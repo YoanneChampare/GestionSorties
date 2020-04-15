@@ -47,6 +47,12 @@ class Participant
     private $actif;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $mdp;
+
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -148,6 +154,22 @@ class Participant
     public function setActif($actif)
     {
         $this->actif = $actif;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getMdp()
+    {
+        return $this->mdp;
+    }
+
+    /**
+     * @param mixed $mdp
+     */
+    public function setMdp($mdp)
+    {
+        $this->mdp = $mdp;
     }
 
 

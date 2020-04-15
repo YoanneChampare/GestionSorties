@@ -20,11 +20,13 @@ security:
             logout:
                 path: logout
                 target: participant
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800 # 1 week in seconds
+
     encoders:
         App\Entity\Participant:
             algorithm: bcrypt
-
-
 
 
             # activate different ways to authenticate

@@ -24,11 +24,9 @@ class ParticipantController extends Controller
      */
     public function login(){
 
-        $participant = new Participant();
-        $loginForm = $this->createForm(LoginType::class,$participant);
 
         return $this->render('participant/login.html.twig', [
-            'loginForm'=>$loginForm->createView(),
+
             'page_name'=>'Login',
         ]);
     }

@@ -54,6 +54,35 @@ class Sortie
 
 
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Lieu")
+     */
+    private $lieu;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Etat")
+     */
+    private $et;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Site")
+     */
+    private $siteOrganisateur;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\ Participant")
+     */
+    private $inscrit;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Participant")
+     */
+    private $organisateur;
+
+
+
+
+
 
 
 
@@ -66,11 +95,27 @@ class Sortie
     }
 
     /**
+     * @param mixed $idSortie
+     */
+    public function setIdSortie($idSortie)
+    {
+        $this->idSortie = $idSortie;
+    }
+
+    /**
      * @return mixed
      */
     public function getNom()
     {
         return $this->nom;
+    }
+
+    /**
+     * @param mixed $nom
+     */
+    public function setNom($nom)
+    {
+        $this->nom = $nom;
     }
 
     /**
@@ -82,11 +127,27 @@ class Sortie
     }
 
     /**
+     * @param mixed $dateHeureDebut
+     */
+    public function setDateHeureDebut($dateHeureDebut)
+    {
+        $this->dateHeureDebut = $dateHeureDebut;
+    }
+
+    /**
      * @return mixed
      */
     public function getDuree()
     {
         return $this->duree;
+    }
+
+    /**
+     * @param mixed $duree
+     */
+    public function setDuree($duree)
+    {
+        $this->duree = $duree;
     }
 
     /**
@@ -98,11 +159,27 @@ class Sortie
     }
 
     /**
+     * @param mixed $dateLimiteInscription
+     */
+    public function setDateLimiteInscription($dateLimiteInscription)
+    {
+        $this->dateLimiteInscription = $dateLimiteInscription;
+    }
+
+    /**
      * @return mixed
      */
     public function getNbInscriptionsMax()
     {
         return $this->nbInscriptionsMax;
+    }
+
+    /**
+     * @param mixed $nbInscriptionsMax
+     */
+    public function setNbInscriptionsMax($nbInscriptionsMax)
+    {
+        $this->nbInscriptionsMax = $nbInscriptionsMax;
     }
 
     /**
@@ -114,12 +191,117 @@ class Sortie
     }
 
     /**
+     * @param mixed $infosSortie
+     */
+    public function setInfosSortie($infosSortie)
+    {
+        $this->infosSortie = $infosSortie;
+    }
+
+    /**
      * @return mixed
      */
     public function getEtat()
     {
         return $this->etat;
     }
+
+    /**
+     * @param mixed $etat
+     */
+    public function setEtat($etat)
+    {
+        $this->etat = $etat;
+    }
+
+
+
+
+    /**
+     * @return mixed
+     */
+    public function getLieu()
+    {
+        return $this->lieu;
+    }
+
+    /**
+     * @param mixed $lieu
+     */
+    public function setLieu($lieu)
+    {
+        $this->lieu = $lieu;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEt()
+    {
+        return $this->et;
+    }
+
+    /**
+     * @param mixed $et
+     */
+    public function setEt($et)
+    {
+        $this->et = $et;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSiteOrganisateur()
+    {
+        return $this->siteOrganisateur;
+    }
+
+    /**
+     * @param mixed $siteOrganisateur
+     */
+    public function setSiteOrganisateur($siteOrganisateur)
+    {
+        $this->siteOrganisateur = $siteOrganisateur;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getInscrit()
+    {
+        return $this->inscrit;
+    }
+
+    /**
+     * @param mixed $inscrit
+     */
+    public function setInscrit($inscrit)
+    {
+        $this->inscrit = $inscrit;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getOrganisateur()
+    {
+        return $this->organisateur;
+    }
+
+    /**
+     * @param mixed $organisateur
+     */
+    public function setOrganisateur($organisateur)
+    {
+        $this->organisateur = $organisateur;
+    }
+
+
+
+
+
+
 
 
 

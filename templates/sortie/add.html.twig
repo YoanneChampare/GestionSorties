@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>{#stephane#}
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+    <p>rfg</p>
+        {% block body %}
+            {{ form_start(sortieForm) }}
+            {{ form_widget(sortieForm) }}
+                <button type="submit">Inscription</button>
+            {{ form_end(sortieForm) }}
+
+
+        {% endblock %}
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

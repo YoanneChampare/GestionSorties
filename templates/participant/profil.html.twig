@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="form">
+        <p>Pseudo: à intégrer</p>
+        <p>Prénom: {{ participant.prenom }}</p>
+        <p>Nom: {{ participant.nom }}</p>
+        <p>Téléphone: {{ participant.telephone }}</p>
+        <p>Email: {{ participant.mail }}</p>
+        <p>Site de rattachement:à implémenter</p>
+        <p>Ma photo: à intégrer</p>
+
+        <div style="display: inline-flex">
+            <form method="post" action="{{ path("modifier_profil") }}">
+                <button type="submit">Modifier</button>
+
+            </form>
+            <form method="post" action="">
+
+                <button type="submit">Retour</button>
+            </form>
+        </div>
+    </div>
+
+
+
+{% endblock %}

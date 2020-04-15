@@ -8,12 +8,12 @@
 
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
 
-           {# <li class="nav-item">
+           <li class="nav-item">
                 <a class="nav-link" href="{{ path('logout') }}">Se déconnecter</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ path('compte') }}">Profil</a>
-            </li>#}
+                <a class="nav-link" href="{{ path('profil') }}">Mon Profil</a>
+            </li>
         {% else %}
             <li class="nav-item">
                 <a class="nav-link" href="{{ path('login') }}">Se connecter</a>

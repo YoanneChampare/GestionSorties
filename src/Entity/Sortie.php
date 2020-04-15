@@ -70,7 +70,7 @@ class Sortie
     private $siteOrganisateur;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\ Participant")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Participant")
      */
     private $inscrit;
 

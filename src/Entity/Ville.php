@@ -26,11 +26,10 @@ class Ville
      */
     private $codePostal;
 
-
-
-
-
-
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Lieu",mappedBy="ville")
+     */
+    private $lieu;
 
 
 

@@ -47,9 +47,19 @@ class Sortie
     private $infosSortie;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Participant",mappedBy="sortie")
+     * @ORM\Column(type="string")
+     */
+    private $etat;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Participant")
      */
     private $participant;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Site",inversedBy="sortie")
+     */
+    private $site;
 
     /**
      * @return mixed

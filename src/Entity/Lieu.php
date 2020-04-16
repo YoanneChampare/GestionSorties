@@ -36,6 +36,11 @@ class Lieu
      */
     private $longitude;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Ville",inversedBy="lieu")
+     */
+    private $ville;
+
     public function getId()
     {
         return $this->id;

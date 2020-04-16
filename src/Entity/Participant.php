@@ -53,7 +53,7 @@ class Participant implements UserInterface
     private $mdp;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Sortie",inversedBy="participant")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Sortie")
      */
     private $sortie;
 

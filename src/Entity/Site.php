@@ -21,6 +21,10 @@ class Site
      */
     private $nom;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Sortie",mappedBy="site")
+     */
+    private $sortie;
 
 
     /**

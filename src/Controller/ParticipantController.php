@@ -43,7 +43,6 @@ class ParticipantController extends Controller
     /**
      * @Route("/profil", name="profil")
      */
-
     public function afficherProfil(){
         $idParticipant=$this->getUser()->getId();
         $participantRepo=$this->getDoctrine()->getRepository(Participant::class);

@@ -19,7 +19,7 @@ security:
             logout_on_user_change: true
             logout:
                 path: logout
-                target: participant
+                target: accueil
             remember_me:
                 secret: '%kernel.secret%'
                 lifetime: 604800 # 1 week in seconds

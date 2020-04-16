@@ -14,7 +14,7 @@ class Ville
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $idVille;
+    private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -39,17 +39,17 @@ class Ville
     /**
      * @return mixed
      */
-    public function getIdVille()
+    public function getId()
     {
-        return $this->idVille;
+        return $this->id;
     }
 
     /**
-     * @param mixed $idVille
+     * @param mixed $i
      */
-    public function setIdVille($idVille)
+    public function setId($id)
     {
-        $this->idVille = $idVille;
+        $this->id = $id;
     }
 
     /**

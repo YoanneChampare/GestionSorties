@@ -57,7 +57,7 @@ class ParticipantController extends Controller
         $participantRepo=$this->getDoctrine()->getRepository(Participant::class);
         $participant=$participantRepo->find($idParticipant);
 
-        $participantForm = $this->createForm(ParticipantType::class,$participant);
+        $participantForm = $this->createForm(ParticipantType::class);
         return $this->render("participant/profil.html.twig",[
             "participant"=>$participant,
             'page_name'=>'Mon profil',

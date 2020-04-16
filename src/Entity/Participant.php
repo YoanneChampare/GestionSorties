@@ -53,7 +53,7 @@ class Participant implements UserInterface
     private $mdp;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Sortie")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Sortie",mappedBy="participant")
      */
     private $sortie;
 
@@ -220,6 +220,22 @@ class Participant implements UserInterface
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSortie()
+    {
+        return $this->sortie;
+    }
+
+    /**
+     * @param mixed $sortie
+     */
+    public function setSortie($sortie)
+    {
+        $this->sortie = $sortie;
     }
 
 

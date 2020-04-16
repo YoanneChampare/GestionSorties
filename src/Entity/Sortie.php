@@ -52,7 +52,7 @@ class Sortie
     private $etat;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Participant")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Participant",inversedBy="sortie")
      */
     private $participant;
 
@@ -171,6 +171,22 @@ class Sortie
     public function setInfosSortie($infosSortie)
     {
         $this->infosSortie = $infosSortie;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEtat()
+    {
+        return $this->etat;
+    }
+
+    /**
+     * @param mixed $etat
+     */
+    public function setEtat($etat)
+    {
+        $this->etat = $etat;
     }
 
 

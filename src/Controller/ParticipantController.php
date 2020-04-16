@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Participant;
 use App\Form\LoginType;
+use App\Form\ParticipantType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ParticipantController extends Controller
@@ -57,15 +59,15 @@ class ParticipantController extends Controller
      * @Route("/profil/modifier", name="modifier_profil")
      */
 
-    public function modifierProfil(){
+    public function modifierProfil(Request $request){
         $idParticipant=$this->getUser()->getId();
         $profil= new Participant();
-
-
+        $participantForm = $this->createForm(ParticipantType::class,$profil);
+        $participantForm->handleRequest($request);
 
         return $this->render("participant/modifier_profil.html.twig",[
-
-            'page_name'=>'Modifier profil',
+            "formulaire"=>$participantForm->createView(),
+            'page_name'=>'Modifier profil'
         ]);
     }
 

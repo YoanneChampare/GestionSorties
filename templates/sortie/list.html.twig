@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>{#stephane#}
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Liste des SORTIES{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+<p>rfg</p>
+{% block body %}
+    <div class="container">
+        {% include 'sortie/filtre.html.twig' with {form: form} only %}
+            {% for sortie in sorties %}
+                {% include 'sortie/SearchSortie.html.twig' with {sorties: sorties} only %}
+            {% endfor %}
+
+    </div>
+{% endblock %}
+{% block javascripts %}{% endblock %}
+</body>
+</html>

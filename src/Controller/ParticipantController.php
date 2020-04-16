@@ -12,12 +12,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class ParticipantController extends Controller
 {
     /**
-     * @Route("/", name="participant")
+     * @Route("/", name="accueil")
      */
     public function index()
     {
         return $this->render('participant/index.html.twig', [
-            'page_name'=>'Home',
+            'page_name'=>'accueil',
         ]);
     }
 
@@ -29,7 +29,7 @@ class ParticipantController extends Controller
 
         return $this->render('participant/login.html.twig', [
 
-            'page_name'=>'Login',
+            'page_name'=>'Se connecter',
         ]);
     }
 

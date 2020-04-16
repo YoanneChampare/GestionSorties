@@ -1,8 +1,26 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <div class="form">
+    <div style="display: inline-flex">
+        {{ form_start(formulaire) }}
+        {#{{ form_row(formulaire.prenom,{'value':participant.prenom})  }}#}
+        {{ form_row(formulaire.prenom,{'value':participant.prenom})  }}
+        {{ form_row(formulaire.nom,{'value':participant.nom})  }}
+        {{ form_row(formulaire.telephone,{'value':participant.telephone})  }}
+        {{ form_row(formulaire.mail,{'value':participant.mail})  }}
+       {# {{ form_row(formulaire.mdp)  }}#}
+
+        <button type="submit">Modifier</button>
+
+        {{ form_end(formulaire) }}
+
+        <form method="post" action="{{ path("accueil") }}">
+
+            <button type="submit">Retour</button>
+        </form>
+    </div>
+ {#   <div class="form">
         <p>Pseudo: à intégrer</p>
-        <p>Prénom: {{ participant.prenom }}</p>
+        <p>Prénom: , </p>
         <p>Nom: {{ participant.nom }}</p>
         <p>Téléphone: {{ participant.telephone }}</p>
         <p>Email: {{ participant.mail }}</p>
@@ -20,7 +38,7 @@
             </form>
         </div>
     </div>
-
+#}
 
 
 {% endblock %}

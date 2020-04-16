@@ -8,6 +8,7 @@ use App\Form\ParticipantType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class ParticipantController extends Controller
 {
@@ -24,12 +25,20 @@ class ParticipantController extends Controller
     /**
      * @Route("/login", name="login")
      */
-    public function login(){
+    public function login(AuthenticationUtils $authenticationUtils){
+
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+
+        // last username entered by the user
+        $mail = $authenticationUtils->getLastUsername();
 
 
         return $this->render('participant/login.html.twig', [
 
             'page_name'=>'Se connecter',
+            'mail' => $mail,
+            'error'         => $error,
         ]);
     }
 
@@ -48,9 +57,11 @@ class ParticipantController extends Controller
         $participantRepo=$this->getDoctrine()->getRepository(Participant::class);
         $participant=$participantRepo->find($idParticipant);
 
+        $participantForm = $this->createForm(ParticipantType::class,$participant);
         return $this->render("participant/profil.html.twig",[
             "participant"=>$participant,
             'page_name'=>'Mon profil',
+            "formulaire"=>$participantForm->createView(),
         ]);
     }
 

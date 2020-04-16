@@ -52,6 +52,14 @@ class Participant implements UserInterface
      */
     private $mdp;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Sortie",inversedBy="participant")
+     */
+    private $sortie;
+
+
+
+
 
     /**
      * @return mixed
@@ -213,4 +221,7 @@ class Participant implements UserInterface
     {
         // TODO: Implement eraseCredentials() method.
     }
+
+
+
 }

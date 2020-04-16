@@ -21,17 +21,6 @@ class Site
      */
     private $nom;
 
-//    /**
-//     * @ORM\OnetoMany(targetEntity="App\Entity\Participant"  inverdedBy="sites"
-//     */
-//    private $participant;
-
-
-
-
-
-
-
 
 
     /**
@@ -65,7 +54,6 @@ class Site
     {
         $this->nom = $nom;
     }
-
 
 
 

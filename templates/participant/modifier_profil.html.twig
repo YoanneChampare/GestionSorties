@@ -2,14 +2,13 @@
 {% block body %}
 
 
-
-    {{ form(formulaire) }}
     <div style="display: inline-flex">
-        <form method="post" action="{{ path("modifier_profil") }}">
+    {{ form_start(formulaire) }}
+    {{ form_widget(formulaire) }}
             <button type="submit">Modifier</button>
 
-        </form>
-        <form method="post" action="">
+    {{ form_end(formulaire) }}
+        <form method="post" action="{{ path("accueil") }}">
 
             <button type="submit">Retour</button>
         </form>

@@ -28,6 +28,7 @@ class ParticipantType extends AbstractType
                 "first_options"=>["label"=>"Password"],
                 "second_options"=>["label"=>"Repeat Password"]
             ])
+            ->add('site')
         ;
     }
 

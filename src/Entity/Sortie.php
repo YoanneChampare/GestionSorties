@@ -14,7 +14,7 @@ class Sortie
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $idSortie;
+    private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -47,59 +47,24 @@ class Sortie
     private $infosSortie;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\ManyToMany(targetEntity="App\Entity\Participant",mappedBy="sortie")
      */
-    private $etat;
-
-
-
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Lieu")
-     */
-    private $lieu;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Etat")
-     */
-    private $et;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Site")
-     */
-    private $siteOrganisateur;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Participant")
-     */
-    private $inscrit;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Participant")
-     */
-    private $organisateur;
-
-
-
-
-
-
-
+    private $participant;
 
     /**
      * @return mixed
      */
-    public function getIdSortie()
+    public function getId()
     {
-        return $this->idSortie;
+        return $this->id;
     }
 
     /**
-     * @param mixed $idSortie
+     * @param mixed $id
      */
-    public function setIdSortie($idSortie)
+    public function setId($id)
     {
-        $this->idSortie = $idSortie;
+        $this->id = $id;
     }
 
     /**
@@ -197,113 +162,6 @@ class Sortie
     {
         $this->infosSortie = $infosSortie;
     }
-
-    /**
-     * @return mixed
-     */
-    public function getEtat()
-    {
-        return $this->etat;
-    }
-
-    /**
-     * @param mixed $etat
-     */
-    public function setEtat($etat)
-    {
-        $this->etat = $etat;
-    }
-
-
-
-
-    /**
-     * @return mixed
-     */
-    public function getLieu()
-    {
-        return $this->lieu;
-    }
-
-    /**
-     * @param mixed $lieu
-     */
-    public function setLieu($lieu)
-    {
-        $this->lieu = $lieu;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getEt()
-    {
-        return $this->et;
-    }
-
-    /**
-     * @param mixed $et
-     */
-    public function setEt($et)
-    {
-        $this->et = $et;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getSiteOrganisateur()
-    {
-        return $this->siteOrganisateur;
-    }
-
-    /**
-     * @param mixed $siteOrganisateur
-     */
-    public function setSiteOrganisateur($siteOrganisateur)
-    {
-        $this->siteOrganisateur = $siteOrganisateur;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getInscrit()
-    {
-        return $this->inscrit;
-    }
-
-    /**
-     * @param mixed $inscrit
-     */
-    public function setInscrit($inscrit)
-    {
-        $this->inscrit = $inscrit;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getOrganisateur()
-    {
-        return $this->organisateur;
-    }
-
-    /**
-     * @param mixed $organisateur
-     */
-    public function setOrganisateur($organisateur)
-    {
-        $this->organisateur = $organisateur;
-    }
-
-
-
-
-
-
-
-
 
 
 

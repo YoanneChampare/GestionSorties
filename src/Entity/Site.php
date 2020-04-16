@@ -14,40 +14,29 @@ class Site
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $idSite;
+    private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
      */
     private $nom;
 
-//    /**
-//     * @ORM\OnetoMany(targetEntity="App\Entity\Participant"  inverdedBy="sites"
-//     */
-//    private $participant;
-
-
-
-
-
-
-
 
 
     /**
      * @return mixed
      */
-    public function getIdSite()
+    public function getId()
     {
-        return $this->idSite;
+        return $this->id;
     }
 
     /**
-     * @param mixed $idSite
+     * @param mixed $id
      */
-    public function setIdSite($idSite)
+    public function setId($id)
     {
-        $this->idSite = $idSite;
+        $this->id = $id;
     }
 
     /**
@@ -66,23 +55,6 @@ class Site
         $this->nom = $nom;
     }
 
-//    /**
-//     * @return mixed
-//     */
-//    public function getParticipant()
-//   {
-//        return $this->participant;
-//    }
-
-
-
-//      /**
-//     * @param mixed $participant
-//     */
-//    public function setParticipant($participant)
-//    {
-//        $this->participant = $participant;
-//    }
 
 
 

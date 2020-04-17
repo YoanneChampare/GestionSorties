@@ -52,4 +52,12 @@ class SortieController extends Controller
                 'form'=>$form->createView()
             ]);
     }
+
+    /**
+     * @Route("/afficherSortie",name="afficherSortie")
+     */
+    public function afficherSortie(){
+
+        return $this->render('sortie/afficherSortie.html.twig');
+    }
 }

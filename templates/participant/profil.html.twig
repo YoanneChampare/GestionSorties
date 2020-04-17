@@ -1,23 +1,54 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <div style="display: inline-flex">
-        {{ form_start(formulaire) }}
-        {#{{ form_row(formulaire.prenom,{'value':participant.prenom})  }}#}
-        {{ form_row(formulaire.prenom,{'value':participant.prenom})  }}
-        {{ form_row(formulaire.nom,{'value':participant.nom})  }}
-        {{ form_row(formulaire.telephone,{'value':participant.telephone})  }}
-        {{ form_row(formulaire.mail,{'value':participant.mail})  }}
-       {# {{ form_row(formulaire.mdp)  }}#}
+    <div>
 
-        <button type="submit">Modifier</button>
+        {#<img src="{{ asset("images/"~participant.avatar) }}">#}
 
+        <img src="{{ asset("images/avatar.png") }}">
+
+    </div>
+        <div class="mx-auto group-form" style="width: 400px">
+            {{ form_start(formulaire) }}
+        <div class="group-form">
+            {{ form_row(formulaire.pseudo,{'attr':{'value':participant.pseudo,'class':'form-control'}})  }}
+        </div>
+        <div class="group-form">
+            {{ form_row(formulaire.prenom,{'attr':{'value':participant.prenom,'class':'form-control'}})  }}
+         </div>
+        <div class="group-form">
+            {{ form_row(formulaire.nom,{'attr':{'value':participant.nom,'class':'form-control'}})  }}
+        </div>
+        <div class="group-form">
+            {{ form_row(formulaire.telephone,{'attr':{'value':participant.telephone,'class':'form-control'}})  }}
+        </div>
+        <div class="group-form">
+            {{ form_row(formulaire.mail,{'attr':{'value':participant.mail,'class':'form-control'}})  }}
+        </div>
+        <div class="group-form">
+            {{ form_row(formulaire.mdp.first,{'attr':{'class':'form-control'}})  }}
+
+        </div>
+            <div class="group-form">
+                {{ form_row(formulaire.mdp.second,{'attr':{'class':'form-control'}})  }}
+
+            </div>
+            <div class="group-form">
+                {{ form_row(formulaire.site,{'attr':{'class':'form-control'}})  }}
+            </div>
+
+
+        {#{{ form_row(formulaire.avatar,{'value':participant.avatar})  }}#}
+
+
+
+        <button type="submit" class="btn btn-primary">Modifier</button>
+        <button type="button" class="btn btn-primary">Retour</button>
         {{ form_end(formulaire) }}
 
-        <form method="post" action="{{ path("accueil") }}">
-
-            <button type="submit">Retour</button>
-        </form>
     </div>
+
+
+    <div class="group-form"></div>
 
 
 

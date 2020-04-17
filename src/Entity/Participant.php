@@ -18,6 +18,11 @@ class Participant implements UserInterface
     private $id;
 
     /**
+     * @ORM\Column(type="string", length=255,unique=true)
+     */
+    private $pseudo;
+
+    /**
      * @ORM\Column(type="string", length=255)
      */
     private $nom;
@@ -53,9 +58,20 @@ class Participant implements UserInterface
     private $mdp;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $avatar;
+
+    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Sortie",mappedBy="participant")
      */
     private $sortie;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Site",inversedBy="participant")
+     */
+private $site;
+
 
 
 
@@ -236,6 +252,54 @@ class Participant implements UserInterface
     public function setSortie($sortie)
     {
         $this->sortie = $sortie;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPseudo()
+    {
+        return $this->pseudo;
+    }
+
+    /**
+     * @param mixed $pseudo
+     */
+    public function setPseudo($pseudo)
+    {
+        $this->pseudo = $pseudo;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAvatar()
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * @param mixed $avatar
+     */
+    public function setAvatar($avatar)
+    {
+        $this->avatar = $avatar;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSite()
+    {
+        return $this->site;
+    }
+
+    /**
+     * @param mixed $site
+     */
+    public function setSite($site)
+    {
+        $this->site = $site;
     }
 
 

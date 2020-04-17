@@ -3,8 +3,13 @@
 namespace App\Form;
 
 use App\Entity\Participant;
+use App\Entity\Site;
+use Doctrine\ORM\Mapping\Entity;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -16,6 +21,7 @@ class ParticipantType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('pseudo',TextType::class)
             ->add('nom',TextType::class)
             ->add('prenom',TextType::class)
             ->add('telephone',TextType::class)
@@ -28,7 +34,16 @@ class ParticipantType extends AbstractType
                 "first_options"=>["label"=>"Password"],
                 "second_options"=>["label"=>"Repeat Password"]
             ])
-            ->add('site')
+            ->add('site',EntityType::class,[
+                "label"=>"Site de rattachement",
+                "class"=>Site::class,
+                "choice_label"=>function($site){
+                return $site->getNom();
+                }
+            ])
+            /*->add('avatar',FileType::class,[
+                "label"=>"Ma photo"
+            ])*/
         ;
     }
 

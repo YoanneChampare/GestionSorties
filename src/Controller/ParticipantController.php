@@ -5,13 +5,17 @@ namespace App\Controller;
 use App\Entity\Participant;
 use App\Form\LoginType;
 use App\Form\ParticipantType;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class ParticipantController extends Controller
 {
+
     /**
      * @Route("/", name="accueil")
      */
@@ -27,6 +31,9 @@ class ParticipantController extends Controller
      */
     public function login(AuthenticationUtils $authenticationUtils){
 
+        $participant=new Participant();
+        $participantForm=$this->createForm(ParticipantType::class,$participant);
+
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
 
@@ -35,10 +42,10 @@ class ParticipantController extends Controller
 
 
         return $this->render('participant/login.html.twig', [
-
+            "formulaire"=>$participantForm->createView(),
             'page_name'=>'Se connecter',
             'mail' => $mail,
-            'error'         => $error,
+            'error'=> $error,
         ]);
     }
 
@@ -52,33 +59,46 @@ class ParticipantController extends Controller
     /**
      * @Route("/profil", name="profil")
      */
-    public function afficherProfil(){
-        $idParticipant=$this->getUser()->getId();
-        $participantRepo=$this->getDoctrine()->getRepository(Participant::class);
-        $participant=$participantRepo->find($idParticipant);
 
-        $participantForm = $this->createForm(ParticipantType::class);
+    public function afficherProfil(Request $request,EntityManagerInterface $em,UserPasswordEncoderInterface $encode){
+        $this->denyAccessUnlessGranted("ROLE_USER");
+       $user=$this->getUser();
+        $participantForm = $this->createForm(ParticipantType::class,$user);
+
+        $participantForm->handleRequest($request);
+        if($participantForm->isSubmitted() && $participantForm->isValid()){
+           $data=$participantForm->getData();
+            $hash=$encode->encodePassword($user,$data->getMdp());
+            $user->setMdp($hash);
+
+
+           /* $file = $participantForm['avatar']->getData();
+            if($file){
+                $fileName=pathinfo($file->getClientOriginalName(),PATHINFO_FILENAME);
+
+                $newFileName=$fileName.'-'.uniqid().'.'.$file->guessExtension();
+                try {
+                    $file->move(
+                        $this->getParameter('file_directory'),
+                        $newFileName
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                $user->setAvatar($newFileName);
+            }*/
+           $em->persist($data);
+           $em->flush();
+
+        }
         return $this->render("participant/profil.html.twig",[
-            "participant"=>$participant,
+            "participant"=>$user,
             'page_name'=>'Mon profil',
             "formulaire"=>$participantForm->createView(),
         ]);
     }
 
-    /**
-     * @Route("/profil/modifier", name="modifier_profil")
-     */
 
-    public function modifierProfil(Request $request){
-        $idParticipant=$this->getUser()->getId();
-        $profil= new Participant();
-        $participantForm = $this->createForm(ParticipantType::class,$profil);
-        $participantForm->handleRequest($request);
-
-        return $this->render("participant/modifier_profil.html.twig",[
-            "formulaire"=>$participantForm->createView(),
-            'page_name'=>'Modifier profil'
-        ]);
-    }
 
 }

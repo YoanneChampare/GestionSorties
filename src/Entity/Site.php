@@ -26,6 +26,11 @@ class Site
      */
     private $sortie;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Participant",mappedBy="site")
+     */
+    private $participant;
+
 
     /**
      * @return mixed

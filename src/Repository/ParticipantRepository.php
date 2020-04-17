@@ -47,4 +47,16 @@ class ParticipantRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function modifierProfil($id,$pseudo){
+        $em = $this->getEntityManager();
+        $dql="UPDATE 
+        App\Entity\Participant p SET p.pseudo="."'$pseudo'"."
+        WHERE p.id=$id";
+
+        $query = $em->createQuery($dql);
+
+        return $query->getResult();
+
+    }
 }

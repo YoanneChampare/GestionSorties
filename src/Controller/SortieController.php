@@ -54,10 +54,16 @@ class SortieController extends Controller
     }
 
     /**
-     * @Route("/afficherSortie",name="afficherSortie")
+     * @Route("/afficherSortie/{id}",name="afficherSortie",requirements={"id":"\d+"})
      */
-    public function afficherSortie(){
+    public function afficherSortie($id){
 
-        return $this->render('sortie/afficherSortie.html.twig');
+        $sortieRepo = $this->getDoctrine()->getRepository(Sortie::class);
+        $sortie =$sortieRepo->find($id);
+
+        return $this->render('sortie/afficherSortie.html.twig',[
+            "sortie"=>$sortie,
+            "page_name"=>"Sortie"
+        ]);
     }
 }

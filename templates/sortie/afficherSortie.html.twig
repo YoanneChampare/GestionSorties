@@ -1,21 +1,24 @@
+{% extends 'base.html.twig' %}
 {% block body %}
 
-    <dif>
+    <div>
 
-        <label>Nom de la sortie: </label>
-        <label>Date et heure de la sortie: </label>
-        <label>Date limite d'inscription: </label>
-        <label>Nombre de places: </label>
-        <label>Durée :</label>
-        <label>Description et infos:</label>
-        <label>Lieu: </label>
-        <label>Rue: </label>
-        <label>Ville: </label>
-        <label>Code postal: </label>
-        <label>Latitude: </label>
-        <label>Longitude: </label>
+        <div><label>Nom de la sortie: </label>{{ sortie.nom }}</div>
+        <div> <label>Date et heure de la sortie: </label>{{ sortie.dateHeureDebut | date("d/m/Y")}}</div>
+        <div><label>Date limite d'inscription: </label>{{ sortie.dateLimiteInscription | date("d/m/Y")}}</div>
+        <div><label>Nombre de places: </label>{{ sortie.nbInscriptionsMax }}</div>
+        <div><label>Durée: </label>{{ sortie.duree |date("h:m:s")}}</div>
+        <div><label>Description et infos: </label>{{ sortie.infosSortie }}</div>
+{#        <label>Lieu: </label>{{ sortie. }}#}
+{#        <label>Rue: </label>#}
+{#        <label>Ville: </label>#}
+{#        <label>Code postal: </label>#}
+{#        <label>Latitude: </label>#}
+{#        <label>Longitude: </label>#}
 
-    </dif>
+    </div>
+
+    <div>  <button type="submit" class="btn btn-primary">S'inscrire</button></div>
 
     
 {% endblock %}

@@ -6,11 +6,12 @@
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
-    <p>rfg</p>
         {% block body %}
             {{ form_start(sortieForm) }}
             {{ form_widget(sortieForm) }}
-                <button type="submit">Inscription</button>
+            <button type="submit">Publier la Sortie </button>
+            <button><a href="/GestionSorties/public">Annuler</a></button>
+            <button type="button">Enregistrer</button>
             {{ form_end(sortieForm) }}
 
 

@@ -47,7 +47,7 @@ class Sortie
     private $infosSortie;
 
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $etat;
 
@@ -60,6 +60,12 @@ class Sortie
      * @ORM\ManyToOne(targetEntity="App\Entity\Site",inversedBy="sortie")
      */
     private $site;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Lieu",inversedBy="sortie")
+     */
+    private $lieu;
+
 
     /**
      * @return mixed
@@ -187,6 +193,54 @@ class Sortie
     public function setEtat($etat)
     {
         $this->etat = $etat;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getParticipant()
+    {
+        return $this->participant;
+    }
+
+    /**
+     * @param mixed $participant
+     */
+    public function setParticipant($participant)
+    {
+        $this->participant = $participant;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSite()
+    {
+        return $this->site;
+    }
+
+    /**
+     * @param mixed $site
+     */
+    public function setSite($site)
+    {
+        $this->site = $site;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLieu()
+    {
+        return $this->lieu;
+    }
+
+    /**
+     * @param mixed $lieu
+     */
+    public function setLieu($lieu)
+    {
+        $this->lieu = $lieu;
     }
 
 

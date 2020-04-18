@@ -56,14 +56,35 @@ class SortieController extends Controller
     /**
      * @Route("/afficherSortie/{id}",name="afficherSortie",requirements={"id":"\d+"})
      */
-    public function afficherSortie($id){
+    public function afficherSortie($id,Request $request){
 
         $sortieRepo = $this->getDoctrine()->getRepository(Sortie::class);
         $sortie =$sortieRepo->find($id);
 
+        $participantSRepo = $this->getDoctrine()->getRepository(Participant::class);
+        $p_sortie = $participantSRepo->liste_participant();
+        $iduser=$this->getUser()->getId();
+        $user=$participantSRepo->find($iduser);
+
+        if($user!=null){
+           $etat=0;
+        }
+        else{
+            if(sizeof($p_sortie)>$sortie->getNbInscriptionsMax()){
+                $etat=1;
+            }
+            else{
+                $etat=2;
+            }
+        }
+
+
+
         return $this->render('sortie/afficherSortie.html.twig',[
+            "p_sortie"=>$p_sortie,
             "sortie"=>$sortie,
-            "page_name"=>"Sortie"
+            "page_name"=>"Sortie",
+            "etat"=>$etat
         ]);
     }
 }

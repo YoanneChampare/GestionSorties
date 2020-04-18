@@ -4,4 +4,34 @@
         {% include 'sortie/filtre.html.twig' %}
 
     </div>
+
+    <div>
+        <table>
+            <tr>
+                <td>
+                    <th>Nom de la sortie</th>
+                    <th>Date de la sortie</th>
+                    <th>Clôture des inscriptions</th>
+                    <th>Participants Max</th>
+                    <th>Etat</th>
+                    <th>Inscrit</th>
+                    <th>Organisateur</th>
+                    <th>Actions</th>
+                </td>
+            </tr>
+
+            {% for sortie in sorties %}
+                <tr>
+                    <td>{{ sortie.nom }}</td>
+                    <td>{{ sortie.date_heure_debut }}</td>
+                    <td>{{ sortie.date_limite_inscription }}</td>
+                    <td>{{ sortie.nb_inscriptions_max }}</td>
+                    <td>{{ sortie.etat }}</td>
+                    <td>{{ sortie. }}</td>
+                    <td>{{ sortie. }}</td>
+                </tr>
+
+            {% endfor %}
+        </table>
+    </div>
 </div>

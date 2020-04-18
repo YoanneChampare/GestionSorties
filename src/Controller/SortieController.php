@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Data\SearchData;
+use App\Entity\Lieu;
 use App\Entity\Sortie;
 use App\Form\SearchType;
 use App\Form\SortieType;
+use App\Repository\LieuRepository;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -24,13 +26,17 @@ class SortieController extends Controller
      */
     public function add(EntityManagerInterface $em,Request $request)
     {
+
         $sortie=new Sortie();
         $sortieForm=$this->createForm(SortieType::class,$sortie);
 
         $sortieForm->handleRequest($request);
+        
         if($sortieForm->isSubmitted()){
-            $em->persist($sortie);
-            $em->flush();
+
+
+           /* $em->persist($sortie);
+            $em->flush();*/
         }
         return $this->render('sortie/add.html.twig', ['sortieForm'=>$sortieForm->createView()]);
     }
@@ -66,4 +72,7 @@ class SortieController extends Controller
             "page_name"=>"Sortie"
         ]);
     }
+
+
+
 }

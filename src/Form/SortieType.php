@@ -12,6 +12,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 class SortieType extends AbstractType
@@ -25,7 +27,7 @@ class SortieType extends AbstractType
             ->add('nbInscriptionsMax',IntegerType::class,['label'=>'Nombres de places'])
             ->add('duree',TimeType::class,['label'=>'Durée de la Sortie'])
             ->add('infosSortie',TextareaType::class,['label'=>'Description et infos'])
-            ->add('etat',TextType::class,['label'=>'Etat'])
+           /* ->add('etat',TextType::class,['label'=>'Etat'])*/
 
       //      ->add('lieu', 'entity', array(
        //         'class' => 'App\Entity\Lieu',
@@ -33,22 +35,26 @@ class SortieType extends AbstractType
         //        'multiple' => true,
         //        'expanded' => false
         //    ))
-            ->add('lieu', EntityType::class, [
-                'class' => Lieu::class,
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('l')
-                        ->orderBy('l.nom', 'ASC');
-                },
-                'choice_label' => 'nom',
-            ])
+           ->add('lieu', EntityType::class, [
+               'class' => Lieu::class,
+               'query_builder' => function (EntityRepository $er) {
+                   return $er->createQueryBuilder('l')
+                       ->orderBy('l.nom', 'ASC');
+               },
+               'choice_label' => 'nom',
+               'mapped'=>false
+           ])
 
         ;
+
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => Sortie::class,
+
+
         ]);
     }
 }

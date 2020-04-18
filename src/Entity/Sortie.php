@@ -67,6 +67,8 @@ class Sortie
     private $lieu;
 
 
+
+
     /**
      * @return mixed
      */
@@ -242,11 +244,6 @@ class Sortie
     {
         $this->lieu = $lieu;
     }
-
-
-
-
-
 
 
 

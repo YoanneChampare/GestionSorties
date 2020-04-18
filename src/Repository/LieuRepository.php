@@ -47,4 +47,12 @@ class LieuRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function getLieu($q){
+
+        $em=$this->getEntityManager();
+        $dql="SELECT l FROM App\Entity\Lieu WHERE l.id=$q";
+        $query=$em->createQuery($dql);
+        return $query->getResult();
+    }
 }

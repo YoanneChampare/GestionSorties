@@ -66,4 +66,26 @@ class SortieController extends Controller
             "page_name"=>"Sortie"
         ]);
     }
+
+
+    /**
+     * @Route("/annulerSortie/{id}",name="annulerSortie",requirements={"id":"\d+"})
+     * @param EntityManagerInterface $em
+     * @param Request $request
+     * @param Sortie $sortie
+     * @return Response
+     */
+    public function annulerSortie(EntityManagerInterface $em,Request $request, Sortie $sortie){
+
+        $sortieAnnulerForm=$this->createForm(AnnulerSortieType::class,$sortie);
+        $sortieAnnulerForm->handleRequest($request);
+
+
+        return $this->render('sortie/afficherSortie.html.twig',[
+            "sortie"=>$sortie,
+            "page_name"=>"Sortie"
+        ]);
+    }
+
+
 }

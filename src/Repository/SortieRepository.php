@@ -53,7 +53,7 @@ class SortieRepository extends ServiceEntityRepository
     public function isInscrit($id){
         $em = $this->getEntityManager();
         $dql = "SELECT p
-        FROM App\Entity\Participant p
+        FROM App\Entity\SortieParticipant p
         Join p.sortie s  WHERE p.id=$id";
         $query = $em->createQuery($dql);
         return  $query->getResult();

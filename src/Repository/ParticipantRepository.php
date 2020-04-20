@@ -59,4 +59,6 @@ class ParticipantRepository extends ServiceEntityRepository
         return $query->getResult();
 
     }
+
+
 }

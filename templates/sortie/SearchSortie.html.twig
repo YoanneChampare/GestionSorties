@@ -1,7 +1,54 @@
 <div class="searchSortie">
 
+    <div class="text-right" style="margin-right: 20px">Date du jour: {{ "now"|date("d/m/Y") }}</div>
+    <div class="text-right" style="margin-right: 20px">Participant(e): {{ user.prenom }} {{ user.nom }}</div>
     <div class="search-title">
-
+        {% include 'sortie/filtre.html.twig' %}
 
     </div>
-</div>s
+
+    <div>
+        <table class="table">
+            <tr>
+
+                    <th>Nom de la sortie</th>
+                    <th>Date de la sortie</th>
+                    <th>Clôture des inscriptions</th>
+                    <th>Places disponibles</th>
+                    <th>Etat</th>
+                    <th>Inscrit</th>
+                    <th>Organisateur</th>
+                    <th>Actions</th>
+
+            </tr>
+
+            {% for sortie in sorties %}
+                <tr>
+                    <td>{{ sortie.nom }}</td>
+                    <td>{{ sortie.dateHeureDebut | date("d/m/Y h:m:s") }}</td>
+                    <td>{{ sortie.dateLimiteInscription | date("d/m/Y h:m:s")}}</td>
+                    <td>?/{{ sortie.nbInscriptionsMax }}</td>
+                    <td>{{ sortie.etat }}</td>
+                    {% if inscrit %}
+                    <td>X</td>
+                    {% else %}
+                        <td>O</td>
+                        {% endif %}
+                    <td>{{ sortie.site.nom }}</td>
+                    <td>
+                        {% if inscrit %}
+                            <a href="">Se désister</a>
+                        {% endif %}
+                        <a href="">Afficher</a>
+                        <a href="">Modifier</a>
+                        <a href="">Publier</a>
+                        <a href="">Annuler</a>
+                        <a href="">Se désister</a>
+                        <a href="">S'inscrire</a>
+                    </td>
+                </tr>
+
+            {% endfor %}
+        </table>
+    </div>
+</div>

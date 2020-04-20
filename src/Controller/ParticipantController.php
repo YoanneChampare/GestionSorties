@@ -16,15 +16,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class ParticipantController extends Controller
 {
 
-    /**
-     * @Route("/", name="accueil")
-     */
-    public function index()
-    {
-        return $this->render('participant/index.html.twig', [
-            'page_name'=>'accueil',
-        ]);
-    }
+
 
     /**
      * @Route("/login", name="login")

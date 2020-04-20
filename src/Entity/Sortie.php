@@ -27,7 +27,7 @@ class Sortie
     private $dateHeureDebut;
 
     /**
-     * @ORM\Column(type="time")
+     * @ORM\Column(type="time",nullable=true)
      */
     private $duree;
 
@@ -51,10 +51,6 @@ class Sortie
      */
     private $etat;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Participant",inversedBy="sortie")
-     */
-    private $participant;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Site",inversedBy="sortie")
@@ -65,6 +61,34 @@ class Sortie
      * @ORM\ManyToOne(targetEntity="App\Entity\Lieu",inversedBy="sortie")
      */
     private $lieu;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\SortieParticipant",mappedBy="sortie")
+     */
+    private $jeParticipe;
+
+    /**
+     *@ORM\ManyToOne(targetEntity="App\Entity\Participant")
+     */
+    private $auteur;
+
+    /**
+     * @return mixed
+     */
+    public function getJeParticipe()
+    {
+        return $this->jeParticipe;
+    }
+
+    /**
+     * @param mixed $jeParticipe
+     */
+    public function setJeParticipe($jeParticipe)
+    {
+        $this->jeParticipe = $jeParticipe;
+    }
+
+
 
 
     /**
@@ -243,10 +267,21 @@ class Sortie
         $this->lieu = $lieu;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getAuteur()
+    {
+        return $this->auteur;
+    }
 
-
-
-
+    /**
+     * @param mixed $auteur
+     */
+    public function setAuteur($auteur)
+    {
+        $this->auteur = $auteur;
+    }
 
 
 

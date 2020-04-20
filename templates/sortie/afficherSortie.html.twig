@@ -18,7 +18,21 @@
 
     </div>
 
-    <div>  <button type="submit" class="btn btn-primary">S'inscrire</button></div>
+    <form method="post" action="{{ path("afficherSortie",{"id":1}) }}">
+        {% if( etat==true)%}
+            <div>  <button type="submit" class="btn btn-primary">S'inscrire</button></div>
+        {% elseif(etat==false) %}
+        <div>  <button type="submit" class="btn btn-danger">Désister</button></div>
+        {% else %}
+
+        {% endif %}
+    </form>
+
+
+    {% for participant in p_sortie %}
+        {{ participant.participant.nom }}
+    {% endfor %}
+
 
     
 {% endblock %}

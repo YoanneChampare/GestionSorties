@@ -62,18 +62,33 @@ class Participant implements UserInterface
      */
     private $avatar;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Sortie",mappedBy="participant")
-     */
-    private $sortie;
+
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Site",inversedBy="participant")
      */
-private $site;
+    private $site;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\SortieParticipant",mappedBy="participant")
+     */
+    private $jeParticipe;
 
+    /**
+     * @return mixed
+     */
+    public function getJeParticipe()
+    {
+        return $this->jeParticipe;
+    }
 
+    /**
+     * @param mixed $jeParticipe
+     */
+    public function setJeParticipe($jeParticipe)
+    {
+        $this->jeParticipe = $jeParticipe;
+    }
 
 
 

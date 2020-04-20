@@ -55,11 +55,20 @@ class SortieParticipantRepository extends ServiceEntityRepository
         return  $query->getResult();
     }
 
-    public function Participant($id){
+    public function Participant($id,$ids){
         $em = $this->getEntityManager();
         $dql ="SELECT s FROM App\Entity\SortieParticipant s
-        WHERE s.participant=$id";
+        WHERE s.participant=$id and s.sortie=$ids";
         $query = $em->createQuery($dql);
         return  $query->getResult();
     }
+
+    public function allParticipant($id){
+        $em = $this->getEntityManager();
+        $dql ="SELECT s FROM App\Entity\SortieParticipant s
+        WHERE s.sortie=$id";
+        $query = $em->createQuery($dql);
+        return  $query->getResult();
+    }
+
 }

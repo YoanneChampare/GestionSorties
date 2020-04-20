@@ -4,6 +4,7 @@
 namespace App\DataFixtures;
 
 
+use App\Entity\Etat;
 use App\Entity\Participant;
 use App\Entity\Ville;
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -24,11 +25,11 @@ class EtatFixtures extends Fixture implements OrderedFixtureInterface
 
 
         for ($i = 0; $i < 5; $i++) {
-            $etat=new Ville();
-            $etat->setNom($statut[$i]);
+            $etat=new Etat();
+            $etat->setLibelle($statut[$i]);
             $manager->persist($etat);
         }
-        $this->addReference('etat',$etat->getId());
+        $this->addReference('etat',$etat);
         $manager->flush();
     }
 

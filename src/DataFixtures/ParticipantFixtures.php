@@ -57,7 +57,7 @@ class ParticipantFixtures extends Fixture implements OrderedFixtureInterface
         $user2->setSite($siteId);
         $manager->persist($user2);
 
-        $this->addReference('participant',$user->getId());
+        $this->addReference('participant',$user);
 
         $manager->flush();
     }

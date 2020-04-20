@@ -29,7 +29,7 @@ class VilleFixtures extends Fixture implements OrderedFixtureInterface
             $ville->setCodePostal($cpo[$i]);
             $manager->persist($ville);
         }
-        $this->addReference('ville',$ville->getId());
+        $this->addReference('ville',$ville);
         $manager->flush();
     }
 

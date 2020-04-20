@@ -27,7 +27,7 @@ class SiteFixtures extends Fixture implements OrderedFixtureInterface
             $site->setNom($nomSite[$i]);
             $manager->persist($site);
         }
-        $this->addReference('site',$site->getId());
+        $this->addReference('site',$site);
         $manager->flush();
     }
 

@@ -37,7 +37,7 @@ class SortieFixtures extends Fixture implements OrderedFixtureInterface
             $sortie->setSite($siteId);
             $sortie->setLieu($lieuId);
             $sortie->setAuteur($auteurId);
-            $sortie->setEtat($etatId);
+            $sortie->setEtat($etatId->getLibelle());
             $manager->persist($sortie);
         }
 

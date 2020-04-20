@@ -1,4 +1,28 @@
 {{ form_start(form) }}
-{{ form_widget(form) }}
 
+
+
+<div class="row mx-auto"style="width: 75%">
+    <div class="col-4">
+<div class="group-form">{{ form_row(form.nSite,{'attr':{'class':'form-control'}}) }}</div>
+<div class="group-form">{{ form_row(form.motCle,{'attr':{'class':'form-control'}}) }}</div>
+<div class="group-form">{{ form_row(form.datemin,{'attr':{'class':'input-group date'}}) }}{{ form_row(form.datemax,{'attr':{'class':'input-group date'}}) }}</div>
+
+
+
+    </div>
+    <div class="col-4">
+        <div class="group-form">{{ form_row(form.sOrganisateur,{'attr':{'class':'form-control'}}) }}</div>
+        <div class="group-form">{{ form_row(form.sInscrit,{'attr':{'class':'form-control'}}) }}</div>
+        <div class="group-form">{{ form_row(form.sNonInscrit,{'attr':{'class':'form-control'}}) }}</div>
+        <div class="group-form">{{ form_row(form.sPasse,{'attr':{'class':'form-control'}}) }}</div>
+
+
+    </div>
+    <div class="col-4">
+        <button type="submit" class="btn btn-primary">Rechercher</button>
+    </div>
 {{ form_end(form) }}
+
+
+</div><br>

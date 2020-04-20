@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Data\SearchData;
+use App\Entity\Etat;
 use App\Entity\Sortie;
+use App\Entity\SortieParticipant;
 use App\Form\SearchType;
 use App\Form\SortieType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -21,20 +23,29 @@ class AccueilController extends Controller
     public function portail(EntityManagerInterface $em,Request $request)
     {
 
+
         $user=$this->getUser();
         $filtre=new SearchData();
+        $etat=new Etat();
 
         $sortieRepo=$this->getDoctrine()->getRepository(Sortie::class);
+        $InscritRepo=$this->getDoctrine()->getRepository(SortieParticipant::class);
+        $etatRepo=$this->getDoctrine()->getRepository(Etat::class);
 
-        $inscrit=$sortieRepo->isInscrit($user->getId());
+        $inscrit=$InscritRepo->isInscrit($user->getId());
         $filtreForm=$this->createForm(SearchType::class,$filtre);
+
         $filtreForm->handleRequest($request);
-        dump($filtre);
-        $sorties=$sortieRepo->findSearch($filtre);
 
-       /* if($filtreForm->isSubmitted() && $filtreForm->isValid()){
+        $sorties=$sortieRepo->findSearch($filtre,$user->getId());
+        for($i=0;$i<sizeof($sorties);$i++){
+            $et=$etatRepo->changeEtat($sorties[$i]);
 
-        }*/
+                $sorties[$i]->setEtat($et);
+
+
+        }
+
 
         return $this->render('participant/index.html.twig', [
             'page_name'=>'accueil',

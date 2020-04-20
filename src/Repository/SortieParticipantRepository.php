@@ -62,4 +62,14 @@ class SortieParticipantRepository extends ServiceEntityRepository
         $query = $em->createQuery($dql);
         return  $query->getResult();
     }
+
+    public function isInscrit($idp){
+        $em = $this->getEntityManager();
+        $dql = "SELECT p
+        FROM App\Entity\SortieParticipant p
+        WHERE p.participant=$idp";
+        $query = $em->createQuery($dql);
+        return  $query->getResult();
+
+    }
 }

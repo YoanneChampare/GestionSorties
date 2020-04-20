@@ -24,11 +24,12 @@ class SortieRepository extends ServiceEntityRepository
      * Récupere les sorties en lien avec les recherches
      */
 
-    public function findSearch(SearchData $search){
+    public function findSearch(SearchData $search,$idUser){
         $query=$this
             ->createQueryBuilder('s')
-            ->select('s,i')
-            ->join('s.site','i');
+            ->select('s');
+
+
             if(!empty($search->motCle)){
                 $query=$query
                     ->andWhere('s.nom LIKE :motCle')
@@ -38,27 +39,55 @@ class SortieRepository extends ServiceEntityRepository
             if(!empty ($search->nSite)){
                 $query=$query
 
-                    ->andWhere('i.id IN (:nSite)')
+                    ->andWhere('s.site IN (:nSite)')
                     ->setParameter('nSite',$search->nSite);
             }
 
             if(!empty($search->datemin)){
-
+                $query=$query
+                    ->andWhere('s.dateHeureDebut >:datemin')
+                    ->setParameter('datemin',$search->datemin);
             }
+
+            if(!empty($search->datemax)){
+                $query=$query
+                    ->andWhere('s.dateHeureDebut <=:datemax')
+                    ->setParameter('datemax',$search->datemax);
+            }
+
+            if(!empty($search->sOrganisateur)){
+                $query=$query
+                    ->andWhere('s.auteur IN (:organisateur)')
+                    ->setParameter('organisateur',$idUser);
+            }
+
+            if(!empty($search->sPasse)){
+                $query=$query
+                    ->andWhere('s.dateHeureDebut <:sortiePassee')
+                    ->setParameter('sortiePassee',new \DateTime());
+            }
+
+
+
+            if(!empty($search->sInscrit)){
+                $query=$query
+                    ->join('s.jeParticipe','p')
+                    ->andWhere("p.participant =:participant")
+                    ->setParameter('participant',$idUser);
+                    }
+
+            if(!empty($search->sNonInscrit)){
+                $query=$query
+                    ->andWhere(" NOT IN (:nonparticipant)")
+                    ->setParameter('nonparticipant',$idUser);
+
+                }
 
 
         return $query->getQuery()->getResult();
     }
 
-    public function isInscrit($id){
-        $em = $this->getEntityManager();
-        $dql = "SELECT p
-        FROM App\Entity\SortieParticipant p
-        Join p.sortie s  WHERE p.id=$id";
-        $query = $em->createQuery($dql);
-        return  $query->getResult();
 
-    }
 
 }
 

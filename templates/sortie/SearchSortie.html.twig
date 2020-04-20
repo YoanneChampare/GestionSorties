@@ -11,35 +11,37 @@
         <table class="table">
             <tr>
 
-                    <th>Nom de la sortie</th>
-                    <th>Date de la sortie</th>
-                    <th>Clôture des inscriptions</th>
-                    <th>Places disponibles</th>
-                    <th>Etat</th>
-                    <th>Inscrit</th>
-                    <th>Organisateur</th>
-                    <th>Actions</th>
+                <th>Nom de la sortie</th>
+                <th>Date de la sortie</th>
+                <th>Clôture des inscriptions</th>
+                <th>Places disponibles</th>
+                <th>Etat</th>
+                <th>Inscrit</th>
+                <th>Organisateur</th>
+                <th>Actions</th>
 
             </tr>
 
-            {% for sortie in sorties %}
+            {% for s in sorties %}
                 <tr>
-                    <td>{{ sortie.nom }}</td>
-                    <td>{{ sortie.dateHeureDebut | date("d/m/Y h:m:s") }}</td>
-                    <td>{{ sortie.dateLimiteInscription | date("d/m/Y h:m:s")}}</td>
-                    <td>?/{{ sortie.nbInscriptionsMax }}</td>
-                    <td>{{ sortie.etat }}</td>
-                    {% if inscrit %}
-                    <td>X</td>
+                    <td>{{ s.nom }}</td>
+                    <td>{{ s.dateHeureDebut | date("d/m/Y h:m:s") }}</td>
+                    <td>{{ s.dateLimiteInscription | date("d/m/Y h:m:s") }}</td>
+                    <td>?/{{ s.nbInscriptionsMax }}</td>
+                    <td>{{ s.etat }}</td>
+
+                    {% if (inscrit) %}
+                                <td>X</td>
                     {% else %}
                         <td>O</td>
-                        {% endif %}
-                    <td>{{ sortie.site.nom }}</td>
+                    {% endif %}
+
+                    <td>{{ s.auteur.nom }}</td>
                     <td>
                         {% if inscrit %}
                             <a href="">Se désister</a>
                         {% endif %}
-                        <a href="{{ path("afficherSortie",{'id':sortie.id}) }}">Afficher</a>
+                        <a href="{{ path("afficherSortie",{'id':s.id}) }}">Afficher</a>
                         <a href="">Modifier</a>
                         <a href="">Publier</a>
                         <a href="">Annuler</a>

@@ -33,17 +33,16 @@ class SortieType extends AbstractType
         //        'multiple' => true,
         //        'expanded' => false
         //    ))
-            ->add('lieu', EntityType::class, [
-                'class' => Lieu::class,
-                'query_builder' => function (EntityRepository $er) {
-                    return $er->createQueryBuilder('l')
-                        ->orderBy('l.nom', 'ASC');
-                },
-                'choice_label' => 'nom',
-            ])
-
-        ;
+             ->add('lieu', EntityType::class, [
+                         'class' => Lieu::class,
+                         'query_builder' => function (EntityRepository $er) {
+                          return $er->createQueryBuilder('l')
+                              ->orderBy('l.nom', 'ASC');
+                          },
+                         'choice_label' => 'nom',
+              ]);
     }
+
 
     public function configureOptions(OptionsResolver $resolver)
     {

@@ -60,13 +60,5 @@ class ParticipantRepository extends ServiceEntityRepository
 
     }
 
-    public function liste_participant(){
-        $em = $this->getEntityManager();
-        $dql = "SELECT p
-        FROM App\Entity\Participant p
-        Join p.sortie s ";
-        $query = $em->createQuery($dql);
-        return  $query->getResult();
 
-    }
 }

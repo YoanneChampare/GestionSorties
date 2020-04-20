@@ -28,17 +28,13 @@ class SortieController extends Controller
      */
     public function add(EntityManagerInterface $em,Request $request)
     {
-
         $sortie=new Sortie();
         $sortieForm=$this->createForm(SortieType::class,$sortie);
 
         $sortieForm->handleRequest($request);
-
         if($sortieForm->isSubmitted()){
-
-
-           /* $em->persist($sortie);
-            $em->flush();*/
+            $em->persist($sortie);
+            $em->flush();
         }
         return $this->render('sortie/add.html.twig', ['sortieForm'=>$sortieForm->createView()]);
     }
@@ -114,6 +110,25 @@ class SortieController extends Controller
         ]);
     }
 
+
+    /**
+     * @Route("/annulerSortie/{id}",name="annulerSortie",requirements={"id":"\d+"})
+     * @param EntityManagerInterface $em
+     * @param Request $request
+     * @param Sortie $sortie
+     * @return Response
+     */
+    public function annulerSortie(EntityManagerInterface $em,Request $request, Sortie $sortie){
+
+        $sortieAnnulerForm=$this->createForm(AnnulerSortieType::class,$sortie);
+        $sortieAnnulerForm->handleRequest($request);
+
+
+        return $this->render('sortie/afficherSortie.html.twig',[
+            "sortie"=>$sortie,
+            "page_name"=>"Sortie"
+        ]);
+    }
 
 
 }

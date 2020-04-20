@@ -24,7 +24,9 @@ class SortieFixtures extends Fixture implements OrderedFixtureInterface
     {
         $lieuId=$this->getReference('lieu');
         $siteId=$this->getReference('site');
-        $participantId=$this->getReference('participant');
+        $auteurId=$this->getReference('participant');
+        $etatId=$this->getReference('etat');
+
         for ($i = 0; $i < 4; $i++) {
             $sortie = new Sortie();
             $sortie->setNom('Sortie '.$i);
@@ -32,12 +34,10 @@ class SortieFixtures extends Fixture implements OrderedFixtureInterface
             $sortie->setDateLimiteInscription(new \DateTime());
             $sortie->setNbInscriptionsMax(10);
             $sortie->setDuree(new\DateTime());
-            $sortie->setEtat("ouverte pour test");
             $sortie->setSite($siteId);
             $sortie->setLieu($lieuId);
-            $sortie->setParticipant();
-
-
+            $sortie->setAuteur($auteurId);
+            $sortie->setEtat($etatId);
             $manager->persist($sortie);
         }
 

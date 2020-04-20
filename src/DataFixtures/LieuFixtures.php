@@ -31,7 +31,7 @@ class LieuFixtures extends Fixture implements OrderedFixtureInterface
             $lieu->setVille($villeId);
             $manager->persist($lieu);
         }
-        $this->addReference('lieu',$lieu);
+        $this->addReference('lieu',$lieu->getId());
 
 
         $manager->flush();

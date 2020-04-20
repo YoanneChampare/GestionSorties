@@ -68,6 +68,11 @@ class Sortie
     private $jeParticipe;
 
     /**
+     *@ORM\ManyToOne(targetEntity="App\Entity\Participant")
+     */
+    private $auteur;
+
+    /**
      * @return mixed
      */
     public function getJeParticipe()
@@ -260,6 +265,22 @@ class Sortie
     public function setLieu($lieu)
     {
         $this->lieu = $lieu;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAuteur()
+    {
+        return $this->auteur;
+    }
+
+    /**
+     * @param mixed $auteur
+     */
+    public function setAuteur($auteur)
+    {
+        $this->auteur = $auteur;
     }
 
 

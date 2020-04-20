@@ -5,13 +5,12 @@ namespace App\DataFixtures;
 
 
 use App\Entity\Participant;
-use App\Entity\Site;
 use App\Entity\Ville;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class SiteFixtures extends Fixture implements OrderedFixtureInterface
+class EtatFixtures extends Fixture implements OrderedFixtureInterface
 {
 
 
@@ -21,13 +20,15 @@ class SiteFixtures extends Fixture implements OrderedFixtureInterface
      */
     public function load(ObjectManager $manager)
     {
-        $nomSite= array ('Nantes','Rennes','Niort');
-        for ($i = 0; $i < 3; $i++) {
-            $site=new Site();
-            $site->setNom($nomSite[$i]);
-            $manager->persist($site);
+        $statut= array ('Créée','Ouverte','Clôturée','Activité en cours','Passée','Annulée');
+
+
+        for ($i = 0; $i < 5; $i++) {
+            $etat=new Ville();
+            $etat->setNom($statut[$i]);
+            $manager->persist($etat);
         }
-        $this->addReference('site',$site->getId());
+        $this->addReference('etat',$etat->getId());
         $manager->flush();
     }
 
@@ -36,6 +37,6 @@ class SiteFixtures extends Fixture implements OrderedFixtureInterface
      */
     public function getOrder()
     {
-        return 1;
+        return 5;
     }
 }

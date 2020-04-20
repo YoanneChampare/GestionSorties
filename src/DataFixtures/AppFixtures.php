@@ -14,7 +14,7 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-        $nomSite= array ('Nantes','Rennes','Niort');
+/*        $nomSite= array ('Nantes','Rennes','Niort');
         $nomVilles= array ('Nantes','Rennes','Niort','Saint-Herblain','Orvault','Paris');
         $cpo=array('44000','52000','42100','44800','44253','75000');
 
@@ -78,7 +78,7 @@ class AppFixtures extends Fixture
         $manager->persist($user1);
 
 
-        $manager->flush();
+        $manager->flush();*/
 
     }
 

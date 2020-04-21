@@ -16,7 +16,12 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class ParticipantController extends Controller
 {
 
-
+    /**
+     * @Route("/", name="acc")
+     */
+    public function accueil(){
+        return $this->redirectToRoute("accueil");
+    }
 
     /**
      * @Route("/login", name="login")

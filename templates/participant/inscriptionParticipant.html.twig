@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+    </div>
+    <div class="mx-auto group-form" style="width: 400px">
+        {{ form_start(formulaire) }}
+        <div class="group-form">
+            {{ form_row(formulaire.pseudo,{'attr':{'class':'form-control'}})  }}
+        </div>
+        <div class="group-form">
+            {{ form_row(formulaire.prenom,{'attr':{'class':'form-control'}})  }}
+        </div>
+        <div class="group-form">
+            {{ form_row(formulaire.nom,{'attr':{'class':'form-control'}})  }}
+        </div>
+        <div class="group-form">
+            {{ form_row(formulaire.telephone,{'attr':{'class':'form-control'}})  }}
+        </div>
+        <div class="group-form">
+            {{ form_row(formulaire.mail,{'attr':{'class':'form-control'}})  }}
+        </div>
+        <div class="group-form">
+            {{ form_row(formulaire.mdp.first,{'attr':{'class':'form-control'}})  }}
+
+        </div>
+        <div class="group-form">
+            {{ form_row(formulaire.mdp.second,{'attr':{'class':'form-control'}})  }}
+
+        </div>
+        <div class="group-form">
+            {{ form_row(formulaire.site,{'attr':{'class':'form-control'}})  }}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+        <button type="button" class="btn btn-primary">Retour</button>
+        {{ form_end(formulaire) }}
+
+    </div>
+
+
+    <div class="group-form"></div>
+{% endblock %}

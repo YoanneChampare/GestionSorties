@@ -51,6 +51,7 @@ class SortieController extends Controller
            $sortie->setEtat($etat);
             $em->persist($sortie);
             $em->flush();
+            $this->addFlash("success","Sortie enregistrée avec succès !");
         }
         return $this->render('sortie/add.html.twig', ['sortieForm'=>$sortieForm->createView(),"page_name"=>"Créer sortie"]);
     }

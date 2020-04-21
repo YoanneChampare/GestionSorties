@@ -14,11 +14,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 
+/**
+ * @Route("/profile")
+ */
 class AccueilController extends Controller
 {
 
     /**
-     * @Route("/", name="accueil")
+     * @Route("/accueil", name="accueil")
      */
     public function portail(EntityManagerInterface $em,Request $request)
     {

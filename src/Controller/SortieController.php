@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+
 class SortieController extends Controller
 {
 
@@ -102,7 +103,7 @@ class SortieController extends Controller
         $p_sortie = $participantSRepo->allParticipant($id);
         $iduser = $this->getUser()->getId();
         $user = $participantSRepo->Participant($iduser,$id);
-        
+
 
 
 

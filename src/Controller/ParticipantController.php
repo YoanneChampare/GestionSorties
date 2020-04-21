@@ -56,7 +56,6 @@ class ParticipantController extends Controller
     /**
      * @Route("/profil", name="profil")
      */
-
     public function afficherProfil(Request $request,EntityManagerInterface $em,UserPasswordEncoderInterface $encode){
         $this->denyAccessUnlessGranted("ROLE_USER");
        $user=$this->getUser();
@@ -94,6 +93,31 @@ class ParticipantController extends Controller
             'page_name'=>'Mon profil',
             "formulaire"=>$participantForm->createView(),
         ]);
+    }
+
+    /**
+     * @Route("/addParticipant", name="addParticipant")
+     */
+    public function addParticipant(Request $request,EntityManagerInterface $em,UserPasswordEncoderInterface $encode){
+        $participant = new Participant();
+        $participantForm= $this->createForm(ParticipantType::class,$participant);
+
+        $participantForm->handleRequest($request);
+        if($participantForm->isSubmitted() && $participantForm->isValid()){
+            
+            $hash=$encode->encodePassword($participant,$participant->getMdp());
+            $participant->setMdp($hash);
+
+            $em->persist($participant);
+            $em->flush();
+
+            $this->addFlash("success","Enregistrement OK!");
+
+        }
+
+        return $this->render("participant/inscriptionParticipant.html.twig",[
+            'page_name'=>'Inscription',
+            "formulaire"=>$participantForm->createView()]);
     }
 
 

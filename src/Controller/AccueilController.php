@@ -32,6 +32,7 @@ class AccueilController extends Controller
         $filtre=new SearchData();
         $etat=new Etat();
 
+
         $sortieRepo=$this->getDoctrine()->getRepository(Sortie::class);
         $InscritRepo=$this->getDoctrine()->getRepository(SortieParticipant::class);
         $etatRepo=$this->getDoctrine()->getRepository(Etat::class);

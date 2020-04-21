@@ -47,7 +47,7 @@ class Sortie
     private $infosSortie;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Etat")
      */
     private $etat;
 

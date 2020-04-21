@@ -2,12 +2,13 @@
 
 namespace App\Entity;
 
+use ArrayAccess;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SortieParticipantRepository")
  */
-class SortieParticipant
+class SortieParticipant implements ArrayAccess
 {
     /**
      * @ORM\Id()
@@ -67,4 +68,35 @@ class SortieParticipant
     }
 
 
+    /**
+     * @inheritDoc
+     */
+    public function offsetExists($offset)
+    {
+        // TODO: Implement offsetExists() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function offsetGet($sortie)
+    {
+        return isset($this->container[$sortie]) ? $this->container[$sortie] : null;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function offsetSet($offset, $value)
+    {
+        // TODO: Implement offsetSet() method.
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function offsetUnset($offset)
+    {
+        // TODO: Implement offsetUnset() method.
+    }
 }

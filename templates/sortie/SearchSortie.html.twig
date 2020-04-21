@@ -22,33 +22,61 @@
 
             </tr>
 
-            {% for s in sorties %}
-                <tr>
-                    <td>{{ s.nom }}</td>
-                    <td>{{ s.dateHeureDebut | date("d/m/Y h:m:s") }}</td>
-                    <td>{{ s.dateLimiteInscription | date("d/m/Y h:m:s") }}</td>
-                    <td>?/{{ s.nbInscriptionsMax }}</td>
-                    <td>{{ s.etat }}</td>
+            {% for key,s in sorties %}
+            <tr>
+                <td>{{ s.nom }}</td>
+                <td>{{ s.dateHeureDebut | date("d/m/Y h:m:s") }}</td>
+                <td>{{ s.dateLimiteInscription | date("d/m/Y h:m:s") }}</td>
 
-                    {% if (inscrit) %}
-                                <td>X</td>
-                    {% else %}
-                        <td>O</td>
+                {% for key2,q in quota %}
+                    {% if key==key2 %}
+                        <td>{{ q }}/{{ 10 }}</td>
+                    {% endif %}
+                {% endfor %}
+
+
+
+                <td>{{ s.etat.libelle }}</td>
+                {% set b=false %}
+                    {% for key3,i in inscrit %}
+
+                        {% if i.sortie.id==s.id%}
+                            {% set b=true %}
+
+                        <td>X</td>
+                            {% endif %}
+                        {%if (key3==key and not b)%}
+
+
+                            <td>O</td>
+
+                            {% endif %}
+
+
+                    {% endfor %}
+
+                <td>{{ s.auteur.nom }}</td>
+                <td>
+                    {% if inscrit %}
+                        <a href="{{ path('desister',{'id':s.id}) }}">Se désister</a>
                     {% endif %}
 
-                    <td>{{ s.auteur.nom }}</td>
-                    <td>
-                        {% if inscrit %}
-                            <a href="">Se désister</a>
-                        {% endif %}
-                        <a href="{{ path("afficherSortie",{'id':s.id}) }}">Afficher</a>
+                    <a href="{{ path("afficherSortie",{'id':s.id}) }}">Afficher</a>
+
+                    {% if s.auteur.id==user.id %}
                         <a href="">Modifier</a>
                         <a href="">Publier</a>
                         <a href="">Annuler</a>
-                        <a href="{{ path('desister',{'id':sortie.id}) }}">Se désister</a>
+                    {% endif %}
+
+
+
+                    {% if (not inscrit) %}
                         <a href="">S'inscrire</a>
-                    </td>
-                </tr>
+                    {% endif %}
+                </td>
+            </tr>
+
 
             {% endfor %}
         </table>

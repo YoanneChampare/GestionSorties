@@ -51,6 +51,11 @@ class Sortie
      */
     private $etat;
 
+   // /**
+   //  * @ORM\Column(type="boolean")
+  //   */
+  //  private $publier;
+
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Site",inversedBy="sortie")
@@ -282,6 +287,24 @@ class Sortie
     {
         $this->auteur = $auteur;
     }
+
+  //  /**
+ //    * @return mixed
+  //   */
+  //  public function getPublier()
+   // {
+  //      return $this->publier;
+ //   }
+
+  //  /**
+  //   * @param mixed $publier
+  //   */
+  //  public function setPublier($publier)
+  //  {
+    //       $this->publier = $publier;
+   // }
+
+
 
 
 

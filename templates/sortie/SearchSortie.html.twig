@@ -6,7 +6,6 @@
         {% include 'sortie/filtre.html.twig' %}
 
     </div>
-
     <div>
         <table class="table">
             <tr>
@@ -23,6 +22,7 @@
             </tr>
 
             {% for sortie in sorties %}
+
                 <tr>
                     <td>{{ sortie.nom }}</td>
                     <td>{{ sortie.dateHeureDebut | date("d/m/Y h:m:s") }}</td>
@@ -34,7 +34,10 @@
                     {% else %}
                         <td>O</td>
                         {% endif %}
-                    <td>{{ sortie.site.nom }}</td>
+                    <td>
+                        <a href=""> {{ sortie.auteur.pseudo }} </a>
+                    </td>
+
                     <td>
                         {% if inscrit %}
                             <a href="">Se désister</a>
@@ -42,7 +45,11 @@
                         <a href="{{ path("afficherSortie",{'id':sortie.id}) }}">Afficher</a>
                         <a href="">Modifier</a>
                         <a href="">Publier</a>
-                        <a href="">Annuler</a>
+
+                        {% if  sortie.dateHeureDebut | date("d/m/Y h:m:s") < "now"|date("d/m/Y h:m:s") and  sortie.etat != "Annulée" and sortie.etat != "Passée" %}
+                        <a href="{{ path("annulerSortie",{'id':sortie.id}) }}">Annuler</a>
+                        {% endif %}
+
                         <a href="">Se désister</a>
                         <a href="">S'inscrire</a>
                     </td>

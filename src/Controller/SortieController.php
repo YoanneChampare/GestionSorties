@@ -3,19 +3,18 @@
 namespace App\Controller;
 
 use App\Data\SearchData;
-use App\Entity\Lieu;
-use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Entity\SortieParticipant;
+use App\Form\ParticipantType;
 use App\Form\SearchType;
 use App\Form\SortieType;
-use App\Repository\LieuRepository;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 
 class SortieController extends Controller
 {
@@ -120,15 +119,49 @@ class SortieController extends Controller
      */
     public function annulerSortie(EntityManagerInterface $em,Request $request, Sortie $sortie){
 
+        $organisteur=$this->getUser();
         $sortieAnnulerForm=$this->createForm(AnnulerSortieType::class,$sortie);
         $sortieAnnulerForm->handleRequest($request);
 
+        if($sortieAnnulerForm->isSubmitted() ){
+            $sortie->setInfosSortie($sortieAnnulerForm['infosSortie']->getData());
+            $sortie->setEtat("Annulée");
+            $em->persist($sortie);
+            $em->flush();
+        }
 
-        return $this->render('sortie/afficherSortie.html.twig',[
+
+        return $this->render('sortie/annulerSortie.html.twig',[
             "sortie"=>$sortie,
-            "page_name"=>"Sortie"
+            "page_name"=>"Annulation Sortie",
+            "organisateur"=>$organisteur,
+            "sortieAnnulerForm"=>$sortieAnnulerForm->createView()
         ]);
     }
+
+   // /**
+ //    * @Route("/profilParticipant{auteur}",name="profilParticipant",requirements={"auteur":"\d+"})
+//     * @param EntityManagerInterface $em
+//     * @param Request $request
+//     * @param Sortie $profilParticipant
+//     * @return Response
+//     */
+//    public function profilParticipant(EntityManagerInterface $em,Request $request, Sortie $profilParticipant){
+
+//        $profilParticipantForm = $this->createForm(ParticipantType::class,$profilParticipant);
+ //       $profilParticipantForm ->handleRequest($request);s
+
+ //         if( $profilParticipantForm ->isSubmitted()){
+ //             $em->persist($profilParticipant);
+ //             $em->flush();
+ //         }
+
+ //        return $this->render('sortie/profilParticipant.html.twig',[
+ //            "profilParticipant"=>profilParticipant,
+ //            "page_name"=>"Profil Participant",
+ //            "profilParticipantForm"=> $profilParticipantForm ->createView()
+ //       ]);
+ //    }
 
 
 }

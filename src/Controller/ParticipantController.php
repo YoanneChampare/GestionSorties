@@ -8,6 +8,7 @@ use App\Form\ParticipantType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -90,6 +91,31 @@ class ParticipantController extends Controller
             "formulaire"=>$participantForm->createView(),
         ]);
     }
+
+ //   /**
+  //   * @Route("/profilParticipant{id}",name="profilParticipant",requirements={"id":"\d+"})
+//    * @param EntityManagerInterface $em
+ //    * @param Request $request
+ //    * @param Participant $profilParticipant
+ //    * @return Response
+ //    */
+//    public function profilParticipant(EntityManagerInterface $em,Request $request, Participant $profilParticipant){
+
+//        $profilParticipantForm = $this->createForm(ParticipantType::class,$profilParticipant);
+//
+//        $profilParticipantForm ->handleRequest($request);
+
+ //       if( $profilParticipantForm ->isSubmitted()){
+ //           $em->persist($profilParticipant);
+ //           $em->flush();
+  //      }
+
+  //      return $this->render('participant/profilParticipant.html.twig',[
+  //          "profilParticipant"=>profilParticipant,
+  //          "page_name"=>"profilParticipant",
+  //          "profilParticipantForm"=> $profilParticipantForm ->createView()
+  //      ]);
+  //  }
 
 
 

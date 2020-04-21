@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>{#stephane#}
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        {% block body %}
+            <h1 align-text="center">{{ page_name }}</h1>
+            {{ form_start(sortieAnnulerForm) }}
+
+            {{ form_row(sortieAnnulerForm.nom) }}
+            {{ form_row(sortieAnnulerForm.dateHeureDebut) }}
+            {{ form_row(sortieAnnulerForm.lieu) }}
+            {{ form_row(sortieAnnulerForm.infosSortie) }}
+
+
+            <button type="submit">Enregistrer </button>
+            <button><a href="/GestionSorties/public">Annuler</a></button
+            {{ form_end(sortieAnnulerForm) }}
+
+            <div id="infos"></div>
+
+
+        {% endblock %}
+
+    </body>
+{% block javascripts %}
+
+{% endblock %}
+</html>

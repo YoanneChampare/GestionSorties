@@ -52,7 +52,7 @@ class SortieController extends Controller
             $em->persist($sortie);
             $em->flush();
         }
-        return $this->render('sortie/add.html.twig', ['sortieForm'=>$sortieForm->createView()]);
+        return $this->render('sortie/add.html.twig', ['sortieForm'=>$sortieForm->createView(),"page_name"=>"Créer sortie"]);
     }
 
 

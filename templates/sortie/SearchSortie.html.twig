@@ -34,9 +34,8 @@
                     {% endif %}
                 {% endfor %}
 
-
-
                 <td>{{ s.etat.libelle }}</td>
+
                 {% set b=false %}
                     {% for key3,i in inscrit %}
 
@@ -44,16 +43,12 @@
                             {% set b=true %}
 
                         <td>X</td>
-                            {% endif %}
-                        {%if (key3==key and not b)%}
-
-
-                            <td>O</td>
-
-                            {% endif %}
-
+                        {% endif %}
 
                     {% endfor %}
+                {% if not b %}
+                    <td>O</td>
+                {% endif %}
 
                 <td>{{ s.auteur.nom }}</td>
                 <td>

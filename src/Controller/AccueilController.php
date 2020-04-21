@@ -8,6 +8,7 @@ use App\Entity\Sortie;
 use App\Entity\SortieParticipant;
 use App\Form\SearchType;
 use App\Form\SortieType;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,21 +32,22 @@ class AccueilController extends Controller
         $filtre=new SearchData();
         $etat=new Etat();
 
+
         $sortieRepo=$this->getDoctrine()->getRepository(Sortie::class);
         $InscritRepo=$this->getDoctrine()->getRepository(SortieParticipant::class);
         $etatRepo=$this->getDoctrine()->getRepository(Etat::class);
-
+        $sortieRepo->changeEtat();
         $inscrit=$InscritRepo->isInscrit($user->getId());
+
         $filtreForm=$this->createForm(SearchType::class,$filtre);
 
         $filtreForm->handleRequest($request);
 
         $sorties=$sortieRepo->findSearch($filtre,$user->getId());
+        $quota=new ArrayCollection();
         for($i=0;$i<sizeof($sorties);$i++){
-            $et=$etatRepo->changeEtat($sorties[$i]);
 
-                $sorties[$i]->setEtat($et);
-
+            $quota->add($InscritRepo->allParticipant2($sorties[$i]->getId()));
 
         }
 
@@ -55,7 +57,9 @@ class AccueilController extends Controller
             "form"=>$filtreForm->createView(),
             "sorties"=>$sorties,
             "inscrit"=>$inscrit,
-            "user"=>$user
+            "user"=>$user,
+            "quota"=>$quota
+
         ]);
     }
 

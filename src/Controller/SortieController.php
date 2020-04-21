@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Data\SearchData;
+use App\Entity\Etat;
 use App\Entity\Lieu;
 use App\Entity\Participant;
 use App\Entity\Sortie;
@@ -17,7 +18,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-
+/**
+ * @Route("/profile")
+ */
 class SortieController extends Controller
 {
 
@@ -30,14 +33,26 @@ class SortieController extends Controller
     public function add(EntityManagerInterface $em,Request $request)
     {
         $sortie=new Sortie();
+        $user=$this->getUser();
+
         $sortieForm=$this->createForm(SortieType::class,$sortie);
+        $etatRepo=$this->getDoctrine()->getRepository(Etat::class);
+
+        $etat = $etatRepo->findOneBy([
+            'libelle' => 'Créée'
+        ]);
 
         $sortieForm->handleRequest($request);
+        dump($sortie);
         if($sortieForm->isSubmitted()){
+
+            $sortie->setSite($user->getSite());
+           $sortie->setAuteur($user);
+           $sortie->setEtat($etat);
             $em->persist($sortie);
             $em->flush();
         }
-        return $this->render('sortie/add.html.twig', ['sortieForm'=>$sortieForm->createView()]);
+        return $this->render('sortie/add.html.twig', ['sortieForm'=>$sortieForm->createView(),"page_name"=>"Créer sortie"]);
     }
 
 

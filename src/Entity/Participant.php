@@ -75,12 +75,37 @@ class Participant implements UserInterface
     private $jeParticipe;
 
     /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Sortie",mappedBy="auteur")
+     */
+    private $organisateur;
+
+    /**
+     * @return mixed
+     */
+    public function getOrganisateur()
+    {
+        return $this->organisateur;
+    }
+
+    /**
+     * @param mixed $organisateur
+     */
+    public function setOrganisateur($organisateur)
+    {
+        $this->organisateur = $organisateur;
+    }
+
+
+
+    /**
      * @return mixed
      */
     public function getJeParticipe()
     {
         return $this->jeParticipe;
     }
+
+
 
     /**
      * @param mixed $jeParticipe

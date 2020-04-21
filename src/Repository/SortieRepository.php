@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Data\SearchData;
 use App\Entity\Sortie;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -85,6 +86,54 @@ class SortieRepository extends ServiceEntityRepository
 
 
         return $query->getQuery()->getResult();
+    }
+
+
+    public function isOrganisateur($idp){
+        $em = $this->getEntityManager();
+        $dql = "SELECT s
+        FROM App\Entity\Sortie s
+        WHERE s.sortie=$idp";
+        $query = $em->createQuery($dql);
+        return  $query->getResult();
+
+    }
+
+    public function changeEtat(){
+        $em=$this->getEntityManager();
+
+        $sorties=$this->findAll();
+
+        foreach($sorties as $key=>$s){
+            if($s->getDateLimiteInscription() >= new \DateTime()) {
+                $dql = "SELECT e.id FROM App\Entity\Etat e WHERE e.libelle='Ouverte'";
+                $query1=$em->createQuery($dql);
+                $etat=$query1->getResult();
+            }
+           if($s->getDateLimiteInscription()<= new \DateTime()) {
+                $dql = "SELECT e.id FROM App\Entity\Etat e WHERE e.libelle='Passée'";
+                $query1=$em->createQuery($dql);
+                $etat=$query1->getResult();
+            }
+            /* if($sortie->getDateLimiteInscription()>= new \DateTime()) {
+                 $dql = "SELECT e.id FROM App\Entity\Etat e WHERE e.libelle='Créée'";
+             }*/
+
+
+            foreach($etat as $e){
+
+
+                dump($s);
+                $req="UPDATE App\Entity\Sortie s SET s.etat=".$e["id"]."WHERE s.id=".$s->getId() ;
+                $query2=$em->createQuery($req);
+               return $query2->getResult();
+            }
+
+
+        }
+
+
+
     }
 
 

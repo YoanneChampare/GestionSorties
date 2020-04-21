@@ -49,21 +49,6 @@ class EtatRepository extends ServiceEntityRepository
     }
     */
 
-    public function changeEtat(Sortie $sortie){
-        $em=$this->getEntityManager();
-        if($sortie->getDateLimiteInscription()>= new \DateTime()){
-
-            $etat="Ouverte";
-        }
-
-        if($sortie->getDateLimiteInscription()<= new \DateTime()){
-            $dql="SELECT e FROM App\Entity\Etat e WHERE e.libelle ='Ouverte'";
-            $etat="Fermée";
-        }
 
 
-
-
-       return $etat;
-    }
 }

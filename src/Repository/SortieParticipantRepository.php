@@ -71,6 +71,15 @@ class SortieParticipantRepository extends ServiceEntityRepository
         return  $query->getResult();
     }
 
+    public function allParticipant2($id){
+        $em = $this->getEntityManager();
+        $dql ="SELECT COUNT(s.sortie) FROM App\Entity\SortieParticipant s
+        WHERE s.sortie=$id";
+        $query = $em->createQuery($dql);
+        $query->getResult();
+        return $query->getSingleScalarResult();
+    }
+
     public function isInscrit($idp){
         $em = $this->getEntityManager();
         $dql = "SELECT p
@@ -80,4 +89,6 @@ class SortieParticipantRepository extends ServiceEntityRepository
         return  $query->getResult();
 
     }
+
+
 }

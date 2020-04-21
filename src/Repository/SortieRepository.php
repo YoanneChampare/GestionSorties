@@ -99,7 +99,7 @@ class SortieRepository extends ServiceEntityRepository
 
     }
 
-    public function changeEtat(){
+    public function changeEtat($id){
         $em=$this->getEntityManager();
 
         $sorties=$this->findAll();

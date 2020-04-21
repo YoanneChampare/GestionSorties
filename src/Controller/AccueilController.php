@@ -36,7 +36,7 @@ class AccueilController extends Controller
         $sortieRepo=$this->getDoctrine()->getRepository(Sortie::class);
         $InscritRepo=$this->getDoctrine()->getRepository(SortieParticipant::class);
         $etatRepo=$this->getDoctrine()->getRepository(Etat::class);
-        $sortieRepo->changeEtat();
+
         $inscrit=$InscritRepo->isInscrit($user->getId());
 
         $filtreForm=$this->createForm(SearchType::class,$filtre);
@@ -48,6 +48,7 @@ class AccueilController extends Controller
         for($i=0;$i<sizeof($sorties);$i++){
 
             $quota->add($InscritRepo->allParticipant2($sorties[$i]->getId()));
+            $sortieRepo->changeEtat($sorties[$i]->getId());
 
         }
 

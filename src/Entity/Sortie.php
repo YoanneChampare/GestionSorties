@@ -47,7 +47,7 @@ class Sortie
     private $infosSortie;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\ManyToOne(targetEntity="App\Entity\Etat",inversedBy="sortie")
      */
     private $etat;
 
@@ -73,7 +73,7 @@ class Sortie
     private $jeParticipe;
 
     /**
-     *@ORM\ManyToOne(targetEntity="App\Entity\Participant")
+     *@ORM\ManyToOne(targetEntity="App\Entity\Participant",inversedBy="organisateur")
      */
     private $auteur;
 

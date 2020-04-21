@@ -1,36 +1,46 @@
-<!DOCTYPE html>
-<html>{#stephane#}
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
+{% extends "base.html.twig" %}
+
         {% block body %}
-            {{ form_start(sortieForm) }}
 
-            {{ form_row(sortieForm.nom) }}
-            {{ form_row(sortieForm.dateHeureDebut) }}
-            {{ form_row(sortieForm.dateLimiteInscription) }}
-            {{ form_row(sortieForm.nbInscriptionsMax) }}
-            {{ form_row(sortieForm.duree) }}
-            {{ form_row(sortieForm.infosSortie) }}
-            {{ form_row(sortieForm.lieu,{'attr':{'onclick':'showInfos(this.value)'}}) }}
+            <div class="row mx-auto"style="width: 80%">
+                <div class="col-6">
+                    {{ form_start(sortieForm) }}
+
+                    {{ form_row(sortieForm.nom,{'attr':{'class':"form-control"}}) }}
+                    {{ form_row(sortieForm.dateHeureDebut) }}
+                    {{ form_row(sortieForm.dateLimiteInscription) }}
+                    {{ form_row(sortieForm.nbInscriptionsMax,{'attr':{'class':"form-control"}}) }}
+                    {{ form_row(sortieForm.duree) }}
+                    {{ form_row(sortieForm.infosSortie,{'attr':{'class':"form-control"}}) }}
+                </div>
+                <div class="col-6">
+                    {{ form_row(sortieForm.lieu,{'attr':{'onclick':'showInfos(this.value)','class':"form-control"}}) }}
+
+                    <div id="infos"></div>
 
 
-            <button type="submit">Publier la Sortie </button>
-            <button><a href="/GestionSorties/public">Annuler</a></button>
-            <button type="button">Enregistrer</button>
-            {{ form_end(sortieForm) }}
 
-            <div id="infos"></div>
+            </div>
+            <div class=" row mx-auto"style="width: 40%">
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Publier la Sortie </button>
+                    <button><a href="/GestionSorties/public" class="btn btn-primary">Annuler</a></button>
+                    <button type="button" class="btn btn-primary">Enregistrer</button>
+                    {{ form_end(sortieForm) }}
+                </div>
+
+            </div>
+
+
 
 
         {% endblock %}
 
-    </body>
+
 {% block javascripts %}
+
 <script>
+
     function showInfos(valeur) {
 
         var xhttp;
@@ -50,6 +60,8 @@
         xhttp.open("GET", "{{ asset("requete.php") }}?q="+valeur, true);
         xhttp.send();
     }
+
+
 </script>
 {% endblock %}
-</html>
+

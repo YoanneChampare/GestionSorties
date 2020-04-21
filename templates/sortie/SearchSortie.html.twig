@@ -6,43 +6,64 @@
         {% include 'sortie/filtre.html.twig' %}
 
     </div>
+
     <div>
         <table class="table">
             <tr>
 
-                    <th>Nom de la sortie</th>
-                    <th>Date de la sortie</th>
-                    <th>Clôture des inscriptions</th>
-                    <th>Places disponibles</th>
-                    <th>Etat</th>
-                    <th>Inscrit</th>
-                    <th>Organisateur</th>
-                    <th>Actions</th>
+                <th>Nom de la sortie</th>
+                <th>Date de la sortie</th>
+                <th>Clôture des inscriptions</th>
+                <th>Places disponibles</th>
+                <th>Etat</th>
+                <th>Inscrit</th>
+                <th>Organisateur</th>
+                <th>Actions</th>
 
             </tr>
 
-            {% for sortie in sorties %}
+            {% for key,s in sorties %}
+            <tr>
+                <td>{{ s.nom }}</td>
+                <td>{{ s.dateHeureDebut | date("d/m/Y h:m:s") }}</td>
+                <td>{{ s.dateLimiteInscription | date("d/m/Y h:m:s") }}</td>
 
-                <tr>
-                    <td>{{ sortie.nom }}</td>
-                    <td>{{ sortie.dateHeureDebut | date("d/m/Y h:m:s") }}</td>
-                    <td>{{ sortie.dateLimiteInscription | date("d/m/Y h:m:s")}}</td>
-                    <td>?/{{ sortie.nbInscriptionsMax }}</td>
-                    <td>{{ sortie.etat }}</td>
+                {% for key2,q in quota %}
+                    {% if key==key2 %}
+                        <td>{{ q }}/{{ 10 }}</td>
+                    {% endif %}
+                {% endfor %}
+
+
+
+                <td>{{ s.etat.libelle }}</td>
+                {% set b=false %}
+                    {% for key3,i in inscrit %}
+
+                        {% if i.sortie.id==s.id%}
+                            {% set b=true %}
+
+                        <td>X</td>
+                            {% endif %}
+                        {%if (key3==key and not b)%}
+
+
+                            <td>O</td>
+
+                            {% endif %}
+
+
+                    {% endfor %}
+
+                <td>{{ s.auteur.nom }}</td>
+                <td>
                     {% if inscrit %}
-                    <td>X</td>
-                    {% else %}
-                        <td>O</td>
-                        {% endif %}
-                    <td>
-                        <a href=""> {{ sortie.auteur.pseudo }} </a>
-                    </td>
+                        <a href="{{ path('desister',{'id':s.id}) }}">Se désister</a>
+                    {% endif %}
 
-                    <td>
-                        {% if inscrit %}
-                            <a href="">Se désister</a>
-                        {% endif %}
-                        <a href="{{ path("afficherSortie",{'id':sortie.id}) }}">Afficher</a>
+                    <a href="{{ path("afficherSortie",{'id':s.id}) }}">Afficher</a>
+
+                    {% if s.auteur.id==user.id %}
                         <a href="">Modifier</a>
                         <a href="">Publier</a>
 
@@ -50,10 +71,16 @@
                         <a href="{{ path("annulerSortie",{'id':sortie.id}) }}">Annuler</a>
                         {% endif %}
 
-                        <a href="">Se désister</a>
+                        <a href="{{ path('desister',{'id':s.id}) }}">Se désister</a>
+                    {% endif %}
+
+
+
+                    {% if (not inscrit) %}
                         <a href="">S'inscrire</a>
-                    </td>
-                </tr>
+                    {% endif %}
+                </td>
+            </tr>
 
             {% endfor %}
         </table>

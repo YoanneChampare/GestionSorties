@@ -17,7 +17,12 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class ParticipantController extends Controller
 {
 
-
+    /**
+     * @Route("/", name="acc")
+     */
+    public function accueil(){
+        return $this->redirectToRoute("accueil");
+    }
 
     /**
      * @Route("/login", name="login")
@@ -52,7 +57,6 @@ class ParticipantController extends Controller
     /**
      * @Route("/profil", name="profil")
      */
-
     public function afficherProfil(Request $request,EntityManagerInterface $em,UserPasswordEncoderInterface $encode){
         $this->denyAccessUnlessGranted("ROLE_USER");
        $user=$this->getUser();
@@ -92,30 +96,30 @@ class ParticipantController extends Controller
         ]);
     }
 
- //   /**
-  //   * @Route("/profilParticipant{id}",name="profilParticipant",requirements={"id":"\d+"})
-//    * @param EntityManagerInterface $em
- //    * @param Request $request
- //    * @param Participant $profilParticipant
- //    * @return Response
- //    */
-//    public function profilParticipant(EntityManagerInterface $em,Request $request, Participant $profilParticipant){
+    /**
+     * @Route("/addParticipant", name="addParticipant")
+     */
+    public function addParticipant(Request $request,EntityManagerInterface $em,UserPasswordEncoderInterface $encode){
+        $participant = new Participant();
+        $participantForm= $this->createForm(ParticipantType::class,$participant);
 
-//        $profilParticipantForm = $this->createForm(ParticipantType::class,$profilParticipant);
-//
-//        $profilParticipantForm ->handleRequest($request);
+        $participantForm->handleRequest($request);
+        if($participantForm->isSubmitted() && $participantForm->isValid()){
 
- //       if( $profilParticipantForm ->isSubmitted()){
- //           $em->persist($profilParticipant);
- //           $em->flush();
-  //      }
+            $hash=$encode->encodePassword($participant,$participant->getMdp());
+            $participant->setMdp($hash);
 
-  //      return $this->render('participant/profilParticipant.html.twig',[
-  //          "profilParticipant"=>profilParticipant,
-  //          "page_name"=>"profilParticipant",
-  //          "profilParticipantForm"=> $profilParticipantForm ->createView()
-  //      ]);
-  //  }
+            $em->persist($participant);
+            $em->flush();
+
+            $this->addFlash("success","Enregistrement OK!");
+
+        }
+
+        return $this->render("participant/inscriptionParticipant.html.twig",[
+            'page_name'=>'Inscription',
+            "formulaire"=>$participantForm->createView()]);
+    }
 
 
 

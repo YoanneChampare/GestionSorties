@@ -1,6 +1,8 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 
+
+    <div class="mx-auto" style="text-align: center">
     <div>
 
         <div><label>Nom de la sortie: </label>{{ sortie.nom }}</div>
@@ -18,21 +20,37 @@
 
     </div>
 
-    <form method="post" action="{{ path("afficherSortie",{"id":1}) }}">
-        {% if( etat==true)%}
-            <div>  <button type="submit" class="btn btn-primary">S'inscrire</button></div>
-        {% elseif(etat==false) %}
-        <div>  <button type="submit" class="btn btn-danger">Désister</button></div>
+
+        {% if(etat==true and etat2==true)%}
+            <a class="btn btn-primary" href="{{ path("participer",{"id":sortie.id}) }}">S'inscrire</a>
+        {% elseif(not etat and etat2==false) %}
+            <a class="btn btn-outline-danger"  href="{{ path("desister",{"id":sortie.id}) }}">Désister</a>
         {% else %}
-
+            <p>Complet</p>
         {% endif %}
-    </form>
+
+    </div>
 
 
-    {% for participant in p_sortie %}
-        {{ participant.participant.nom }}
-    {% endfor %}
+    <div class="test">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">Pseudo</th>
+            <th scope="col">Nom</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for key,participant in p_sortie %}
+        <tr>
+            <th scope="row">{{ participant.participant.pseudo }}</th>
+            <td>{{ participant.participant.nom }}</td>
+        </tr>
+        {% endfor %}
 
+        </tbody>
+    </table>
+    </div>
 
     
 {% endblock %}

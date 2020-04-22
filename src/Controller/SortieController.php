@@ -164,7 +164,7 @@ class SortieController extends Controller
 
         if($sortieAnnulerForm->isSubmitted() ){
             $sortie->setInfosSortie($sortieAnnulerForm['infosSortie']->getData());
-            $sortie->setEtat("Annulée");
+            //$sortie->setEtat(6);
             $em->persist($sortie);
             $em->flush();
         }
@@ -179,7 +179,7 @@ class SortieController extends Controller
     }
 
    // /**
- //    * @Route("/profilParticipant{auteur}",name="profilParticipant",requirements={"auteur":"\d+"})
+ //    * @Route("/profilParticipant{id}",name="profilParticipant",requirements={"auteur":"\d+"})
 //     * @param EntityManagerInterface $em
 //     * @param Request $request
 //     * @param Sortie $profilParticipant
@@ -187,7 +187,7 @@ class SortieController extends Controller
 //     */
 //    public function profilParticipant(EntityManagerInterface $em,Request $request, Sortie $profilParticipant){
 
-//        $profilParticipantForm = $this->createForm(ParticipantType::class,$profilParticipant);
+//        $profilParticipantForm = $this->createForm(profilParticipantType::class,$profilParticipant);
  //       $profilParticipantForm ->handleRequest($request);s
 
  //         if( $profilParticipantForm ->isSubmitted()){

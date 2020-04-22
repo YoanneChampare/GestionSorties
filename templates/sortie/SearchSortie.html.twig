@@ -66,8 +66,8 @@
                     {% if inscrit %}
                         <a href="{{ path('desister',{'id':s.id}) }}">Se désister</a>
                     {% endif %}
-                    <td>{{ s.auteur.nom }}</td>
-                    <td>
+
+                    
                         {% set b1=false %}
                         {% for i in inscrit %}
                             {% if s.id==i.sortie.id %}

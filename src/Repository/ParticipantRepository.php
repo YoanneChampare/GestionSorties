@@ -60,5 +60,13 @@ class ParticipantRepository extends ServiceEntityRepository
 
     }
 
+    public function Delete_Participant($id){
+        $em = $this->getEntityManager();
+        $dql = "DELETE FROM App\Entity\Participant p WHERE  p.id=$id";
+        $query = $em->createQuery($dql);
+        return  $query->getResult();
+    }
+
+
 
 }

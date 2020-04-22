@@ -52,4 +52,17 @@ class AdminController extends Controller
 
         ]);
     }
+
+    /**
+     * @Route("/deleteParticipant/{id}",name="deleteParticipant",requirements={"id":"\d+"})
+     */
+    public function deleteParticipant($id,EntityManagerInterface $em){
+
+        $participantRepo= $this->getDoctrine()->getRepository(Participant::class);
+        $participant= $participantRepo->Delete_Participant($id);
+
+
+        return $this->redirectToRoute("accueil");
+
+    }
 }

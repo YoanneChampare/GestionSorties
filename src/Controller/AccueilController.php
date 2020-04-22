@@ -45,10 +45,10 @@ class AccueilController extends Controller
 
         $sorties=$sortieRepo->findSearch($filtre,$user->getId());
         $quota=new ArrayCollection();
-        for($i=0;$i<sizeof($sorties);$i++){
+        foreach($sorties as $s){
 
-            $quota->add($InscritRepo->allParticipant2($sorties[$i]->getId()));
-            $sortieRepo->changeEtat($sorties[$i],$user->getId());
+            $quota->add($InscritRepo->allParticipant2($s->getId()));
+            $sortieRepo->changeEtat($s,$user->getId());
 
         }
 

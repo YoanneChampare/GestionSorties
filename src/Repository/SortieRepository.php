@@ -117,7 +117,7 @@ class SortieRepository extends ServiceEntityRepository
                 $query1=$em->createQuery($dql);
                 $etat=$query1->getResult();
             }
-            if($s->getDateLimiteInscription() >= new \DateTime() and $s->getAuteur()->getId()==$auteur) {
+            if($s->getDateLimiteInscription() >= new \DateTime() and $s->getAuteur()->getId()==$auteur and !$s->getIsPublished()) {
                 $dql = "SELECT e.id FROM App\Entity\Etat e WHERE e.libelle='Créée'";
                 $query1=$em->createQuery($dql);
                 $etat=$query1->getResult();

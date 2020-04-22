@@ -27,34 +27,36 @@
                 {% set dateNow = "now"|date  %}
                 {% set dateDifference = date(dateNow).diff(date(dateSortie)) %}
 
-               {%  if dateDifference.days < 30 %}
-
+                {%  if dateDifference.days < 30 %}
                 <tr>
-                <td>{{ s.nom }}</td>
-                <td>{{ s.dateHeureDebut | date("d/m/Y h:m:s") }}</td>
-                <td>{{ s.dateLimiteInscription | date("d/m/Y h:m:s") }}</td>
+                    <td>{{ s.nom }}</td>
+                    <td>{{ s.dateHeureDebut | date("d/m/Y h:m:s") }}</td>
+                    <td>{{ s.dateLimiteInscription | date("d/m/Y h:m:s") }}</td>
+                    {% set b2=false %}
+                    {% for key2,q in quota %}
+                        {% if key==key2 %}
+                            <td>{{ q }}/{{ s.nbInscriptionsMax }}</td>
+                        {% endif %}
+                        {% if q==s.nbInscriptionsMax %}
+                        {% set b2=true %}
+                        {% endif %}
+                    {% endfor %}
 
-                {% for key2,q in quota %}
-                    {% if key==key2 %}
-                        <td>{{ q }}/{{ 10 }}</td>
-                    {% endif %}
-                {% endfor %}
+                    <td>{{ s.etat.libelle }}</td>
 
-                <td>{{ s.etat.libelle }}</td>
+                    {% set b=false %}
+                    {% for i in inscrit %}
 
-                {% set b=false %}
-                    {% for key3,i in inscrit %}
-
-                        {% if i.sortie.id==s.id%}
+                        {% if i.sortie.id==s.id %}
                             {% set b=true %}
 
-                        <td>X</td>
+                            <td>X</td>
                         {% endif %}
 
                     {% endfor %}
-                {% if not b %}
-                    <td>O</td>
-                {% endif %}
+                    {% if not b %}
+                        <td>O</td>
+                    {% endif %}
 
                 <td>
 
@@ -64,8 +66,24 @@
                     {% if inscrit %}
                         <a href="{{ path('desister',{'id':s.id}) }}">Se désister</a>
                     {% endif %}
+                    <td>{{ s.auteur.nom }}</td>
+                    <td>
+                        {% set b1=false %}
+                        {% for i in inscrit %}
+                            {% if s.id==i.sortie.id %}
+                                {% set b1=true %}
+                                <a href="{{ path('desister',{'id':s.id}) }}">Se désister</a>
 
-                    <a href="{{ path("afficherSortie",{'id':s.id}) }}">Afficher</a>
+                            {% endif %}
+
+                        {% endfor %}
+
+                        {% if not b and not b2 %}
+                            <a href="{{ path("participer",{'id':s.id}) }}">S'inscrire</a>
+                        {% endif %}
+
+
+                        <a href="{{ path("afficherSortie",{'id':s.id}) }}">Afficher</a>
 
                     {% if s.auteur.id==user.id %}
                         <a href="">Modifier</a>
@@ -75,13 +93,7 @@
                         <a href="{{ path("annulerSortie",{'id':s.id}) }}">Annuler</a>
                         {% endif %}
 
-                        <a href="{{ path('desister',{'id':s.id}) }}">Se désister</a>
-                    {% endif %}
 
-
-
-                    {% if (not inscrit) %}
-                        <a href="">S'inscrire</a>
                     {% endif %}
                 </td>
             </tr>

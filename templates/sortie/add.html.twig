@@ -11,28 +11,27 @@
                     {{ form_row(sortieForm.dateLimiteInscription) }}
                     {{ form_row(sortieForm.nbInscriptionsMax,{'attr':{'class':"form-control"}}) }}
                     {{ form_row(sortieForm.duree) }}
+                    <div style="margin-bottom: 50px">
                     {{ form_row(sortieForm.infosSortie,{'attr':{'class':"form-control"}}) }}
+                    </div>
                 </div>
                 <div class="col-6">
                     {{ form_row(sortieForm.lieu,{'attr':{'onclick':'showInfos(this.value)','class':"form-control"}}) }}
 
-                    <div id="infos"></div>
+                    <div id="infos" style="margin-top: 20px"></div>
 
 
 
             </div>
-            <div class=" row mx-auto"style="width: 40%">
-                <div class="col-12">
-                    <button type="submit" class="btn btn-primary">Publier la Sortie </button>
+            <div class="mx-auto"style="width: 40%;margin-bottom: 80px">
+
+                {{ form_row(sortieForm.isPublished) }}
                     <button><a href="/GestionSorties/public" class="btn btn-primary">Annuler</a></button>
-                    <button type="button" class="btn btn-primary">Enregistrer</button>
+                    <button type="submit" class="btn btn-primary" onclick="actionChange()">Enregistrer</button>
                     {{ form_end(sortieForm) }}
-                </div>
+
 
             </div>
-
-
-
 
         {% endblock %}
 

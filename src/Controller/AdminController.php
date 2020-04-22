@@ -22,9 +22,9 @@ class AdminController extends Controller
     public function gestionAdmin(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $encode)
     {
         $participantRepo = $this->getDoctrine()->getRepository(Participant::class);
-        $participant = $participantRepo->findAll();
+        $participantliste = $participantRepo->findAll();
         $sortieRepo = $this->getDoctrine()->getRepository(Sortie::class);
-        $sortie = $participantRepo->findAll();
+        $sortie = $sortieRepo->findAll();
 
         $participant = new Participant();
         $participantForm = $this->createForm(ParticipantType::class, $participant);
@@ -46,7 +46,7 @@ class AdminController extends Controller
         }
         return $this->render('admin/admin.html.twig', [
             'page_name' => 'Gestion administateur ',
-            "participants" => $participant,
+            "participants" => $participantliste,
             "sorties" => $sortie,
             "formulaire" => $participantForm->createView()
 

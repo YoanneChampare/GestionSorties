@@ -43,7 +43,7 @@ class Participant implements UserInterface
     private $mail;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="boolean")
      */
     private $administrateur;
 
@@ -243,7 +243,12 @@ class Participant implements UserInterface
      */
     public function getRoles()
     {
-        return ["ROLE_USER"];
+        if($this->getAdministrateur()) {
+            return ["ROLE_USER","ROLE_ADMIN"];
+        }else{
+            return ["ROLE_USER"];
+        }
+
     }
 
     /**

@@ -29,6 +29,8 @@ class AccueilController extends Controller
 
 
         $user=$this->getUser();
+        $test=$user->getRoles();
+        dump($test);
         $filtre=new SearchData();
         $etat=new Etat();
 
@@ -59,7 +61,9 @@ class AccueilController extends Controller
             "sorties"=>$sorties,
             "inscrit"=>$inscrit,
             "user"=>$user,
-            "quota"=>$quota
+            "quota"=>$quota,
+
+
 
         ]);
     }

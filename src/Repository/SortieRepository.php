@@ -6,7 +6,6 @@ use App\Data\SearchData;
 use App\Entity\Sortie;
 use App\Entity\SortieParticipant;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -29,7 +28,9 @@ class SortieRepository extends ServiceEntityRepository
     public function findSearch(SearchData $search,$idUser){
         $query=$this
             ->createQueryBuilder('s')
-            ->select('s');
+            ->select('s')
+            ->andWhere('s.isPublished=true or (s.auteur=:idUser and s.isPublished =false)')
+            ->setParameter('idUser',$idUser);
 
 
             if(!empty($search->motCle)){

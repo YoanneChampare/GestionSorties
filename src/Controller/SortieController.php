@@ -44,14 +44,14 @@ class SortieController extends Controller
 
         $sortieForm->handleRequest($request);
         dump($sortie);
-        if($sortieForm->isSubmitted()){
+        if($sortieForm->isSubmitted() && $sortieForm->isValid()) {
 
             $sortie->setSite($user->getSite());
-           $sortie->setAuteur($user);
-           $sortie->setEtat($etat);
+            $sortie->setAuteur($user);
+            $sortie->setEtat($etat);
             $em->persist($sortie);
             $em->flush();
-            $this->addFlash("success","Sortie enregistrée avec succès !");
+            $this->addFlash("success", "Sortie enregistrée avec succès !");
         }
         return $this->render('sortie/add.html.twig', ['sortieForm'=>$sortieForm->createView(),"page_name"=>"Créer sortie"]);
     }
@@ -85,7 +85,7 @@ class SortieController extends Controller
         $user = $participantSRepo->Participant($iduser,$id);
 
         $supParticipant= $participantSRepo->sup_Participant($id,$iduser);
-
+        $this->addFlash("success","Votre désistement a été pris en compte");
         return $this->redirectToRoute('accueil');
     }
 
@@ -102,7 +102,7 @@ class SortieController extends Controller
         $sortieP->setParticipant($this->getUser());
         $em->persist($sortieP);
         $em->flush();
-
+        $this->addFlash("success","Votre participation a été prise en compte");
         return $this->redirectToRoute('accueil');
     }
 
@@ -132,6 +132,7 @@ class SortieController extends Controller
             if (sizeof($p_sortie) >=$sortie->getNbInscriptionsMax()) {
                 $etat=true;//rien
                 $etat2=false;
+                $this->addFlash("danger","Oups ! Il semble que la sortie soit complète ou que les inscriptions soient clôturées");
             }
             else{
                 $etat=true;

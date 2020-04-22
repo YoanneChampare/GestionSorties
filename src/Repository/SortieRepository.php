@@ -99,12 +99,14 @@ class SortieRepository extends ServiceEntityRepository
 
     }
 
-    public function changeEtat($id){
+    public function changeEtat($s,$auteur){
         $em=$this->getEntityManager();
 
-        $sorties=$this->findAll();
 
-        foreach($sorties as $key=>$s){
+
+        dump($s->getId());
+
+
             if($s->getDateLimiteInscription() >= new \DateTime()) {
                 $dql = "SELECT e.id FROM App\Entity\Etat e WHERE e.libelle='Ouverte'";
                 $query1=$em->createQuery($dql);
@@ -115,22 +117,24 @@ class SortieRepository extends ServiceEntityRepository
                 $query1=$em->createQuery($dql);
                 $etat=$query1->getResult();
             }
-            /* if($sortie->getDateLimiteInscription()>= new \DateTime()) {
-                 $dql = "SELECT e.id FROM App\Entity\Etat e WHERE e.libelle='Créée'";
-             }*/
+            if($s->getDateLimiteInscription() >= new \DateTime() and $s->getAuteur()->getId()==$auteur) {
+                $dql = "SELECT e.id FROM App\Entity\Etat e WHERE e.libelle='Créée'";
+                $query1=$em->createQuery($dql);
+                $etat=$query1->getResult();
+        }
 
 
             foreach($etat as $e){
+dump($e["id"]);
 
 
-                dump($s);
                 $req="UPDATE App\Entity\Sortie s SET s.etat=".$e["id"]."WHERE s.id=".$s->getId() ;
                 $query2=$em->createQuery($req);
                return $query2->getResult();
             }
 
 
-        }
+
 
 
 

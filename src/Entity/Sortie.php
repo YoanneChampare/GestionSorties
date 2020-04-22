@@ -47,6 +47,11 @@ class Sortie
     private $infosSortie;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isPublished;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Etat",inversedBy="sortie")
      */
     private $etat;
@@ -71,6 +76,8 @@ class Sortie
      *@ORM\ManyToOne(targetEntity="App\Entity\Participant",inversedBy="organisateur")
      */
     private $auteur;
+
+
 
     /**
      * @return mixed
@@ -281,6 +288,22 @@ class Sortie
     public function setAuteur($auteur)
     {
         $this->auteur = $auteur;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIsPublished()
+    {
+        return $this->isPublished;
+    }
+
+    /**
+     * @param mixed $isPublished
+     */
+    public function setIsPublished($isPublished)
+    {
+        $this->isPublished = $isPublished;
     }
 
 

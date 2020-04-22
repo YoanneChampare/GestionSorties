@@ -75,7 +75,7 @@
                         {% if s.auteur.id==user.id %}
                             <a href="">Modifier</a>
                             <a href="">Publier</a>
-                            <a href="">Annuler</a>
+                            <a href="{{ path("annulerSortie",{'id':s.id}) }}">Annuler</a>
                         {% endif %}
 
                     </td>

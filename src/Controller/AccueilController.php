@@ -48,7 +48,7 @@ class AccueilController extends Controller
         for($i=0;$i<sizeof($sorties);$i++){
 
             $quota->add($InscritRepo->allParticipant2($sorties[$i]->getId()));
-            $sortieRepo->changeEtat($sorties[$i]->getId());
+            $sortieRepo->changeEtat($sorties[$i],$user->getId());
 
         }
 

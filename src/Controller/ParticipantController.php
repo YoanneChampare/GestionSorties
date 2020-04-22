@@ -121,6 +121,19 @@ class ParticipantController extends Controller
             "formulaire"=>$participantForm->createView()]);
     }
 
+    /**
+     * @Route("/supParticipasnt/{id}",name="supParticipant",requirements={"id":"\d+"}")
+     */
+    public function supParticipant($id,EntityManagerInterface $em){
+
+        $participantRepo= $this->getDoctrine()->getRepository(Participant::class);
+        $participant= $participantRepo->find($id);
+        $em->remove($participant);
+        $em->flush();
+
+        return $this->redirectToRoute("accueil");
+
+    }
 
 
 }

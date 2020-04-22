@@ -4,8 +4,8 @@ namespace App\Repository;
 
 use App\Data\SearchData;
 use App\Entity\Sortie;
+use App\Entity\SortieParticipant;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -28,7 +28,9 @@ class SortieRepository extends ServiceEntityRepository
     public function findSearch(SearchData $search,$idUser){
         $query=$this
             ->createQueryBuilder('s')
-            ->select('s');
+            ->select('s')
+            ->andWhere('s.isPublished=true or (s.auteur=:idUser and s.isPublished =false)')
+            ->setParameter('idUser',$idUser);
 
 
             if(!empty($search->motCle)){
@@ -102,32 +104,35 @@ class SortieRepository extends ServiceEntityRepository
     public function changeEtat($s,$auteur){
         $em=$this->getEntityManager();
 
+        $repo=$em->getRepository(SortieParticipant::class);
+        $quota=$repo->allParticipant2($s->getId());
 
 
-        dump($s->getId());
 
-
-            if($s->getDateLimiteInscription() >= new \DateTime()) {
+            if($s->getDateLimiteInscription() >= new \DateTime() and $s->getIsPublished()) {
                 $dql = "SELECT e.id FROM App\Entity\Etat e WHERE e.libelle='Ouverte'";
                 $query1=$em->createQuery($dql);
                 $etat=$query1->getResult();
             }
-           if($s->getDateLimiteInscription()<= new \DateTime()) {
-                $dql = "SELECT e.id FROM App\Entity\Etat e WHERE e.libelle='Passée'";
+           if($s->getDateLimiteInscription()<= new \DateTime() or $quota>=$s->getNbInscriptionsMax() ) {
+
+                   $dql = "SELECT e.id FROM App\Entity\Etat e WHERE e.libelle='Clôturée'";
+
                 $query1=$em->createQuery($dql);
                 $etat=$query1->getResult();
             }
-            if($s->getDateLimiteInscription() >= new \DateTime() and $s->getAuteur()->getId()==$auteur) {
+            if(!$s->getIsPublished() and $s->getAuteur()->getId()==$auteur) {
                 $dql = "SELECT e.id FROM App\Entity\Etat e WHERE e.libelle='Créée'";
                 //Un commentaire
                 $query1=$em->createQuery($dql);
                 $etat=$query1->getResult();
-        }
+            }
+
+
+
 
 
             foreach($etat as $e){
-dump($e["id"]);
-
 
                 $req="UPDATE App\Entity\Sortie s SET s.etat=".$e["id"]."WHERE s.id=".$s->getId() ;
                 $query2=$em->createQuery($req);

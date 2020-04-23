@@ -61,8 +61,8 @@ class AdminController extends Controller
         $participantRepo= $this->getDoctrine()->getRepository(Participant::class);
         $participant= $participantRepo->Delete_Participant($id);
 
-
-        return $this->redirectToRoute("accueil");
+$this->addFlash("success","Utilisateur supprimé avec succès");
+        return $this->redirectToRoute("gestion_admin");
 
     }
 }

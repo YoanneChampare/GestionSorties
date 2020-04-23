@@ -11,12 +11,10 @@
         <div><label>Nombre de places: </label>{{ sortie.nbInscriptionsMax }}</div>
         <div><label>Durée: </label>{{ sortie.duree |date("h:m:s")}}</div>
         <div><label>Description et infos: </label>{{ sortie.infosSortie }}</div>
-{#        <label>Lieu: </label>{{ sortie. }}#}
-{#        <label>Rue: </label>#}
-{#        <label>Ville: </label>#}
-{#        <label>Code postal: </label>#}
-{#        <label>Latitude: </label>#}
-{#        <label>Longitude: </label>#}
+        <div><label>Site: </label>{{ sortie.site.nom}}</div>
+        <div><label>Lieu: </label>{{ sortie.lieu.nom }}</div>
+        {#<div><label>Description et infos: </label>{{ sortie.auteur }}</div>#}
+
 
     </div>
 

@@ -121,7 +121,8 @@ class SortieController extends Controller
         $user = $participantSRepo->Participant($iduser,$id);
 
 
-
+        $dateMax=$sortie->getDateLimiteInscription();
+        $datetime = date("Y-m-d H:i:s");
 
 
         if($user!=null){
@@ -129,7 +130,7 @@ class SortieController extends Controller
             $etat2= false;
         }
         else{
-            if (sizeof($p_sortie) >=$sortie->getNbInscriptionsMax()) {
+            if (sizeof($p_sortie) >=$sortie->getNbInscriptionsMax() || $dateMax->format('Y-m-d H:i:s')<$datetime || $sortie->getEtat()->getLibelle=='Annuler') {
                 $etat=true;//rien
                 $etat2=false;
                 $this->addFlash("danger","Oups ! Il semble que la sortie soit complète ou que les inscriptions soient clôturées");
@@ -165,6 +166,7 @@ class SortieController extends Controller
 
         if($sortieAnnulerForm->isSubmitted() ){
             $sortie->setInfosSortie($sortieAnnulerForm['infosSortie']->getData());
+            $sortie->setEtat($this->getDoctrine()->getRepository(Etat::class)->etat("Annuler"));
             //$sortie->setEtat(6);
             $em->persist($sortie);
             $em->flush();
@@ -178,6 +180,14 @@ class SortieController extends Controller
             "sortieAnnulerForm"=>$sortieAnnulerForm->createView()
         ]);
     }
+
+    /**
+     * @Route("t")
+     */
+    public function modifierSortie(EntityManagerInterface $em,Request $request){
+
+    }
+
 
    // /**
  //    * @Route("/profilParticipant{id}",name="profilParticipant",requirements={"auteur":"\d+"})

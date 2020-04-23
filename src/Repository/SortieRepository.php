@@ -147,6 +147,14 @@ class SortieRepository extends ServiceEntityRepository
     }
 
 
+    public function etat($libelle){
+        $em = $this->getEntityManager();
+        $dql = "SELECT e.id
+        FROM App\Entity\Etat e
+        WHERE s.libele = $libelle";
+        $query = $em->createQuery($dql);
+        return  $query->getResult();
+    }
 
 }
 

@@ -121,4 +121,40 @@ class ParticipantController extends Controller
             "formulaire"=>$participantForm->createView()]);
     }
 
+
+    /**
+     * @Route("/resetPassword",name="reset_password")
+     */
+    public  function resetPassord(Request $request,UserPasswordEncoderInterface $encode,EntityManagerInterface $em){
+
+        $repo=$this->getDoctrine()->getRepository(Participant::class);
+        $passwordForm=$this->createForm(ParticipantType::class);
+        $checkMail=$repo->findAll();
+
+        $passwordForm->handleRequest($request);
+        $check=false;
+        if($passwordForm->isSubmitted() && $passwordForm->isValid()){
+            foreach($checkMail as $m){
+                if(strcmp($m->getMail(),$request->getMail())){
+                    $user=$m;
+                    $check=true;
+                    exit;
+                }
+            }
+
+            if($check){
+                $hash=$encode->encodePassword($m,$request->getMdp());
+                $m->setMdp($hash);
+
+                $em->persist($m);
+                $em->flush();
+            }
+        }
+        return  $this->render("participant/resetPassword.html.twig",[
+            "page_name"=>"Réinitialisation de mot de passe",
+            "formulaire"=>$passwordForm->createView()
+        ]);
+
+
+    }
 }

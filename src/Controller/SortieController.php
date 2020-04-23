@@ -4,12 +4,10 @@ namespace App\Controller;
 
 use App\Data\SearchData;
 use App\Entity\Etat;
-use App\Entity\Lieu;
 use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Entity\SortieParticipant;
 use App\Form\AnnulerSortieType;
-use App\Form\ParticipantType;
 use App\Form\ProfilParticipantType;
 use App\Form\SearchType;
 use App\Form\SortieType;

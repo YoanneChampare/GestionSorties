@@ -4,7 +4,7 @@
 namespace App\DataFixtures;
 
 
-use App\Entity\Participant;
+
 use App\Entity\Ville;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;

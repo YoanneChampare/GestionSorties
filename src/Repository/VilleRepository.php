@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Data\AfficherData;
 use App\Entity\Ville;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -17,6 +18,26 @@ class VilleRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Ville::class);
+    }
+    /**
+     * Récupere les villes en lien avec les recherches
+     * @param AfficherData $search
+     * @param $idUser
+     */
+
+    public function findSearch(AfficherData $search,$idUser)
+    {
+        $query = $this
+            ->createQueryBuilder('s')
+            ->select('s')
+            ->setParameter('idUser', $idUser);
+
+
+        if (!empty($search->motCle)) {
+            $query = $query
+                ->andWhere('s.nom LIKE :motCle')
+                ->setParameter('motCle', "%{$search->motCle}%");
+        }
     }
 
     // /**

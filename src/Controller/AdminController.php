@@ -65,4 +65,6 @@ $this->addFlash("success","Utilisateur supprimé avec succès");
         return $this->redirectToRoute("gestion_admin");
 
     }
+
+
 }

@@ -7,7 +7,6 @@ use App\Entity\Etat;
 use App\Entity\Sortie;
 use App\Entity\SortieParticipant;
 use App\Form\SearchType;
-use App\Form\SortieType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

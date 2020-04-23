@@ -41,8 +41,13 @@
         <tbody>
         {% for key,participant in p_sortie %}
         <tr>
-            <th scope="row">{{ participant.participant.pseudo }}</th>
-            <td>{{ participant.participant.nom }}</td>
+            <th scope="row">
+                <a href="{{ path("profilParticipant",{'id':participant.participant.id}) }}">{{ participant.participant.pseudo }}</a>
+            </th>
+            <td>
+                <a href="{{ path("profilParticipant",{'id':participant.participant.id}) }}">{{ participant.participant.nom }}</a>
+
+            </td>
         </tr>
         {% endfor %}
 

@@ -245,11 +245,13 @@ class Participant implements UserInterface
     {
         if($this->getAdministrateur()) {
             return ["ROLE_USER","ROLE_ADMIN"];
-        }else{
+        }else {
             return ["ROLE_USER"];
         }
 
     }
+
+
 
     /**
      * @inheritDoc

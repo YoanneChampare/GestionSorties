@@ -1,0 +1,61 @@
+{% extends "base.html.twig" %}
+
+        {% block body %}
+
+            <div class="row mx-auto"style="width: 80%">
+                <div class="col-6">
+                    {{ form_start(lieuForm) }}
+
+                    {{ form_row(lieuForm.nom) }}
+                    {{ form_row(lieuForm.rue) }}
+                    {{ form_row(lieuForm.latitude) }}
+                    {{ form_row(lieuForm.longitude) }}
+
+                </div>
+                <div class="col-6">
+                    {{ form_row(lieuForm.ville,{'attr':{'onclick':'showInfos(this.value)','class':"form-control"}}) }}
+
+                    <div id="infos" style="margin-top: 20px"></div>
+
+
+
+            </div>
+            <div class="mx-auto"style="width: 40%;margin-bottom: 80px">
+
+                    <button type="submit" class="btn btn-primary">Enregistrer</button>
+                    {{ form_end(lieuForm) }}
+                <button><a href="/GestionSorties/public" class="btn btn-primary">Annuler</a></button>
+
+            </div>
+
+        {% endblock %}
+
+
+{% block javascripts %}
+
+<script>
+
+    function showInfos(valeur) {
+
+        var xhttp;
+        if (valeur == "") {
+
+            document.getElementById("infos").innerHTML = "";
+            return;
+        }
+        xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                console.log("youpi");
+                document.getElementById("infos").innerHTML = this.responseText;
+                document.getElementById("infos2").innerHTML = this.responseText;
+            }
+        };
+        xhttp.open("GET", "{{ asset("requete.php") }}?q="+valeur, true);
+        xhttp.send();
+    }
+
+
+</script>
+{% endblock %}
+

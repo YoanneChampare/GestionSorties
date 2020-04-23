@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Data\SearchData;
 use App\Entity\Etat;
+use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Entity\SortieParticipant;
 use App\Form\SearchType;
@@ -26,14 +27,10 @@ class AccueilController extends Controller
      */
     public function portail(EntityManagerInterface $em,Request $request)
     {
-
-
         $user=$this->getUser();
-        $test=$user->getRoles();
-        dump($test);
+
         $filtre=new SearchData();
         $etat=new Etat();
-
 
         $sortieRepo=$this->getDoctrine()->getRepository(Sortie::class);
         $InscritRepo=$this->getDoctrine()->getRepository(SortieParticipant::class);

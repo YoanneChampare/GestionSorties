@@ -21,6 +21,16 @@ class ParticipantController extends Controller
      * @Route("/", name="acc")
      */
     public function accueil(){
+        $user=$this->getUser();
+
+        if(!$user->getActif()){
+
+            $this->addFlash("danger","Votre compte est désactivé, veuillez contacter l'administrateur");
+
+            return  $this->redirectToRoute("logout");
+
+
+        }
         return $this->redirectToRoute("accueil");
     }
 
@@ -58,18 +68,31 @@ class ParticipantController extends Controller
      * @Route("/profil", name="profil")
      */
     public function afficherProfil(Request $request,EntityManagerInterface $em,UserPasswordEncoderInterface $encode){
-        $this->denyAccessUnlessGranted("ROLE_USER");
-       $user=$this->getUser();
-        $participantForm = $this->createForm(ParticipantType::class,$user);
+
+        $id=$this->getUser()->getId();
+        $repo=$this->getDoctrine()->getRepository(Participant::class);
+        $user=$repo->find($id);
+        $participant=new Participant();
+        $participantForm = $this->createForm(ParticipantType::class,$participant);
 
         $participantForm->handleRequest($request);
+
         if($participantForm->isSubmitted() && $participantForm->isValid()){
-           $data=$participantForm->getData();
-            $hash=$encode->encodePassword($user,$data->getMdp());
-            $user->setMdp($hash);
+            $user->setPseudo($participant->getPseudo());
+            $user->setNom($participant->getNom());
+            $user->setPrenom($participant->getPrenom());
+            $user->setMail($participant->getMail());
+            $user->setPseudo($participant->getPseudo());
+            $user->setPseudo($participant->getPseudo());
+            $user->setTelephone($participant->getTelephone());
+            $user->setSite($participant->getSite());
+            $user->setActif($participant->getActif());
+            $user->setAdministrateur($participant->getAdministrateur());
 
 
-           /* $file = $participantForm['avatar']->getData();
+
+
+            $file = $participant->getAvatar();
             if($file){
                 $fileName=pathinfo($file->getClientOriginalName(),PATHINFO_FILENAME);
 
@@ -84,10 +107,14 @@ class ParticipantController extends Controller
                 }
 
                 $user->setAvatar($newFileName);
-            }*/
-           $em->persist($data);
+            }
+
+           $em->persist($user);
            $em->flush();
 
+
+            $this->addFlash("success","Modifications effectuées");
+            return $this->redirectToRoute("profil");
         }
         return $this->render("participant/profil.html.twig",[
             "participant"=>$user,
@@ -96,29 +123,42 @@ class ParticipantController extends Controller
         ]);
     }
 
+
+
+
     /**
-     * @Route("/addParticipant", name="addParticipant")
+     * @Route("/resetPassword",name="reset_password")
      */
-    public function addParticipant(Request $request,EntityManagerInterface $em,UserPasswordEncoderInterface $encode){
-        $participant = new Participant();
-        $participantForm= $this->createForm(ParticipantType::class,$participant);
+    public  function resetPassord(Request $request,UserPasswordEncoderInterface $encode,EntityManagerInterface $em){
 
-        $participantForm->handleRequest($request);
-        if($participantForm->isSubmitted() && $participantForm->isValid()){
+        $repo=$this->getDoctrine()->getRepository(Participant::class);
+        $passwordForm=$this->createForm(ParticipantType::class);
+        $checkMail=$repo->findAll();
 
-            $hash=$encode->encodePassword($participant,$participant->getMdp());
-            $participant->setMdp($hash);
+        $passwordForm->handleRequest($request);
+        $check=false;
+        if($passwordForm->isSubmitted() && $passwordForm->isValid()){
+            foreach($checkMail as $m){
+                if(strcmp($m->getMail(),$request->getMail())){
+                    $user=$m;
+                    $check=true;
+                    exit;
+                }
+            }
 
-            $em->persist($participant);
-            $em->flush();
+            if($check){
+                $hash=$encode->encodePassword($m,$request->getMdp());
+                $m->setMdp($hash);
 
-            $this->addFlash("success","Enregistrement OK!");
-
+                $em->persist($m);
+                $em->flush();
+            }
         }
+        return  $this->render("participant/resetPassword.html.twig",[
+            "page_name"=>"Réinitialisation de mot de passe",
+            "formulaire"=>$passwordForm->createView()
+        ]);
 
-        return $this->render("participant/inscriptionParticipant.html.twig",[
-            'page_name'=>'Inscription',
-            "formulaire"=>$participantForm->createView()]);
+
     }
-
 }

@@ -1,13 +1,6 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <div>
-        {% if participant.avatar %}
-        <img src="{{ asset("images/"~participant.avatar) | imagine_filter('my_thumb')}}">
-        {% else %}
-        <img src="{{ asset("images/avatar.png") }}">
-        {% endif %}
 
-    </div>
         <div class="mx-auto group-form" style="width: 400px">
             {{ form_start(formulaire) }}
         <div class="group-form">
@@ -25,30 +18,32 @@
         <div class="group-form">
             {{ form_row(formulaire.mail,{'attr':{'value':participant.mail,'class':'form-control'}})  }}
         </div>
-        <div class="group-form">
-            {{ form_row(formulaire.mdp.first,{'attr':{'class':'form-control'}})  }}
-
-        </div>
-            <div class="group-form">
-                {{ form_row(formulaire.mdp.second,{'attr':{'class':'form-control'}})  }}
-
-            </div>
             <div class="group-form">
                 {{ form_row(formulaire.site,{'attr':{'class':'form-control'}})  }}
             </div>
-
-
-        {{ form_row(formulaire.avatar)  }}
-
             <div class="group-form">
-                {{ form_row(formulaire.actif,{'attr':{'class':'form-control','disabled':'disabled'}})  }}
+                {{ form_row(formulaire.mdp.first,{'attr':{'class':'form-control','disabled':'disabled'}})  }}
+
             </div>
             <div class="group-form">
-                {{ form_row(formulaire.administrateur,{'attr':{'class':'form-control','disabled':'disabled'}})  }}
+                {{ form_row(formulaire.mdp.second,{'attr':{'class':'form-control','disabled':'disabled'}})  }}
+
+            </div>
+            <div class="group-form">
+                {{ form_row(formulaire.actif,{'attr':{'class':'form-control'}})  }}
+            </div>
+            <div class="group-form">
+                {{ form_row(formulaire.administrateur,{'attr':{'class':'form-control'}})  }}
+            </div>
+            <div class="group-form">
+                {{ form_row(formulaire.avatar,{'attr':{'class':'form-control','disabled':'disabled'}})  }}
             </div>
 
-        <button type="submit" class="btn btn-primary">Modifier</button>
-        <button type="button" class="btn btn-primary">Retour</button>
+<div style="margin-top: 30px">
+    <button type="submit" class="btn btn-primary">Modifier</button>
+    <button type="button" class="btn btn-primary">Retour</button>
+</div>
+
         {{ form_end(formulaire) }}
 
     </div>

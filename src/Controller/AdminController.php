@@ -21,10 +21,6 @@ class AdminController extends Controller
      */
     public function gestionAdmin(Request $request, EntityManagerInterface $em, UserPasswordEncoderInterface $encode)
     {
-        $participantRepo = $this->getDoctrine()->getRepository(Participant::class);
-        $participant = $participantRepo->findAll();
-        $sortieRepo = $this->getDoctrine()->getRepository(Sortie::class);
-        $sortie = $participantRepo->findAll();
 
         $participant = new Participant();
         $participantForm = $this->createForm(ParticipantType::class, $participant);
@@ -45,10 +41,38 @@ class AdminController extends Controller
 
         }
         return $this->render('admin/admin.html.twig', [
-            'page_name' => 'Gestion administateur ',
-            "participants" => $participant,
-            "sorties" => $sortie,
+            'page_name' => 'Gestion Administratives ',
             "formulaire" => $participantForm->createView()
+
+        ]);
+    }
+
+    /**
+     * @Route("/gestionPatiipant", name="gestionParticipant")
+     */
+    public function afficherAllParticipant(){
+        $participantRepo = $this->getDoctrine()->getRepository(Participant::class);
+        $participantliste = $participantRepo->findAll();
+
+        return $this->render('participant/gestionAdmin/gestionParticipant.html.twig', [
+            'page_name' => 'Gestion Participants ',
+            "participants" => $participantliste,
+
+
+        ]);
+    }
+
+    /**
+     * @Route("/gestionSortie", name="gestionSortie")
+     */
+    public function afficherAllSorties(){
+        $sortieRepo = $this->getDoctrine()->getRepository(Sortie::class);
+        $sortie = $sortieRepo->findAll();
+
+        return $this->render('participant/gestionAdmin/gestionSortie.html.twig', [
+            'page_name' => 'Gestion Sorties ',
+            "sorties" => $sortie,
+
 
         ]);
     }
@@ -61,8 +85,72 @@ class AdminController extends Controller
         $participantRepo= $this->getDoctrine()->getRepository(Participant::class);
         $participant= $participantRepo->Delete_Participant($id);
 
-
-        return $this->redirectToRoute("accueil");
+$this->addFlash("success","Utilisateur supprimé avec succès");
+        return $this->redirectToRoute("gestionParticipant");
 
     }
+
+    /**
+     * @Route("/modifierProfil/{id}", name="modifier_profil")
+     */
+    public function modifierProfil($id,Request $request,EntityManagerInterface $em,UserPasswordEncoderInterface $encode){
+
+        $repo=$this->getDoctrine()->getRepository(Participant::class);
+        $user=$repo->find($id);
+        $participant=new Participant();
+        $participantForm = $this->createForm(ParticipantType::class,$participant);
+
+        $participantForm->handleRequest($request);
+
+       if($participantForm->isSubmitted() && $participantForm->isValid()){
+           $user->setPseudo($participant->getPseudo());
+           $user->setNom($participant->getNom());
+           $user->setPrenom($participant->getPrenom());
+           $user->setMail($participant->getMail());
+           $user->setPseudo($participant->getPseudo());
+           $user->setPseudo($participant->getPseudo());
+           $user->setTelephone($participant->getTelephone());
+           $user->setSite($participant->getSite());
+           $user->setActif($participant->getActif());
+           $user->setAdministrateur($participant->getAdministrateur());
+            $em->persist($user);
+            $em->flush();
+
+            $this->addFlash("success","Modifications effectuées");
+            return $this->redirectToRoute("gestionParticipant");
+
+        }
+        return $this->render("participant/modifierProfil.html.twig",[
+            "participant"=>$user,
+            'page_name'=>'Modifier profil utilisateur',
+            "formulaire"=>$participantForm->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/addParticipant", name="addParticipant")
+     */
+    public function addParticipant(Request $request,EntityManagerInterface $em,UserPasswordEncoderInterface $encode){
+        $participant = new Participant();
+        $participantForm= $this->createForm(ParticipantType::class,$participant);
+
+        $participantForm->handleRequest($request);
+        if($participantForm->isSubmitted() && $participantForm->isValid()){
+
+            $hash=$encode->encodePassword($participant,$participant->getMdp());
+            $participant->setMdp($hash);
+
+            $em->persist($participant);
+            $em->flush();
+
+            $this->addFlash("success","Enregistrement OK!");
+            return $this->redirectToRoute("gestion_admin");
+
+        }
+
+        return $this->render("participant/gestionAdmin/inscriptionParticipant.html.twig",[
+            'page_name'=>'Inscription participants',
+            "formulaire"=>$participantForm->createView()]);
+    }
+
 }

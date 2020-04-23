@@ -1,33 +1,29 @@
-<!DOCTYPE html>
-<head>
-    <meta charset="UTF-8">
-    <title>{% block title %}Welcome!{% endblock %}</title>
-    {% block stylesheets %}{% endblock %}
-</head>
-<body>
-{% block body %}
 
-    {{ form_start(profilParticipantForm) }}
+{% extends "base.html.twig" %}
 
-        <h1 align-text="center">{{ form_row(profilParticipantForm.pseudo) }}</h1>
-    {{ form_row(profilParticipantForm.nom) }}
-    {{ form_row(profilParticipantForm.prenom) }}
-    {{ form_row(profilParticipantForm.telephone) }}
-    {{ form_row(profilParticipantForm.mail) }}
-    {{ form_row(profilParticipantForm.site) }}
+        {% block body %}
 
+            <div class="row mx-auto"style="width: 80%">
+                 <div class="col-6">
+                 {{ form_start(profilParticipantForm) }}
+                     {{ form_row(profilParticipantForm.pseudo) }}
+                     {{ form_row(profilParticipantForm.nom) }}
+                     {{ form_row(profilParticipantForm.prenom) }}
+                     {{ form_row(profilParticipantForm.telephone) }}
+                     {{ form_row(profilParticipantForm.mail) }}
+                     {{ form_row(profilParticipantForm.site) }}
+                 </div>
 
+                <div class="mx-auto"style="width: 40%;margin-bottom: 80px">
+                    <button><a href="/GestionSorties/public" class="btn btn-primary">Retour</a></button>
+                {{ form_end(profilParticipantForm) }}
+                </div>
+        <div id="infos"></div>
 
-    <button><a href="/GestionSorties/public">Retour</a></button
-    {{ form_end(profilParticipantForm) }}
+            </div>
+        {% endblock %}
 
-    <div id="infos"></div>
+    {% block javascripts %}
 
+    {% endblock %}
 
-{% endblock %}
-
-</body>
-{% block javascripts %}
-
-{% endblock %}
-</html>

@@ -23,13 +23,11 @@
             </tr>
 
             {% for key,s in sorties %}
-
                 {% set dateSortie = s.dateHeureDebut |date  %}
                 {% set dateNow = "now"|date  %}
                 {% set dateDifference = date(dateNow).diff(date(dateSortie)) %}
 
                 {%  if dateDifference.days < 30 %}
-
                 <tr>
                     <td>{{ s.nom }}</td>
                     <td>{{ s.dateHeureDebut | date("d/m/Y h:m:s") }}</td>
@@ -62,7 +60,7 @@
 
                 <td>
 
-                    <a href="{# "{{ path("profilParticipant",{'id':s.id}) }}#}">{{ s.auteur.nom }}</a>
+                    <a href="{{ path("profilParticipant",{'id':s.auteur.id}) }}">{{ s.auteur.nom }}</a>
                 </td>
                 <td>
 

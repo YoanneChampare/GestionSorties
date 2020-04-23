@@ -205,5 +205,31 @@ class SortieController extends Controller
             "profilParticipantForm"=> $profilParticipantForm ->createView()]);
       }
 
+    /**
+     * @Route("/publier/{id}",name="publier",requirements={"id":"\d+"})
+     */
+
+    public function publier($id,EntityManagerInterface $em){
+        $sortieRepo=$this->getDoctrine()->getRepository(Sortie::class);
+        $sortie=$sortieRepo->find($id);
+
+        if ($sortie->getDateLimiteInscription()< new \Datetime() or $sortie->getDateHeureDebut()< new \Datetime()){
+            $this->addFlash("danger","Une sortie ne peut être publiée si la date limite d'insciption est dépassée");
+        }else{
+            $sortie->setIsPublished(true);
+
+            $em->persist($sortie);
+            $em->flush();
+        }
+
+
+
+
+        return $this->redirectToRoute("accueil");
+
+
+
+    }
+
 
 }

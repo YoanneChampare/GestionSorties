@@ -1,0 +1,35 @@
+<table>
+    <tr>
+        <th>Pseudo</th>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Mail</th>
+        <th>Etat du compte</th>
+        <th>Rôle</th>
+        <th>Actions</th>
+    </tr>
+    {% for p in participants %}
+        <tr>
+            <td>{{ p.pseudo }}</td>
+            <td>{{ p.nom }}</td>
+            <td>{{ p.prenom }}</td>
+            <td>{{ p.mail }}</td>
+            {% if p.actif %}
+                <td>Actif</td>
+            {% else %}
+                <td>Inactif</td>
+            {% endif %}
+            {% if p.administrateur %}
+                <td>Yes</td>
+            {% else %}
+                <td>No</td>
+            {% endif %}
+            <td>
+                <a href="#">Afficher</a>
+                <a href="#">Modifier</a>
+                <a href="#">Supprimer</a>
+            </td>
+
+        </tr>
+    {% endfor %}
+</table>

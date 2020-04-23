@@ -121,6 +121,4 @@ class ParticipantController extends Controller
             "formulaire"=>$participantForm->createView()]);
     }
 
-
-
 }

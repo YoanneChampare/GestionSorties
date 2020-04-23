@@ -65,4 +65,29 @@ $this->addFlash("success","Utilisateur supprimé avec succès");
         return $this->redirectToRoute("gestion_admin");
 
     }
+
+    /**
+     * @Route("/modifierProfil", name="modifier_profil")
+     */
+    public function modifierProfil(Request $request,EntityManagerInterface $em,UserPasswordEncoderInterface $encode){
+
+        $user=$this->getUser();
+        $participantForm = $this->createForm(ParticipantType::class,$user);
+
+        $participantForm->handleRequest($request);
+        if($participantForm->isSubmitted() && $participantForm->isValid()){
+            $data=$participantForm->getData();
+            $hash=$encode->encodePassword($user,$data->getMdp());
+            $user->setMdp($hash);
+
+            $em->persist($data);
+            $em->flush();
+
+        }
+        return $this->render("participant/modifierProfil.html.twig",[
+            "participant"=>$user,
+            'page_name'=>'Modifier profil utilisateur',
+            "formulaire"=>$participantForm->createView(),
+        ]);
+    }
 }

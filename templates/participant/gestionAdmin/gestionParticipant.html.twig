@@ -1,4 +1,4 @@
-<table>
+<table class="table">
     <tr>
         <th>Pseudo</th>
         <th>Nom</th>
@@ -26,7 +26,7 @@
             {% endif %}
             <td>
                 <a href="#">Afficher</a>
-                <a href="#">Modifier</a>
+                <a href="{{ path("modifier_profil",{'id':p.id}) }}">Modifier</a>
                 <a href="{{ path("deleteParticipant",{'id':p.id}) }}">Supprimer</a>
             </td>
 

@@ -44,6 +44,8 @@ class ParticipantType extends AbstractType
             /*->add('avatar',FileType::class,[
                 "label"=>"Ma photo"
             ])*/
+            ->add('actif')
+            ->add('administrateur')
         ;
     }
 

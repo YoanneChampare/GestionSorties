@@ -21,6 +21,16 @@ class ParticipantController extends Controller
      * @Route("/", name="acc")
      */
     public function accueil(){
+        $user=$this->getUser();
+
+        if(!$user->getActif()){
+
+            $this->addFlash("danger","Votre compte est désactivé, veuillez contacter l'administrateur");
+
+            return  $this->redirectToRoute("logout");
+
+
+        }
         return $this->redirectToRoute("accueil");
     }
 
@@ -95,6 +105,7 @@ class ParticipantController extends Controller
             "formulaire"=>$participantForm->createView(),
         ]);
     }
+
 
     /**
      * @Route("/addParticipant", name="addParticipant")

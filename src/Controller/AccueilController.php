@@ -8,7 +8,6 @@ use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Entity\SortieParticipant;
 use App\Form\SearchType;
-use App\Form\SortieType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -28,6 +27,7 @@ class AccueilController extends Controller
     public function portail(EntityManagerInterface $em,Request $request)
     {
         $user=$this->getUser();
+        $today=new \Datetime();
 
         $filtre=new SearchData();
         $etat=new Etat();
@@ -59,6 +59,7 @@ class AccueilController extends Controller
             "inscrit"=>$inscrit,
             "user"=>$user,
             "quota"=>$quota,
+            "today"=>new \Datetime()
 
 
 

@@ -1,42 +1,69 @@
 {% extends "admin/admin.html.twig" %}
 
 {% block interface %}
-
-    <div class="mx-auto group-form" style="width: 400px">
-        {{ form_start(formulaire) }}
-        <div class="group-form">
-            {{ form_row(formulaire.pseudo,{'attr':{'class':'form-control'}})  }}
-        </div>
-        <div class="group-form">
-            {{ form_row(formulaire.prenom,{'attr':{'class':'form-control'}})  }}
-        </div>
-        <div class="group-form">
-            {{ form_row(formulaire.nom,{'attr':{'class':'form-control'}})  }}
-        </div>
-        <div class="group-form">
-            {{ form_row(formulaire.telephone,{'attr':{'class':'form-control'}})  }}
-        </div>
-        <div class="group-form">
-            {{ form_row(formulaire.mail,{'attr':{'class':'form-control'}})  }}
-        </div>
-        <div class="group-form">
-            {{ form_row(formulaire.mdp.first,{'attr':{'class':'form-control'}})  }}
-
-        </div>
-        <div class="group-form">
-            {{ form_row(formulaire.mdp.second,{'attr':{'class':'form-control'}})  }}
-
-        </div>
-        <div class="group-form">
-            {{ form_row(formulaire.site,{'attr':{'class':'form-control'}})  }}
-        </div>
+    <style>
+        .increase {
+            width:30px;
+            height:30px;
+            margin-top: 40px;
+        }
+    </style>
+    {{ form_start(formulaire) }}
+    <div class="row mx-auto" style="width: 60%">
 
 
+        <div class="col-6">
+            <div class="group-form">
+                {{ form_row(formulaire.pseudo,{'attr':{'class':'form-control'}})  }}
+            </div>
+            <div class="group-form">
+                {{ form_row(formulaire.prenom,{'attr':{'class':'form-control'}})  }}
+            </div>
+            <div class="group-form">
+                {{ form_row(formulaire.nom,{'attr':{'class':'form-control'}})  }}
+            </div>
+            <div class="group-form">
+                {{ form_row(formulaire.telephone,{'attr':{'class':'form-control'}})  }}
+            </div>
+            <div class="group-form">
+                {{ form_row(formulaire.mail,{'attr':{'class':'form-control'}})  }}
+            </div>
+        </div>
+        <div class="col-6">
+
+            <div class="group-form">
+                {{ form_row(formulaire.mdp.first,{'attr':{'class':'form-control'}})  }}
+
+            </div>
+            <div class="group-form">
+                {{ form_row(formulaire.mdp.second,{'attr':{'class':'form-control'}})  }}
+
+            </div>
+            <div class="group-form">
+                {{ form_row(formulaire.site,{'attr':{'class':'form-control'}})  }}
+            </div>
+            <div class="group-form">
+                {{ form_widget(formulaire.actif,{'attr':{'class':'increase'}})  }}
+                {{ form_label(formulaire.actif, 'Actif') }}
+            </div>
+            <div class="group-form">
+                {{ form_widget(formulaire.administrateur,{'attr':{'class':'increase'}})  }}
+                {{ form_label(formulaire.administrateur, 'Administrateur') }}
+            </div>
+            <div class="group-form">
+                {{ form_widget(formulaire.avatar,{'attr':{'class':'form-control','hidden':'hidden'}})  }}
+                {{ form_label(formulaire.actif, 'Actif',{'label_attr':{'hidden':'hidden'}}) }}
+            </div>
+
+
+        </div>
+
+    </div>
+    <div class="mx-auto"style="width: 20%;margin-top: 30px">
 
         <button type="submit" class="btn btn-primary">Enregistrer</button>
         <button type="button" class="btn btn-primary">Retour</button>
         {{ form_end(formulaire) }}
-
     </div>
 {% endblock %}
 

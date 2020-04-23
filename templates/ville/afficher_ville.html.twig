@@ -1,0 +1,35 @@
+<div class="searchSortie">
+
+    <div class="text-right" style="margin-right: 20px">Date du jour: {{ "now"|date("d/m/Y") }}</div>
+    <div class="text-right" style="margin-right: 20px">Participant(e): {{ user.prenom }} {{ user.nom }}</div>
+    <div class="search-title">
+        {% include 'lieu/filtre_lieu.html.twig' %}
+
+    </div>
+
+    <div style="margin-bottom: 20%">
+        <table class="table">
+            <tr>
+
+                <th>Nom de la Ville</th>
+                <th>Code Postal </th>
+            </tr>
+
+            {% for key,v in villes %}
+
+            <tr>
+                <td>{{ v.nom }}</td>
+                <td>{{ v.codePostal }}</td>
+
+                <td>
+                    <a href="{{ path('modifier',{'id':v.id}) }}">Modifier</a>
+
+                    <a href="{{ path("supprimer",{'id':v.id}) }}">Supprimer</a>
+
+                </td>
+            </tr>
+            {% endif %}
+            {% endfor %}
+        </table>
+    </div>
+</div>

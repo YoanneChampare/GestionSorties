@@ -41,10 +41,10 @@
         {{ form_row(formulaire.avatar)  }}
 
             <div class="group-form">
-                {{ form_row(formulaire.actif,{'attr':{'class':'form-control','disabled':'disabled'}})  }}
+                {{ form_row(formulaire.actif,{'attr':{'value':participant.actif,'class':'form-control','disabled':'disabled'}})  }}
             </div>
             <div class="group-form">
-                {{ form_row(formulaire.administrateur,{'attr':{'class':'form-control','disabled':'disabled'}})  }}
+                {{ form_row(formulaire.administrateur,{'attr':{'value':participant.administrateur,'class':'form-control','disabled':'disabled'}})  }}
             </div>
 
         <button type="submit" class="btn btn-primary">Modifier</button>

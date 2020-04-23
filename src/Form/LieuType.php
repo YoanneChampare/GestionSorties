@@ -20,7 +20,7 @@ class LieuType extends AbstractType
             ->add('rue',TextType::class,['label'=>'Nom et Numéro de la Rue'])
             ->add('latitude',IntegerType::class,['label'=>' Renseigner la Latitude'])
             ->add('longitude',IntegerType::class,['label'=>'Renseigner la Longitude'])
-            ->add('ville', EntityType::class, [
+            ->add('ville', EntityType::class,[
                'class' => Ville::class,
                'query_builder' => function (EntityRepository $er) {
                    return $er->createQueryBuilder('v')

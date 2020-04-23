@@ -71,7 +71,7 @@ class AdminController extends Controller
 
         return $this->render('participant/gestionAdmin/gestionSortie.html.twig', [
             'page_name' => 'Gestion Sorties ',
-            "sorties" => $sortie,
+            "sorties"=>$sortie
 
 
         ]);
@@ -107,7 +107,6 @@ $this->addFlash("success","Utilisateur supprimé avec succès");
            $user->setNom($participant->getNom());
            $user->setPrenom($participant->getPrenom());
            $user->setMail($participant->getMail());
-           $user->setPseudo($participant->getPseudo());
            $user->setPseudo($participant->getPseudo());
            $user->setTelephone($participant->getTelephone());
            $user->setSite($participant->getSite());

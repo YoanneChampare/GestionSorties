@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>{#stephane#}
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Liste des Villes{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+<p>rfg</p>
+{% block body %}
+    <div class="container">
+        {% include 'ville/filtre_ville.html.twig' with {form: form} only %}
+            {% for ville in villes %}
+                {% include 'ville/afficher_ville.html.twig' with {villes: villes} only %}
+            {% endfor %}
+
+    </div>
+{% endblock %}
+{% block javascripts %}{% endblock %}
+</body>
+</html>

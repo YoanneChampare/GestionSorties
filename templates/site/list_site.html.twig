@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>{#stephane#}
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Liste des Sites{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+<p>rfg</p>
+{% block body %}
+    <div class="container">
+        {% include 'site/filtre_site.html.twig' with {form: form} only %}
+            {% for site in sites %}
+                {% include 'site/afficher_site.html.twig' with {sites: sites} only %}
+            {% endfor %}
+
+    </div>
+{% endblock %}
+{% block javascripts %}{% endblock %}
+</body>
+</html>

@@ -7,7 +7,7 @@
 
     </div>
 
-    <div style="margin-bottom: 20%">
+    <div>
         <table class="table">
             <tr>
 
@@ -27,7 +27,8 @@
                 {% set dateNow = "now"|date  %}
                 {% set dateDifference = date(dateNow).diff(date(dateSortie)) %}
 
-                {%  if dateDifference.days < 30 %}
+                {% if dateSortie > dateNow %}
+                {%  if dateDifference.days < 30%}
                 <tr>
                     <td>{{ s.nom }}</td>
                     <td>{{ s.dateHeureDebut | date("d/m/Y h:m:s") }}</td>
@@ -63,8 +64,7 @@
                     <a href="{{ path("profilParticipant",{'id':s.auteur.id}) }}">{{ s.auteur.nom }}</a>
                 </td>
                 <td>
-
-
+                    <td>
                         {% set b1=false %}
                         {% for i in inscrit %}
                             {% if s.id==i.sortie.id %}
@@ -83,11 +83,12 @@
                         <a href="{{ path("afficherSortie",{'id':s.id}) }}">Afficher</a>
 
                     {% if s.auteur.id==user.id %}
+
                         <a href="">Modifier</a>
-                        {% if not s.isPublished %}
-                        <a href="{{ path("publier",{ 'id':s.id}) }}">Publier</a>
+                        {% if s.dateLimiteInscription > today %}
+                        <a href="">Publier</a>
                             {% endif %}
-                        {% if  s.dateHeureDebut | date("d/m/Y h:m:s") < "now"|date("d/m/Y h:m:s")  and s.etat.libelle != "Passée" and s.etat.libelle != "Clôturée" and s.etat.libelle != "Annulée" %}
+                        {% if  s.isPublished%}
                         <a href="{{ path("annulerSortie",{'id':s.id}) }}">Annuler</a>
                         {% endif %}
 
@@ -95,6 +96,7 @@
                     {% endif %}
                 </td>
             </tr>
+               {% endif %}
                {% endif %}
             {% endfor %}
         </table>

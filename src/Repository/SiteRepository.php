@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Data\AfficherData;
 use App\Entity\Site;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -19,6 +20,26 @@ class SiteRepository extends ServiceEntityRepository
         parent::__construct($registry, Site::class);
     }
 
+    /**
+     * Récupere les sites en lien avec les recherches
+     * @param AfficherData $search
+     * @param $idUser
+     */
+
+    public function findSearch(AfficherData $search,$idUser)
+    {
+        $query = $this
+            ->createQueryBuilder('s')
+            ->select('s')
+            ->setParameter('idUser', $idUser);
+
+
+        if (!empty($search->motCle)) {
+            $query = $query
+                ->andWhere('s.nom LIKE :motCle')
+                ->setParameter('motCle', "%{$search->motCle}%");
+        }
+    }
     // /**
     //  * @return Site[] Returns an array of Site objects
     //  */

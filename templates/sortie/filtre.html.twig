@@ -1,8 +1,13 @@
 {{ form_start(form) }}
 
+<style>
+    .increase {
+        width:30px;
+        height:30px;
+    }
+</style>
 
-
-<div class="row mx-auto"style="width: 75%">
+<div class="row mx-auto"style="width: 90%">
     <div class="col-4">
 <div class="group-form">{{ form_row(form.nSite,{'attr':{'class':'form-control'}}) }}</div>
 <div class="group-form">{{ form_row(form.motCle,{'attr':{'class':'form-control'}}) }}</div>
@@ -11,15 +16,16 @@
 
 
     </div>
-    <div class="col-4">
-        <div class="group-form">{{ form_row(form.sOrganisateur,{'attr':{'class':'form-control'}}) }}</div>
-        <div class="group-form">{{ form_row(form.sInscrit,{'attr':{'class':'form-control'}}) }}</div>
-        <div class="group-form">{{ form_row(form.sNonInscrit,{'attr':{'class':'form-control'}}) }}</div>
-        <div class="group-form">{{ form_row(form.sPasse,{'attr':{'class':'form-control'}}) }}</div>
+    <div class="col-5">
+        <div class="group-form">{{ form_widget(form.sOrganisateur,{'attr':{'class':'increase'}}) }}{{ form_label(form.sOrganisateur, 'Sorties dont je suis l\'organisateur/trice') }}</div>
+        <div class="group-form">{{ form_widget(form.sInscrit,{'attr':{'class':'increase'}}) }}{{ form_label(form.sInscrit, 'Sorties auxquelles je suis inscrit/e') }}</div>
+        <div class="group-form">{{ form_widget(form.sNonInscrit,{'attr':{'class':'increase'}}) }}{{ form_label(form.sNonInscrit, 'Sorties auxquelles je ne suis pas inscrit/e') }}</div>
+        <div class="group-form">{{ form_widget(form.sPasse,{'attr':{'class':'increase'}}) }}{{ form_label(form.sPasse, 'Sorties passées') }}</div>
+
 
 
     </div>
-    <div class="col-4">
+    <div class="col-3" style="margin-top: 40px">
         <button type="submit" class="btn btn-primary">Rechercher</button>
     </div>
 {{ form_end(form) }}

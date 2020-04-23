@@ -27,6 +27,7 @@ class AccueilController extends Controller
     public function portail(EntityManagerInterface $em,Request $request)
     {
         $user=$this->getUser();
+        $today=new \Datetime();
 
         $filtre=new SearchData();
         $etat=new Etat();
@@ -58,6 +59,7 @@ class AccueilController extends Controller
             "inscrit"=>$inscrit,
             "user"=>$user,
             "quota"=>$quota,
+            "today"=>new \Datetime()
 
 
 

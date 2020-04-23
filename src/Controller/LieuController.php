@@ -32,6 +32,7 @@ class LieuController extends Controller
             $em->persist($lieu);
             $em->flush();
             $this->addFlash("success", " Lieu enregistrée avec succès !");
+
         }
         return $this->render('lieu/add_lieu.html.twig', ['lieuForm'=>$lieuForm->createView(),"page_name"=>"Ajouter Lieux"]);
     }

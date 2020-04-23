@@ -1,10 +1,11 @@
 {% extends 'base.html.twig' %}
 {% block body %}
     <div>
-
-        {#<img src="{{ asset("images/"~participant.avatar) }}">#}
-
+        {% if participant.avatar %}
+        <img src="{{ asset("images/"~participant.avatar) | imagine_filter('my_thumb')}}">
+        {% else %}
         <img src="{{ asset("images/avatar.png") }}">
+        {% endif %}
 
     </div>
         <div class="mx-auto group-form" style="width: 400px">
@@ -37,7 +38,7 @@
             </div>
 
 
-        {#{{ form_row(formulaire.avatar,{'value':participant.avatar})  }}#}
+        {{ form_row(formulaire.avatar)  }}
 
             <div class="group-form">
                 {{ form_row(formulaire.actif,{'attr':{'class':'form-control','disabled':'disabled'}})  }}

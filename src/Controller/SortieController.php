@@ -185,10 +185,33 @@ class SortieController extends Controller
     }
 
     /**
-     * @Route("t")
+     * @Route("/updateSortie/{id}",name="updateSortie")
      */
-    public function modifierSortie(EntityManagerInterface $em,Request $request){
+    public function modifierSortie($id,EntityManagerInterface $em,Request $request){
 
+        $sortieRepo = $this->getDoctrine()->getRepository(Sortie::class);
+        $sortie= $sortieRepo->find($id);
+        $laSortie = new Sortie();
+        $sortieForm = $this->createForm(SortieType::class,$laSortie);
+        $sortieForm->handleRequest($request);
+        if($sortieForm->isSubmitted() && $sortieForm->isValid()){
+            $sortie->setNom($laSortie->getNom());
+            $sortie->setDateHeureDebut($laSortie->getDateHeureDebut());
+            $sortie->setDuree($laSortie->getDuree());
+            $sortie->setDateLimiteInscription($laSortie->getDateLimiteInscription());
+            $sortie->setNbInscriptionsMax($laSortie->getNbInscriptionsMax());
+            $sortie->setInfosSortie($laSortie->getInfosSortie());
+            $sortie->setEtat($laSortie->getEtat());
+            $em->persist($sortie);
+            $em->flush();
+            $this->addFlash("success","Modification effectuée");
+            return $this->redirectToRoute("accueil");
+        }
+
+        return $this->render('sortie/modifierSortie.html.twig',[
+            "sortieForm"=>$sortieForm->createView(),
+            "page_name"=>"Modifier Sortie"
+        ]);
     }
 
 

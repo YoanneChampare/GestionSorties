@@ -38,9 +38,12 @@ class ParticipantType extends AbstractType
                 return $site->getNom();
                 }
             ])
-            /*->add('avatar',FileType::class,[
-                "label"=>"Ma photo"
-            ])*/
+            ->add('avatar',FileType::class,[
+                "label"=>"Ma photo",
+                'required'=>false
+            ])
+            ->add('actif')
+            ->add('administrateur')
         ;
     }
 

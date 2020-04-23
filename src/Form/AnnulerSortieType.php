@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Controller;
+namespace App\Form;
 
 use App\Entity\Lieu;
 use App\Entity\Sortie;

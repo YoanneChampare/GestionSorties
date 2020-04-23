@@ -1,31 +1,28 @@
-<!DOCTYPE html>
-<html>{#stephane#}
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
+
+        {% extends "base.html.twig" %}
+
         {% block body %}
-            <h1 align-text="center">{{ page_name }}</h1>
-            {{ form_start(sortieAnnulerForm) }}
 
-            {{ form_row(sortieAnnulerForm.nom) }}
-            {{ form_row(sortieAnnulerForm.dateHeureDebut) }}
-            {{ form_row(sortieAnnulerForm.lieu) }}
-            {{ form_row(sortieAnnulerForm.infosSortie) }}
+        <div class="row mx-auto"style="width: 80%">
+            <div class="col-6">
+                {{ form_start(sortieAnnulerForm) }}
+                    {{ form_row(sortieAnnulerForm.nom) }}
+                    {{ form_row(sortieAnnulerForm.dateHeureDebut) }}
+                    {{ form_row(sortieAnnulerForm.lieu)  }}
+                    {{ form_row(sortieAnnulerForm.infosSortie) }}
+            </div>
 
-            <button type="submit">Enregistrer </button>
-            <button><a href="/GestionSorties/public">Annuler</a></button
-            {{ form_end(sortieAnnulerForm) }}
+            <div class="mx-auto"style="width: 40%;margin-bottom: 80px">
+                <button type="submit" class="btn btn-primary">Enregistrer </button>
+                {{ form_end(sortieAnnulerForm) }}
+                <button><a href="/GestionSorties/public" class="btn btn-primary">Annuler</a></button>
+        </div>
+        <div id="infos"></div>
 
-            <div id="infos"></div>
-
-
+        </div>
         {% endblock %}
 
-    </body>
 {% block javascripts %}
 
 {% endblock %}
-</html>
+

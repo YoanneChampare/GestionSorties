@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\Controller;
+namespace App\Form;
 
 use App\Entity\Lieu;
 use App\Entity\Participant;
@@ -27,42 +27,22 @@ class ProfilParticipantType extends AbstractType
                   ->add('pseudo',TextType::class,[
                       "label"=>"Nom",
                       'disabled'=>true,
-                      "class"=>Participant::class,
-                      "choice"=>function($participant){
-                          return $participant->getPseudo();
-                      }
                   ])
                   ->add('nom',TextType::class,[
                       'label'=>'Nom ',
                       'disabled'=>true,
-                      "class"=>Participant::class,
-                      "choice"=>function($participant){
-                          return $participant->getNom();
-                          }
                       ])
                   ->add('prenom',TextType::class,[
                       'label'=>'Prénom',
                       'disabled'=>true,
-                      "class"=>Participant::class,
-                      "choice"=>function($participant){
-                          return $participant->getPrenom();
-                          }
                       ])
                   ->add('telephone',TextType::class,[
                       'label'=>'Téléphone',
                       'disabled'=>true,
-                      "class"=>Participant::class,
-                      "choice"=>function($participant){
-                          return $participant->getTelephone();
-                          }
                       ])
                   ->add('mail',EmailType::class,[
                       'label'=>'E-mail',
                       'disabled'=>true,
-                      "class"=>Participant::class,
-                      "choice"=>function($participant){
-                          return $participant->getEmail();
-                          }
                       ])
                   ->add('site',EntityType::class,[
                       "label"=>"Site de rattachement",
@@ -78,7 +58,7 @@ class ProfilParticipantType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => Sortie::class,
+            'data_class' => Participant::class,
         ]);
     }
 

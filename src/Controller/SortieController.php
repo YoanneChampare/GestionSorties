@@ -8,7 +8,9 @@ use App\Entity\Lieu;
 use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Entity\SortieParticipant;
+use App\Form\AnnulerSortieType;
 use App\Form\ParticipantType;
+use App\Form\ProfilParticipantType;
 use App\Form\SearchType;
 use App\Form\SortieType;
 use App\Repository\SortieRepository;
@@ -165,7 +167,9 @@ class SortieController extends Controller
 
         if($sortieAnnulerForm->isSubmitted() ){
             $sortie->setInfosSortie($sortieAnnulerForm['infosSortie']->getData());
-            //$sortie->setEtat(6);
+            $etatRepo = $this->getDoctrine()->getRepository(Etat::class);
+            $endEtat = $etatRepo ->find(6);
+            $sortie->setEtat($endEtat);
             $em->persist($sortie);
             $em->flush();
         }
@@ -179,29 +183,27 @@ class SortieController extends Controller
         ]);
     }
 
-   // /**
- //    * @Route("/profilParticipant{id}",name="profilParticipant",requirements={"auteur":"\d+"})
-//     * @param EntityManagerInterface $em
-//     * @param Request $request
-//     * @param Sortie $profilParticipant
-//     * @return Response
-//     */
-//    public function profilParticipant(EntityManagerInterface $em,Request $request, Sortie $profilParticipant){
+    /**
+     * @Route("/profilParticipant/{id}",name="profilParticipant",requirements={"id":"\d+"})
+     * @param EntityManagerInterface $em
+     * @param Request $request
+     * @param Participant $profilParticipant
+     * @return Response
+     */
+    public function profilParticipant(EntityManagerInterface $em,Request $request, Participant $profilParticipant){
+       $profilParticipantForm = $this->createForm(profilParticipantType::class,$profilParticipant);
+       $profilParticipantForm ->handleRequest($request);
 
-//        $profilParticipantForm = $this->createForm(profilParticipantType::class,$profilParticipant);
- //       $profilParticipantForm ->handleRequest($request);s
+          if( $profilParticipantForm ->isSubmitted()){
+              $em->persist($profilParticipant);
+             $em->flush();
+         }
 
- //         if( $profilParticipantForm ->isSubmitted()){
- //             $em->persist($profilParticipant);
- //             $em->flush();
- //         }
-
- //        return $this->render('sortie/profilParticipant.html.twig',[
- //            "profilParticipant"=>profilParticipant,
- //            "page_name"=>"Profil Participant",
- //            "profilParticipantForm"=> $profilParticipantForm ->createView()
- //       ]);
- //    }
+         return $this->render('sortie/profilParticipant.html.twig',[
+            "profilParticipant"=>$profilParticipant,
+             "page_name"=>"Profil Participant",
+            "profilParticipantForm"=> $profilParticipantForm ->createView()]);
+      }
 
 
 }

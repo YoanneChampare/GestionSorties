@@ -28,7 +28,7 @@
                 {% set dateDifference = date(dateNow).diff(date(dateSortie)) %}
 
                 {%  if dateDifference.days < 30 %}
-                <tr>
+                    <tr>
                     <td>{{ s.nom }}</td>
                     <td>{{ s.dateHeureDebut | date("d/m/Y h:m:s") }}</td>
                     <td>{{ s.dateLimiteInscription | date("d/m/Y h:m:s") }}</td>
@@ -60,7 +60,7 @@
 
                 <td>
 
-                    <a href="{# "{{ path("profilParticipant",{'id':s.id}) }}#}">{{ s.auteur.nom }}</a>
+                    <a href="{{ path("profilParticipant",{'id':s.auteur.id}) }}">{{ s.auteur.nom }}</a>
                 </td>
                 <td>
                     {% if inscrit %}

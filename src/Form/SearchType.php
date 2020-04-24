@@ -36,12 +36,14 @@ class SearchType extends AbstractType
 
             ->add('datemin',DateTimeType::class,[
                 "label"=>'Entre',
-                'required'=>false
+                'required'=>false,
+                'widget'=>'single_text'
             ])
 
             ->add('datemax',DateTimeType::class,[
                 "label"=>'et',
-                'required'=>false
+                'required'=>false,
+                'widget'=>'single_text'
             ])
 
             ->add('sOrganisateur',CheckboxType::class,[

@@ -1,6 +1,12 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
+        <style>
+                .increase {
+                        width:30px;
+                        height:30px;
+                }
+        </style>
         <div class="row mx-auto"style="width: 80%">
                 <div class="col-6">
                         {{ form_start(sortieForm) }}
@@ -20,12 +26,19 @@
                 </div>
                 <div class="col-6">
                         {{ form_row(sortieForm.lieu,{'attr':{'onclick':'showInfos(this.value)','class':"form-control"}}) }}
-
-                        <div id="infos">
-                                {{ form_row(sortieForm.infosSortie,{'attr':{'class':"form-control",'value':sortie.infosSortie}}) }}
-                        </div>
-
                 </div>
+                {% if sortie.isPublished %}
+                <div class="col-6">
+                        {{ form_widget(sortieForm.isPublished,{'attr':{'checked':'checked','disabled':'disabled','class':"increase"}}) }}
+                        {{  form_label(sortieForm.isPublished,'Publier la sortie' )}}
+                </div>
+                {% else %}
+                        <div class="col-6">
+                                {{ form_row(sortieForm.isPublished,{'attr':{'disabled':'disabled','class':"increase"}}) }}
+                                {{  form_label(sortieForm.isPublished,'Publier la sortie' )}}
+                        </div>
+                {% endif %}
+
                 <div class="mx-auto"style="width: 40%;margin-bottom: 80px">
 
                         {{ form_row(sortieForm.isPublished) }}

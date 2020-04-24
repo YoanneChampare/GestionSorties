@@ -208,14 +208,27 @@ class SortieController extends Controller
         $laSortie = new Sortie();
         $sortieForm = $this->createForm(SortieType::class,$laSortie);
         $sortieForm->handleRequest($request);
+
         if($sortieForm->isSubmitted() && $sortieForm->isValid()){
+            if($laSortie->getDateHeureDebut()<=$laSortie->getDateLimiteInscription()){
+                $this->addFlash("warning", "Attention la date de la sortie doit être supérieure à la date limite d'inscription");
+                return $this->redirectToRoute("updateSortie",[
+                    'id'=>$id
+                ]);
+            }
+            if($laSortie->getDateLimiteInscription()<new \Datetime()){
+                $this->addFlash("warning", "Attention la date limite d'inscription ne peut être inférieur à la date du jour");
+                return $this->redirectToRoute("updateSortie",[
+                    'id'=>$id
+                ]);
+            }
             $sortie->setNom($laSortie->getNom());
             $sortie->setDateHeureDebut($laSortie->getDateHeureDebut());
             $sortie->setDuree($laSortie->getDuree());
             $sortie->setDateLimiteInscription($laSortie->getDateLimiteInscription());
             $sortie->setNbInscriptionsMax($laSortie->getNbInscriptionsMax());
             $sortie->setInfosSortie($laSortie->getInfosSortie());
-            /*$sortie->setEtat($laSortie->getEtat());*/
+            $sortie->setEtat($laSortie->getEtat()->getId());
             $em->persist($sortie);
             $em->flush();
             $this->addFlash("success","Modification effectuée");

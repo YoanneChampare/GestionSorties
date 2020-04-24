@@ -75,8 +75,6 @@ class ParticipantController extends Controller
             $user->setPseudo($participant->getPseudo());
             $user->setPseudo($participant->getPseudo());
             $user->setTelephone($participant->getTelephone());
-            $user->setSite($participant->getSite());
-            $user->setActif($participant->getActif());
             $user->setAdministrateur($participant->getAdministrateur());
 
 

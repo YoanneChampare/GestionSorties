@@ -250,9 +250,11 @@ class SortieController extends Controller
      * @param Participant $profilParticipant
      * @return Response
      */
-    public function profilParticipant(EntityManagerInterface $em,Request $request, Participant $profilParticipant){
+    public function profilParticipant($id,EntityManagerInterface $em,Request $request, Participant $profilParticipant){
        $profilParticipantForm = $this->createForm(profilParticipantType::class,$profilParticipant);
        $profilParticipantForm ->handleRequest($request);
+       $repo=$this->getDoctrine()->getRepository(Participant::class);
+       $participant=$repo->find($id);
 
           if( $profilParticipantForm ->isSubmitted()){
               $em->persist($profilParticipant);
@@ -261,6 +263,7 @@ class SortieController extends Controller
 
          return $this->render('sortie/profilParticipant.html.twig',[
             "profilParticipant"=>$profilParticipant,
+             "pa"=>$participant,
              "page_name"=>"Profil Participant",
             "profilParticipantForm"=> $profilParticipantForm ->createView()]);
       }

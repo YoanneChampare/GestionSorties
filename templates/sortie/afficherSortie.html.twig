@@ -2,22 +2,33 @@
 {% block body %}
 
 
-    <div class="mx-auto" style="text-align: center">
-    <div>
 
-        <div><label>Nom de la sortie: </label>{{ sortie.nom }}</div>
-        <div> <label>Date et heure de la sortie: </label>{{ sortie.dateHeureDebut | date("d/m/Y")}}</div>
-        <div><label>Date limite d'inscription: </label>{{ sortie.dateLimiteInscription | date("d/m/Y")}}</div>
-        <div><label>Nombre de places: </label>{{ sortie.nbInscriptionsMax }}</div>
-        <div><label>Durée: </label>{{ sortie.duree |date("h:m:s")}}</div>
-        <div><label>Description et infos: </label>{{ sortie.infosSortie }}</div>
-        <div><label>Site: </label>{{ sortie.site.nom}}</div>
-        <div><label>Lieu: </label>{{ sortie.lieu.nom }}</div>
-        {#<div><label>Description et infos: </label>{{ sortie.auteur }}</div>#}
+    <div class="row mx-auto" style="width: 40%">
+    <div class="col-6">
+        <table class="table">
+            <tr><th>Nom de la sortie</th><td>{{ sortie.nom }}</td></tr>
+            <tr><th>Date et heure de la sortie:</th><td>{{ sortie.dateHeureDebut | date("d/m/Y")}}</td></tr>
+            <tr><th>Date limite d'inscription:</th><td>{{ sortie.dateLimiteInscription | date("d/m/Y")}}</td></tr>
+            <tr><th>Nombre de places:</th><td>{{ sortie.nbInscriptionsMax }}</td></tr>
+            <tr><th>Durée:</th><td>{{ sortie.duree |date("h:m:s")}}</td></tr>
+            <tr><th>Description et infos:</th><td>{{ sortie.infosSortie }}</td></tr>
 
+        </table>
+
+    </div>
+    <div class="col-6">
+        <table class="table">
+        <tr><th>Lieu:</th><td>{{ sortie.lieu.nom}}</td></tr>
+        <tr><th>Rue:</th><td>{{ sortie.lieu.rue}}</td></tr>
+        <tr><th>Ville:</th><td>{{ sortie.lieu.ville.nom }}<</td></tr>
+        <tr><th>Latitude:</th><td>{{ sortie.lieu.latitude }}</td></tr>
+        <tr><th>Longitude:</th><td>{{ sortie.lieu.longitude}}</td></tr>
+        </table>
+    </div>
 
     </div>
 
+    <div class="row mx-auto" style="width: 20%">
 
         {% if(etat==true and etat2==true)%}
             <a class="btn btn-primary" href="{{ path("participer",{"id":sortie.id}) }}">S'inscrire</a>
@@ -26,11 +37,14 @@
         {% else %}
             <p>Complet</p>
         {% endif %}
+        <a class="btn btn-primary" href="{{ path("accueil") }}">Retour</a>
 
     </div>
 
 
+
     <div class="test">
+        <legend>Liste des participants inscrits:</legend>
     <table class="table table-striped">
         <thead>
         <tr>

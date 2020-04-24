@@ -58,7 +58,7 @@ class AdminController extends Controller
     }
 
     /**
-     * @Route("/gestionPatiipant", name="gestionParticipant")
+     * @Route("/gestionPatipant", name="gestionParticipant")
      */
     public function afficherAllParticipant(){
         $participantRepo = $this->getDoctrine()->getRepository(Participant::class);

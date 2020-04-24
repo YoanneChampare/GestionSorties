@@ -42,7 +42,7 @@
                 <div class="mx-auto"style="width: 40%;margin-bottom: 80px">
 
                         {{ form_row(sortieForm.isPublished) }}
-                        <button><a href="/GestionSorties/public" class="btn btn-primary">Annuler</a></button>
+                        <a type="button" href="{{ path("accueil") }}" class="btn btn-primary">Annuler</a>
                         <button type="submit" class="btn btn-primary" onclick="actionChange()">Enregistrer</button>
                         {{ form_end(sortieForm) }}
 

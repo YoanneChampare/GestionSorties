@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Participant;
+use App\Entity\Site;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -67,6 +68,15 @@ class ParticipantRepository extends ServiceEntityRepository
         return  $query->getResult();
     }
 
+    public function findBySite(Site $site){
+        $result=$this->createQueryBuilder('s')
+            ->select('s')
+            ->where('s.site =:site')
+            ->setParameter('site',$site->getId());
+
+        return $result->getQuery()
+            ->getArrayResult();
+    }
 
 
 }

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Data\AfficherData;
+use App\Entity\Lieu;
 use App\Entity\Ville;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -47,32 +48,45 @@ class VilleRepository extends ServiceEntityRepository
 
 
 
+
+
+    public function CompareVille(Ville $ville){
+        $test= $this->getEntityManager()->getRepository(Lieu::class)->findByVille($ville);
+        return empty($test);
+    }
+
+
+
+
     public function delete_ville(Ville $ville)
     {
         $em = $this->getEntityManager();
-        //Verification si la ville est liee a une place
-        $laVille = $ville->getLieu()[0];
-        if (!$laVille) {
+        //Verification si la ville est liee a un lieu
+        $CompareVille =$this->CompareVille($ville);
+        if (!$CompareVille) {
             $delete_Ville = false;
         } else {
             //Mise en cache (commit)
             try {
                 $em->remove($ville);
-                //Insertion en BDD (push)
                 $em->flush();
-            $delete_Ville = true;
+                $delete_Ville = true;
             } catch (ORMException $e) {
-
+                echo("Erreur");
             }
 
-            //Insertion en BDD (push)
 
         }
         return $delete_Ville;
     }
+
+
+
+
+
     public function Delete_Villes($id){
         $em = $this->getEntityManager();
-        //$getLieu=$this->getLieu($id)[0];
+
         if(!$em){
             $query=false;
         }else{

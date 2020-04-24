@@ -262,8 +262,8 @@ $this->addFlash("success","Utilisateur supprimé avec succès");
     public function delete_ville($id,EntityManagerInterface $em){
 
         $villeRepo= $this->getDoctrine()->getRepository(Ville::class);
-       //$ville=$villeRepo->find($id);
-     $suppression=$villeRepo->Delete_Villes($id);
+       $ville=$villeRepo->find($id);
+     $suppression=$villeRepo->delete_ville($ville);
 
 
         if(!$suppression){
@@ -379,15 +379,18 @@ $this->addFlash("success","Utilisateur supprimé avec succès");
 
         $siteRepo= $this->getDoctrine()->getRepository(Site::class);
         $site=$siteRepo->find($id);
-        $suppression=$siteRepo->delete($site);
-     //   if
+        $suppression=$siteRepo->delete_site($site);
+        if(!$suppression){
+            $this->addFlash("danger","Erreur, Vous ne pouvez malheureusement pas supprimer ce site");
+        }else{
+            $this->addFlash("success","Ce Site a été supprimer avec succès");
+        }
 
-     //   $site=$siteRepo->Delete_Site($id);
-
-        $this->addFlash("success","Site supprimé avec succès");
         return $this->redirectToRoute("accueil_site");
 
     }
+
+
 
 
 

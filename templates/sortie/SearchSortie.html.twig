@@ -84,7 +84,7 @@
 
                     {% if s.auteur.id==user.id %}
 
-                        <a href="">Modifier</a>
+                        <a href="{{ path("updateSortie",{'id':s.id}) }}">Modifier</a>
                         {% if s.dateLimiteInscription > today %}
                         <a href="">Publier</a>
                             {% endif %}

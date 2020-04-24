@@ -207,7 +207,7 @@ class SortieController extends Controller
             $sortie->setDateLimiteInscription($laSortie->getDateLimiteInscription());
             $sortie->setNbInscriptionsMax($laSortie->getNbInscriptionsMax());
             $sortie->setInfosSortie($laSortie->getInfosSortie());
-            $sortie->setEtat($laSortie->getEtat());
+            /*$sortie->setEtat($laSortie->getEtat());*/
             $em->persist($sortie);
             $em->flush();
             $this->addFlash("success","Modification effectuée");
@@ -216,6 +216,7 @@ class SortieController extends Controller
 
         return $this->render('sortie/modifierSortie.html.twig',[
             "sortieForm"=>$sortieForm->createView(),
+            "sortie"=>$sortie,
             "page_name"=>"Modifier Sortie"
         ]);
     }

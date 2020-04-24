@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Data\SearchData;
+use App\Entity\Site;
 use App\Entity\Sortie;
 use App\Entity\SortieParticipant;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -28,7 +29,7 @@ class SortieRepository extends ServiceEntityRepository
     public function findSearch(SearchData $search,$idUser){
         $query=$this
             ->createQueryBuilder('s')
-            ->select('s') 
+            ->select('s')
             ->andWhere('(s.isPublished=true) or (s.auteur=:idUser and s.isPublished =false)')
             ->setParameter('idUser',$idUser);
 
@@ -109,49 +110,68 @@ class SortieRepository extends ServiceEntityRepository
 
         //$etat=["Ouverte"];
 
-            if($s->getDateLimiteInscription() >= new \DateTime() and $s->getIsPublished()) {
-                $dql = "SELECT e.id FROM App\Entity\Etat e WHERE e.libelle='Ouverte'";
-                $query1=$em->createQuery($dql);
-                $etat=$query1->getResult();
 
-            }
+            $dql = "SELECT e.id FROM App\Entity\Etat e WHERE e.libelle='Annulée'";
 
-           else if($s->getDateLimiteInscription()<= new \DateTime() or $quota>=$s->getNbInscriptionsMax() ) {
+            $query1=$em->createQuery($dql);
+            $etatA=$query1->getResult();
 
-                   $dql = "SELECT e.id FROM App\Entity\Etat e WHERE e.libelle='Clôturée'";
 
-                $query1=$em->createQuery($dql);
-                $etat=$query1->getResult();
-            }
-            else if((!$s->getIsPublished() and $s->getAuteur()->getId()==$auteur)) {
-                $dql = "SELECT e.id FROM App\Entity\Etat e WHERE e.libelle='Créée'";
-                //Un commentaire
-                $query1=$em->createQuery($dql);
-                $etat=$query1->getResult();
-            }
-            else if((!$s->getIsPublished() and !$s->getIsPublished())) {
-                $dql = "SELECT e.id FROM App\Entity\Etat e WHERE e.libelle='Créée'";
-                //Un commentaire
-                $query1=$em->createQuery($dql);
-                $etat=$query1->getResult();
-            }
+            foreach ($etatA as $annuler) {
 
-            else{
-                $dql = "SELECT e.id FROM App\Entity\Etat e WHERE e.libelle='Activité en cours'";
-                //Un commentaire
-                $query1=$em->createQuery($dql);
-                $etat=$query1->getResult();
-            }
+
+                if ($s->getEtat()->getId() !=$annuler["id"] and $s->getDateLimiteInscription() >= new \DateTime() and $s->getIsPublished()) {
+                    $dql = "SELECT e.id FROM App\Entity\Etat e WHERE e.libelle='Ouverte'";
+                    $query1 = $em->createQuery($dql);
+                    $etat = $query1->getResult();
+
+                } else if (($s->getDateLimiteInscription() <= new \DateTime() or $quota >= $s->getNbInscriptionsMax()) and $s->getIsPublished()) {
+
+                    $dql = "SELECT e.id FROM App\Entity\Etat e WHERE e.libelle='Clôturée'";
+
+                    $query1 = $em->createQuery($dql);
+                    $etat = $query1->getResult();
+                } else if ($s->getDateLimiteInscription() <= new \DateTime() and !$s->getIsPublished()) {
+
+                    $dql = "SELECT e.id FROM App\Entity\Etat e WHERE e.libelle='Créée'";
+
+                    $query1 = $em->createQuery($dql);
+                    $etat = $query1->getResult();
+                } else if ((!$s->getIsPublished() and $s->getAuteur()->getId() == $auteur)) {
+                    $dql = "SELECT e.id FROM App\Entity\Etat e WHERE e.libelle='Créée'";
+                    //Un commentaire
+                    $query1 = $em->createQuery($dql);
+                    $etat = $query1->getResult();
+                } else if (($s->getEtat()->getId() != $annuler["id"] and $s->getIsPublished() and $s->getAuteur()->getId() == $auteur)) {
+                    $dql = "SELECT e.id FROM App\Entity\Etat e WHERE e.libelle='Ouverte'";
+                    //Un commentaire
+                    $query1 = $em->createQuery($dql);
+                    $etat = $query1->getResult();
+                } else {
+                    $dql = "SELECT e.id FROM App\Entity\Etat e WHERE e.libelle='Annulée'";
+                    //Un commentaire
+                    $query1 = $em->createQuery($dql);
+                    $etat = $query1->getResult();
+                }
+
             foreach($etat as $e){
 
                 $req="UPDATE App\Entity\Sortie s SET s.etat=".$e["id"]."WHERE s.id=".$s->getId() ;
                 $query2=$em->createQuery($req);
                return $query2->getResult();
-            }
+            }}
 
     }
 
+    public function findBySite2(Site $site){
+        $result=$this->createQueryBuilder('s')
+            ->select('s')
+            ->where('s.site =:site')
+            ->setParameter('site',$site->getId());
 
+        return $result->getQuery()
+            ->getArrayResult();
+    }
 
 
 }

@@ -134,11 +134,18 @@ class SortieController extends Controller
 
 
         if($user!=null){
-            $etat = false;//désinscrire
-            $etat2= false;
+            if (sizeof($p_sortie) >=$sortie->getNbInscriptionsMax() || $dateMax->format('Y-m-d H:i:s')<$datetime || $sortie->getEtat()->getLibelle()=='Annulée') {
+                $etat = true;//rien
+                $etat2 = false;
+                $this->addFlash("danger", "Oups ! Il semble que la sortie soit complète ou que les inscriptions soient clôturées");
+            }else{
+                $etat = false;//désinscrire
+                $etat2= false;
+            }
+
         }
         else{
-            if (sizeof($p_sortie) >=$sortie->getNbInscriptionsMax() || $dateMax->format('Y-m-d H:i:s')<$datetime /*|| $sortie->getEtat()->getLibelle=='Annuler'*/) {
+            if (sizeof($p_sortie) >=$sortie->getNbInscriptionsMax() || $dateMax->format('Y-m-d H:i:s')<$datetime || $sortie->getEtat()->getLibelle()=='Annulée') {
                 $etat=true;//rien
                 $etat2=false;
                 $this->addFlash("danger","Oups ! Il semble que la sortie soit complète ou que les inscriptions soient clôturées");
@@ -175,10 +182,11 @@ class SortieController extends Controller
         if($sortieAnnulerForm->isSubmitted() ){
             $sortie->setInfosSortie($sortieAnnulerForm['infosSortie']->getData());
             $etatRepo = $this->getDoctrine()->getRepository(Etat::class);
-            $endEtat = $etatRepo ->findOneBy(["libelle"=>'Annuler']);
-            $sortie->setEtat($endEtat->getId());
+            $endEtat = $etatRepo ->findOneBy(["libelle"=>'Annulée']);
+            $sortie->setEtat($endEtat);
             $em->persist($sortie);
             $em->flush();
+            return $this->redirectToRoute("accueil");
         }
 
 

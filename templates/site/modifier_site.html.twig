@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+        <div class="mx-auto group-form" style="width: 400px">
+            {{ form_start(formulaire) }}
+
+        <div class="group-form">
+            {{ form_row(formulaire.nom,{'attr':{'value':site.nom,'class':'form-control'}})  }}
+        </div>
+
+
+<div style="margin-top: 30px">
+    <button type="submit" class="btn btn-primary">Modifier</button>
+    <button><a href="{{ path("gestion_admin") }}" class="btn btn-primary">Retourr</a></button>
+</div>
+
+        {{ form_end(formulaire) }}
+
+    </div>
+
+
+    <div class="group-form"></div>
+
+
+
+{% endblock %}

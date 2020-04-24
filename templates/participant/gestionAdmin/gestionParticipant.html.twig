@@ -23,9 +23,9 @@
                 <td>Inactif</td>
             {% endif %}
             {% if p.administrateur %}
-                <td>Yes</td>
+                <td>Administrateur</td>
             {% else %}
-                <td>No</td>
+                <td>Utilisateur</td>
             {% endif %}
             <td>
                 <a href="{{ path("modifier_profil",{'id':p.id}) }}">Modifier</a>

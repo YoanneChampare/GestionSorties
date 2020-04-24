@@ -43,8 +43,15 @@ class SortieController extends Controller
         ]);
 
         $sortieForm->handleRequest($request);
-        dump($sortie);
         if($sortieForm->isSubmitted() && $sortieForm->isValid()) {
+            if($sortie->getDateHeureDebut()<=$sortie->getDateLimiteInscription()){
+                $this->addFlash("warning", "Attention la date de la sortie doit être supérieure à la date limite d'inscription");
+                return $this->redirectToRoute("sortie_add");
+            }
+            if($sortie->getDateLimiteInscription()<new \Datetime()){
+                $this->addFlash("warning", "Attention la date limite d'inscription ne peut être inférieur à la date du jour");
+                return $this->redirectToRoute("sortie_add");
+            }
 
             $sortie->setSite($user->getSite());
             $sortie->setAuteur($user);
@@ -52,6 +59,7 @@ class SortieController extends Controller
             $em->persist($sortie);
             $em->flush();
             $this->addFlash("success", "Sortie enregistrée avec succès !");
+            return $this->redirectToRoute("accueil");
         }
         return $this->render('sortie/add.html.twig', ['sortieForm'=>$sortieForm->createView(),"page_name"=>"Créer sortie"]);
     }
@@ -130,7 +138,7 @@ class SortieController extends Controller
             $etat2= false;
         }
         else{
-            if (sizeof($p_sortie) >=$sortie->getNbInscriptionsMax() || $dateMax->format('Y-m-d H:i:s')<$datetime || $sortie->getEtat()->getLibelle=='Annuler') {
+            if (sizeof($p_sortie) >=$sortie->getNbInscriptionsMax() || $dateMax->format('Y-m-d H:i:s')<$datetime /*|| $sortie->getEtat()->getLibelle=='Annuler'*/) {
                 $etat=true;//rien
                 $etat2=false;
                 $this->addFlash("danger","Oups ! Il semble que la sortie soit complète ou que les inscriptions soient clôturées");
@@ -167,8 +175,8 @@ class SortieController extends Controller
         if($sortieAnnulerForm->isSubmitted() ){
             $sortie->setInfosSortie($sortieAnnulerForm['infosSortie']->getData());
             $etatRepo = $this->getDoctrine()->getRepository(Etat::class);
-            $endEtat = $etatRepo ->find(6);
-            $sortie->setEtat($endEtat);
+            $endEtat = $etatRepo ->findOneBy(["libelle"=>'Annuler']);
+            $sortie->setEtat($endEtat->getId());
             $em->persist($sortie);
             $em->flush();
         }
@@ -183,21 +191,36 @@ class SortieController extends Controller
     }
 
     /**
-     * @Route("t")
+     * @Route("/updateSortie/{id}",name="updateSortie")
      */
-    public function modifierSortie(EntityManagerInterface $em,Request $request){
+    public function modifierSortie($id,EntityManagerInterface $em,Request $request){
 
+        $sortieRepo = $this->getDoctrine()->getRepository(Sortie::class);
+        $sortie= $sortieRepo->find($id);
+        $laSortie = new Sortie();
+        $sortieForm = $this->createForm(SortieType::class,$laSortie);
+        $sortieForm->handleRequest($request);
+        if($sortieForm->isSubmitted() && $sortieForm->isValid()){
+            $sortie->setNom($laSortie->getNom());
+            $sortie->setDateHeureDebut($laSortie->getDateHeureDebut());
+            $sortie->setDuree($laSortie->getDuree());
+            $sortie->setDateLimiteInscription($laSortie->getDateLimiteInscription());
+            $sortie->setNbInscriptionsMax($laSortie->getNbInscriptionsMax());
+            $sortie->setInfosSortie($laSortie->getInfosSortie());
+            $sortie->setEtat($laSortie->getEtat());
+            $em->persist($sortie);
+            $em->flush();
+            $this->addFlash("success","Modification effectuée");
+            return $this->redirectToRoute("accueil");
+        }
+
+        return $this->render('sortie/modifierSortie.html.twig',[
+            "sortieForm"=>$sortieForm->createView(),
+            "page_name"=>"Modifier Sortie"
+        ]);
     }
 
 
-   // /**
- //    * @Route("/profilParticipant{id}",name="profilParticipant",requirements={"auteur":"\d+"})
-//     * @param EntityManagerInterface $em
-//     * @param Request $request
-//     * @param Sortie $profilParticipant
-//     * @return Response
-//     */
-//    public function profilParticipant(EntityManagerInterface $em,Request $request, Sortie $profilParticipant){
     /**
      * @Route("/profilParticipant/{id}",name="profilParticipant",requirements={"id":"\d+"})
      * @param EntityManagerInterface $em
@@ -228,7 +251,7 @@ class SortieController extends Controller
         $sortieRepo=$this->getDoctrine()->getRepository(Sortie::class);
         $sortie=$sortieRepo->find($id);
 
-        if ($sortie->getDateLimiteInscription()< new \Datetime() or $sortie->getDateHeureDebut()< new \Datetime()){
+        if ($sortie->getDateLimiteInscription()< new \Datetime()){
             $this->addFlash("danger","Une sortie ne peut être publiée si la date limite d'insciption est dépassée");
         }else{
             $sortie->setIsPublished(true);
@@ -236,9 +259,6 @@ class SortieController extends Controller
             $em->persist($sortie);
             $em->flush();
         }
-
-
-
 
         return $this->redirectToRoute("accueil");
 

@@ -28,8 +28,8 @@ class SortieRepository extends ServiceEntityRepository
     public function findSearch(SearchData $search,$idUser){
         $query=$this
             ->createQueryBuilder('s')
-            ->select('s')
-            ->andWhere('s.isPublished=true or (s.auteur=:idUser and s.isPublished =false)')
+            ->select('s') 
+            ->andWhere('(s.isPublished=true) or (s.auteur=:idUser and s.isPublished =false)')
             ->setParameter('idUser',$idUser);
 
 
@@ -107,31 +107,41 @@ class SortieRepository extends ServiceEntityRepository
         $repo=$em->getRepository(SortieParticipant::class);
         $quota=$repo->allParticipant2($s->getId());
 
-
+        //$etat=["Ouverte"];
 
             if($s->getDateLimiteInscription() >= new \DateTime() and $s->getIsPublished()) {
                 $dql = "SELECT e.id FROM App\Entity\Etat e WHERE e.libelle='Ouverte'";
                 $query1=$em->createQuery($dql);
                 $etat=$query1->getResult();
+
             }
-           if($s->getDateLimiteInscription()<= new \DateTime() or $quota>=$s->getNbInscriptionsMax() ) {
+
+           else if($s->getDateLimiteInscription()<= new \DateTime() or $quota>=$s->getNbInscriptionsMax() ) {
 
                    $dql = "SELECT e.id FROM App\Entity\Etat e WHERE e.libelle='Clôturée'";
 
                 $query1=$em->createQuery($dql);
                 $etat=$query1->getResult();
             }
-            if(!$s->getIsPublished() and $s->getAuteur()->getId()==$auteur) {
+            else if((!$s->getIsPublished() and $s->getAuteur()->getId()==$auteur)) {
+                $dql = "SELECT e.id FROM App\Entity\Etat e WHERE e.libelle='Créée'";
+                //Un commentaire
+                $query1=$em->createQuery($dql);
+                $etat=$query1->getResult();
+            }
+            else if((!$s->getIsPublished() and !$s->getIsPublished())) {
                 $dql = "SELECT e.id FROM App\Entity\Etat e WHERE e.libelle='Créée'";
                 //Un commentaire
                 $query1=$em->createQuery($dql);
                 $etat=$query1->getResult();
             }
 
-
-
-
-
+            else{
+                $dql = "SELECT e.id FROM App\Entity\Etat e WHERE e.libelle='Activité en cours'";
+                //Un commentaire
+                $query1=$em->createQuery($dql);
+                $etat=$query1->getResult();
+            }
             foreach($etat as $e){
 
                 $req="UPDATE App\Entity\Sortie s SET s.etat=".$e["id"]."WHERE s.id=".$s->getId() ;
@@ -139,22 +149,10 @@ class SortieRepository extends ServiceEntityRepository
                return $query2->getResult();
             }
 
-
-
-
-
-
     }
 
 
-    public function etat($libelle){
-        $em = $this->getEntityManager();
-        $dql = "SELECT e.id
-        FROM App\Entity\Etat e
-        WHERE s.libele = $libelle";
-        $query = $em->createQuery($dql);
-        return  $query->getResult();
-    }
+
 
 }
 

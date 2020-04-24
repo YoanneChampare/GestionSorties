@@ -44,7 +44,8 @@ class SortieType extends AbstractType
            ])
 
             ->add('isPublished',CheckboxType::class,[
-                "label"=>"Publier la sortie"
+                "label"=>"Publier la sortie",
+                'required'=>false
             ])
 
         ;

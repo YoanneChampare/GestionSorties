@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\SortieRepository")
@@ -23,6 +24,7 @@ class Sortie
 
     /**
      * @ORM\Column(type="datetime")
+     *
      */
     private $dateHeureDebut;
 

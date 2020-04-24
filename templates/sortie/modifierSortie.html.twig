@@ -1,13 +1,55 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-        {{form_start(sortieForm)}}
-        {{ form_widget(sortieForm) }}
-        <div style="margin-top: 30px">
-                <button type="submit" class="btn btn-primary">Modifier</button>
-                <button type="button" class="btn btn-primary">Retour</button>
+        <style>
+                .increase {
+                        width:30px;
+                        height:30px;
+                }
+        </style>
+        <div class="row mx-auto"style="width: 80%">
+                <div class="col-6">
+                        {{ form_start(sortieForm) }}
+
+                        {{ form_row(sortieForm.nom,{'attr':{'class':"form-control",'value':sortie.nom}}) }}
+                        <div class="form-group">
+                        {{ form_row(sortieForm.dateHeureDebut,{'attr':{'class':'input-group date','value':sortie.dateHeureDebut | date("d/m/Y")}}) }}
+                        </div>
+                        <div class="form-group">
+                                {{ form_row(sortieForm.dateLimiteInscription,{'attr':{'class':'input-group date','value':sortie.dateLimiteInscription | date("d/m/Y")}}) }}
+                        </div>
+                        {{ form_row(sortieForm.nbInscriptionsMax,{'attr':{'class':"form-control",'value':sortie.nbInscriptionsMax}}) }}
+                        {{ form_row(sortieForm.duree,{'attr':{'class':'input-group date'}}) }}
+                        <div style="margin-bottom: 50px">
+                                {{ form_row(sortieForm.infosSortie,{'attr':{'class':"form-control",'value':sortie.infosSortie}}) }}
+                        </div>
+                </div>
+                <div class="col-6">
+                        {{ form_row(sortieForm.lieu,{'attr':{'onclick':'showInfos(this.value)','class':"form-control"}}) }}
+                </div>
+                {% if sortie.isPublished %}
+                <div class="col-6">
+                        {{ form_widget(sortieForm.isPublished,{'attr':{'checked':'checked','disabled':'disabled','class':"increase"}}) }}
+                        {{  form_label(sortieForm.isPublished,'Publier la sortie' )}}
+                </div>
+                {% else %}
+                        <div class="col-6">
+                                {{ form_row(sortieForm.isPublished,{'attr':{'disabled':'disabled','class':"increase"}}) }}
+                                {{  form_label(sortieForm.isPublished,'Publier la sortie' )}}
+                        </div>
+                {% endif %}
+
+                <div class="mx-auto"style="width: 40%;margin-bottom: 80px">
+
+                        {{ form_row(sortieForm.isPublished) }}
+                        <button><a href="/GestionSorties/public" class="btn btn-primary">Annuler</a></button>
+                        <button type="submit" class="btn btn-primary" onclick="actionChange()">Enregistrer</button>
+                        {{ form_end(sortieForm) }}
+
+
+                </div>
         </div>
-        {{ form_end(sortieForm) }}
-
-
 {% endblock %}
+
+
+

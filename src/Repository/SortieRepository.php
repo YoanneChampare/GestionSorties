@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Data\SearchData;
+use App\Entity\Site;
 use App\Entity\Sortie;
 use App\Entity\SortieParticipant;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -162,7 +163,15 @@ class SortieRepository extends ServiceEntityRepository
 
     }
 
+    public function findBySite2(Site $site){
+        $result=$this->createQueryBuilder('s')
+            ->select('s')
+            ->where('s.site =:site')
+            ->setParameter('site',$site->getId());
 
+        return $result->getQuery()
+            ->getArrayResult();
+    }
 
 
 }

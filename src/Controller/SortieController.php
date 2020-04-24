@@ -159,7 +159,7 @@ class SortieController extends Controller
         return $this->render('sortie/afficherSortie.html.twig',[
             "p_sortie"=>$p_sortie,
             "sortie"=>$sortie,
-            "page_name"=>"Sortie",
+            "page_name"=>"Afficher sortie",
             "etat"=>$etat,
             "etat2"=>$etat2
         ]);

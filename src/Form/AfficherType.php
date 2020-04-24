@@ -18,7 +18,7 @@ class AfficherType extends AbstractType
                 ['label' => 'Le nom contient',
                     'required' => false,
                     'attr' => [
-                            'placeholder' => 'Rechercher'
+                            'placeholder' => 'Search'
                     ]
                 ])
          ;

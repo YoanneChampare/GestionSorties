@@ -23,15 +23,14 @@ class SiteRepository extends ServiceEntityRepository
     /**
      * Récupere les sites en lien avec les recherches
      * @param AfficherData $search
-     * @param $idUser
      */
 
-    public function findSearch(AfficherData $search,$idUser)
+    public function findSearch(AfficherData $search) //,$idUser
     {
         $query = $this
             ->createQueryBuilder('s')
-            ->select('s')
-            ->setParameter('idUser', $idUser);
+            ->select('s');
+          //  ->setParameter('idUser', $idUser);
 
 
         if (!empty($search->motCle)) {
@@ -39,7 +38,13 @@ class SiteRepository extends ServiceEntityRepository
                 ->andWhere('s.nom LIKE :motCle')
                 ->setParameter('motCle', "%{$search->motCle}%");
         }
+        return $query->getQuery()->getResult();
     }
+
+
+
+
+
     // /**
     //  * @return Site[] Returns an array of Site objects
     //  */

@@ -3,9 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Participant;
+use App\Form\FichierType;
 use App\Form\ParticipantType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -155,7 +157,21 @@ class ParticipantController extends Controller
             "page_name"=>"Réinitialisation de mot de passe",
             "formulaire"=>$passwordForm->createView()
         ]);
+    }
 
+    /**
+     * @Route("/import_participant",name="import_participant")
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     */
+    public function import_participant(Request $request, EntityManagerInterface $em){
+        $participant=new Participant();
+
+        $form=$this->createForm(FichierType::class);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $fichier=$form['AjoutFichier']->getData();
+        }
 
     }
 }

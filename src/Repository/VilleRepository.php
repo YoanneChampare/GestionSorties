@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Data\AfficherData;
 use App\Entity\Ville;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -15,22 +17,24 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class VilleRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+
+
+    public function __construct(EntityManagerInterface $entityManager, ManagerRegistry $registry)
     {
         parent::__construct($registry, Ville::class);
     }
+
     /**
      * Récupere les villes en lien avec les recherches
      * @param AfficherData $search
-     * @param $idUser
      */
 
-    public function findSearch(AfficherData $search,$idUser)
+    public function findSearch(AfficherData $search) //,$idUser
     {
         $query = $this
             ->createQueryBuilder('s')
-            ->select('s')
-            ->setParameter('idUser', $idUser);
+            ->select('s');
+           // ->setParameter('idUser', $idUser);
 
 
         if (!empty($search->motCle)) {
@@ -38,8 +42,46 @@ class VilleRepository extends ServiceEntityRepository
                 ->andWhere('s.nom LIKE :motCle')
                 ->setParameter('motCle', "%{$search->motCle}%");
         }
+        return $query->getQuery()->getResult();
     }
 
+
+
+    public function delete_ville(Ville $ville)
+    {
+        $em = $this->getEntityManager();
+        //Verification si la ville est liee a une place
+        $laVille = $ville->getLieu()[0];
+        if (!$laVille) {
+            $delete_Ville = false;
+        } else {
+            //Mise en cache (commit)
+            try {
+                $em->remove($ville);
+                //Insertion en BDD (push)
+                $em->flush();
+            $delete_Ville = true;
+            } catch (ORMException $e) {
+
+            }
+
+            //Insertion en BDD (push)
+
+        }
+        return $delete_Ville;
+    }
+    public function Delete_Villes($id){
+        $em = $this->getEntityManager();
+        //$getLieu=$this->getLieu($id)[0];
+        if(!$em){
+            $query=false;
+        }else{
+            $dql = "DELETE FROM App\Entity\Ville v WHERE  v.id=$id";
+            $query = $em->createQuery($dql);
+        }
+
+        return  $query->getResult();
+    }
     // /**
     //  * @return Ville[] Returns an array of Ville objects
     //  */

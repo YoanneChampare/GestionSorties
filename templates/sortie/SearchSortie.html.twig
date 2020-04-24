@@ -67,7 +67,7 @@
                     <td>
                         {% set b1=false %}
                         {% for i in inscrit %}
-                            {% if s.id==i.sortie.id %}
+                            {% if s.id==i.sortie.id and (s.etat.libelle!="Annulée")%}
                                 {% set b1=true %}
                                 <a href="{{ path('desister',{'id':s.id}) }}">Se désister</a>
 
@@ -85,11 +85,13 @@
                     {% if s.auteur.id==user.id %}
 
                         <a href="">Modifier</a>
-                        {% if s.dateLimiteInscription > today %}
-                        <a href="">Publier</a>
-                            {% endif %}
+
                         {% if  s.isPublished%}
                         <a href="{{ path("annulerSortie",{'id':s.id}) }}">Annuler</a>
+                        {% else %}
+                        {% if s.dateLimiteInscription > today or s.dateLimiteInscription <= today%}
+                            <a href="{{ path("publier",{'id':s.id}) }}">Publier</a>
+                        {% endif %}
                         {% endif %}
 
 

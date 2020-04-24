@@ -27,8 +27,7 @@
                 {% set dateNow = "now"|date  %}
                 {% set dateDifference = date(dateNow).diff(date(dateSortie)) %}
 
-                {% if dateSortie > dateNow %}
-                {%  if dateDifference.days < 30%}
+
                 <tr>
                     <td>{{ s.nom }}</td>
                     <td>{{ s.dateHeureDebut | date("d/m/Y h:m:s") }}</td>
@@ -98,8 +97,9 @@
                     {% endif %}
                 </td>
             </tr>
-               {% endif %}
-               {% endif %}
+
+                
+
             {% endfor %}
         </table>
     </div>

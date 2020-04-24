@@ -1,5 +1,13 @@
 {% extends 'base.html.twig' %}
 {% block body %}
+
+
+    <style>
+        .increase {
+            width:30px;
+            height:30px;
+        }
+    </style>
     <div>
         {% if participant.avatar %}
         <img src="{{ asset("images/"~participant.avatar) | imagine_filter('my_thumb')}}">
@@ -41,10 +49,23 @@
         {{ form_row(formulaire.avatar)  }}
 
             <div class="group-form">
-                {{ form_row(formulaire.actif,{'attr':{'value':participant.actif,'class':'form-control','disabled':'disabled'}})  }}
+                {% if participant.actif %}
+                {{ form_widget(formulaire.actif,{'attr':{'checked':'checked','class':'increase','disabled':'disabled'}})  }}
+                {{ form_label(formulaire.actif, 'Actif') }}
+                    {% else %}
+                        {{ form_widget(formulaire.actif,{'attr':{'class':'increase','disabled':'disabled'}})  }}
+                        {{ form_label(formulaire.actif, 'Actif') }}
+                {% endif %}
+
             </div>
-            <div class="group-form">
-                {{ form_row(formulaire.administrateur,{'attr':{'value':participant.administrateur,'class':'form-control','disabled':'disabled'}})  }}
+            <div class="group-form ">
+                {% if participant.administrateur %}
+                    {{ form_widget(formulaire.administrateur,{'attr':{'checked':'checked','class':'increase','disabled':'disabled'}})  }}
+                    {{ form_label(formulaire.administrateur, 'Administrateur') }}
+                {% else %}
+                    {{ form_widget(formulaire.administrateur,{'attr':{'class':'increase','disabled':'disabled'}})  }}
+                    {{ form_label(formulaire.administrateur, 'Administrateur') }}
+                {% endif %}
             </div>
 
         <button type="submit" class="btn btn-primary">Modifier</button>

@@ -7,11 +7,14 @@ use App\Entity\Etat;
 use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Entity\SortieParticipant;
+use App\Entity\Ville;
 use App\Form\SearchType;
+use App\Form\VilleType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 
@@ -73,6 +76,26 @@ class AccueilController extends Controller
 
 
         ]);
+    }
+
+    /**
+     * @Route("/add_ville", name="add_ville2")
+     * @param EntityManagerInterface $em
+     * @param Request $request
+     * @return Response
+     */
+    public function add_ville(EntityManagerInterface $em,Request $request)
+    {
+        $ville=new Ville();
+        $villeForm=$this->createForm(VilleType::class,$ville);
+        $villeForm->handleRequest($request);
+
+        if($villeForm->isSubmitted() && $villeForm->isValid()) {
+            $em->persist($ville);
+            $em->flush();
+            $this->addFlash("success", " Ville enregistrée avec succès !");
+        }
+        return $this->render('ville/add_ville.html.twig', ['villeForm'=>$villeForm->createView(),"page_name"=>"Ajouter Ville"]);
     }
 
 

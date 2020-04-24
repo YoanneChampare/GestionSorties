@@ -63,7 +63,7 @@
                     <a href="{{ path("profilParticipant",{'id':s.auteur.id}) }}">{{ s.auteur.nom }}</a>
                 </td>
                 <td>
-                    <td>
+
                         {% set b1=false %}
                         {% for i in inscrit %}
                             {% if s.id==i.sortie.id and (s.etat.libelle!="Annulée")%}
